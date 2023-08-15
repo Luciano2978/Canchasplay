@@ -1,5 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import * as React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import { AlignHorizontalCenter } from "@mui/icons-material";
 
 
 export default function ProtectedRoute({children}){
@@ -9,7 +13,14 @@ export default function ProtectedRoute({children}){
     
     if (isLoading) {
         
-        return <h1>Loading ...</h1>;
+        return (
+            <Box sx={{ 
+                display: 'flex' ,
+                justifyContent: "center"
+            }}>
+              <CircularProgress />
+            </Box>
+          );
         
     }
     if (!user) return <Navigate to="/login" />
