@@ -13,7 +13,7 @@ export default function App(){
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
                     <Route exact path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<ProtectedRoute><FooterNavigation/></ProtectedRoute>}></Route>
+                    <Route exact path="/prueba" element={<ProtectedRoute><FooterNavigation/></ProtectedRoute>}></Route>
                 </Routes>
             </BrowserRouter>
         </>
