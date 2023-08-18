@@ -32,7 +32,7 @@ export default function FooterNavigation() {
         }}>
       <BottomNavigation
         style={{
-          backgroundColor: "transparent"
+          backgroundColor: "black"
         }}
         showLabels
         value={value}

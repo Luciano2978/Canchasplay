@@ -23,7 +23,7 @@ const StyleCardHeader= {
 }
 
 const StyleCardSx = {
-    maxWidth: "80%",
+    maxWidth: "60%",
     margin: '0 auto',
     marginTop: '2%',
     //marginBottom: '2%',
@@ -45,6 +45,7 @@ return (
                 alt="Paella dish"
             />
             </CardActionArea> 
+            
     </Card>
     <Card sx={StyleCardSx}>
         <CardActionArea>
@@ -64,6 +65,20 @@ return (
         <CardActionArea>
         <CardHeader
                 title="Voley"
+                style={StyleCardHeader}
+            />
+            <CardMedia
+                component="img"
+                height= "100"
+                src= {voley}
+                alt="Paella dish"
+            />
+        </CardActionArea> 
+    </Card>
+    <Card sx={StyleCardSx}>
+        <CardActionArea>
+        <CardHeader
+                title="Tenis"
                 style={StyleCardHeader}
             />
             <CardMedia

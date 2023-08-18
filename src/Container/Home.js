@@ -4,6 +4,7 @@ import FooterNavigation from "../Components/FooterNavigation";
 import CardDeportes from "../Components/CardDeportes";
 import "../Assets/css/Background.css";
 import HeaderUsuario from "../Components/HeaderUsuario";
+import BotonDeportes from "../Components/BotonDeportes";
 
 export default function Home(){
 
@@ -20,7 +21,8 @@ export default function Home(){
                 </div>
 
                 <div className="BodyHomeUsuario">
-                    <CardDeportes></CardDeportes>
+                    <BotonDeportes></BotonDeportes>
+                    {/*<CardDeportes></CardDeportes>*/}
                 </div>
 
                 <div className="FooterHomeUsuario">
