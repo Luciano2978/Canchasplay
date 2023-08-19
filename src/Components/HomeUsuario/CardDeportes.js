@@ -2,9 +2,9 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import padel from "../Assets/Padel.png";
-import futbol from "../Assets/Futbol.png";
-import voley from "../Assets/Voley.png";
+//import padel from "../Assets/Padel.png";
+//import futbol from ".../Assets/Futbol.png";
+//import voley from "../Assets/Voley.png";
 import { CardActionArea } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
@@ -41,7 +41,7 @@ return (
             <CardMedia
                 component="img"
                 height= "100"
-                src= {futbol}
+                //src= {futbol}
                 alt="Paella dish"
             />
             </CardActionArea> 
@@ -56,7 +56,7 @@ return (
             <CardMedia
                 component="img"
                 height= "100"
-                src= {padel}
+                //src= {padel}
                 alt="Paella dish"
             />
         </CardActionArea> 
@@ -70,7 +70,7 @@ return (
             <CardMedia
                 component="img"
                 height= "100"
-                src= {voley}
+                //src= {voley}
                 alt="Paella dish"
             />
         </CardActionArea> 
@@ -84,7 +84,7 @@ return (
             <CardMedia
                 component="img"
                 height= "100"
-                src= {voley}
+                //src= {voley}
                 alt="Paella dish"
             />
         </CardActionArea> 

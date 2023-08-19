@@ -1,8 +1,9 @@
-
-import * as React from 'react';
+import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
+import logoCanchasPlay from "../Assets/CanchaPlayTransparent.png";
 
 const theme = createTheme();
 
@@ -16,30 +17,44 @@ theme.typography.h3 = {
   },
 };
 
-const centerContentStyle = {
+const CenteredContentBox = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   marginTop: '3%',
-//height: '100vh', // O ajusta esta altura según tus necesidades
-  //background: 'black', // Cambia el color de fondo si es necesario
-};
+});
 
-const whiteTextStyle = {
-    color: 'black',
-  };
+const WhiteTextStyle = styled(Typography)(({ theme }) => ({
+  color: 'black', // Cambia el color a 'white' si es necesario
+  [theme.breakpoints.down('sm')]: {
+    marginTop: '24%',
+  },
+}));
 
+  const LogoImage = styled('img')(({ theme }) => ({
+    position: 'absolute',
+    top: '4%',
+    left: '2%',
+    width: '25%',
+    height: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '55%',
+      top: '-5%',
+      left: '26%',
+      width: '55%',
+      height: '28%',
+    },
+  }));
 
-
-export default function HeaderUsuario() {
-  return (
-    <ThemeProvider theme={theme}>
-
-        <Box sx={centerContentStyle}>
-  
-            <Typography variant="h3"  sx={whiteTextStyle}>Selecciona el Deporte que deseas Jugar</Typography>
-            
-        </Box>
-    </ThemeProvider>
-  );
-}
+  export default function HeaderUsuario() {
+    return (
+      <ThemeProvider theme={theme}>
+        <CenteredContentBox>
+          <LogoImage src={logoCanchasPlay} alt="CanchasPlay Logo" />
+          <WhiteTextStyle variant="h3">
+            Selecciona el Deporte que deseas Jugar
+          </WhiteTextStyle>
+        </CenteredContentBox>
+      </ThemeProvider>
+    );
+  }

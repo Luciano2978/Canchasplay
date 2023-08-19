@@ -4,6 +4,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { HomeOutlined, AccountCircle} from '@mui/icons-material';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { green } from '@mui/material/colors';
 
 //import { Navigate } from "react-router-dom";
@@ -41,6 +42,7 @@ export default function FooterNavigation() {
         }}
       >
         <BottomNavigationAction label="Home" icon={< HomeOutlined />}style={{color: "white"}} />
+        <BottomNavigationAction label="News" icon={<ArticleOutlinedIcon />} style={{color: "white"}}/>
         <BottomNavigationAction label="Historial" icon={<HistoryOutlinedIcon />} style={{color: "white"}}/>
         <BottomNavigationAction label="Perfil" icon={<AccountCircle />} style={{color: "white"}}/>
       </BottomNavigation>

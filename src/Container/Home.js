@@ -1,10 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../Components/Logout";
 import FooterNavigation from "../Components/FooterNavigation";
-import CardDeportes from "../Components/CardDeportes";
+import CardDeportes from "../Components/HomeUsuario/CardDeportes";
 import "../Assets/css/Background.css";
 import HeaderUsuario from "../Components/HeaderUsuario";
-import BotonDeportes from "../Components/BotonDeportes";
+import BotonDeportes from "../Components/HomeUsuario/BotonDeportes";
 
 export default function Home(){
 
