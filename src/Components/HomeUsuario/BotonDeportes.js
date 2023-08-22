@@ -25,6 +25,16 @@ const images = [
     title: 'Padel',
     width: '40%',
   },
+  {
+    url: 'https://www.ole.com.ar/images/2022/02/08/2bSuGM-yd_1200x630__1.jpg',
+    title: 'Tenis',
+    width: '40%',
+  },
+  {
+    url: '',
+    title: 'Proximamente',
+    width: '40%',
+  },
 ];
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -105,7 +115,8 @@ export default function BotonDeportes() {
       flexDirection: 'column', 
       alignItems: 'center', 
       minWidth: 300, 
-      width: '100%' 
+      width: '100%',
+      overflow: 'auto'
       }}>
       
       
@@ -119,12 +130,13 @@ export default function BotonDeportes() {
         <ImageButton
           focusRipple
           key={image.title}
+
           style={{
             width: "100%",
 
           }}
         >
-
+          
           
           <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
           

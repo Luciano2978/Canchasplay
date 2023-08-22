@@ -1,16 +1,16 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton from "../Components/Logout";
+//import { useAuth0 } from "@auth0/auth0-react";
 import FooterNavigation from "../Components/FooterNavigation";
-import CardDeportes from "../Components/HomeUsuario/CardDeportes";
 import "../Assets/css/Background.css";
 import HeaderUsuario from "../Components/HeaderUsuario";
 import BotonDeportes from "../Components/HomeUsuario/BotonDeportes";
+import { useContext } from "react";
+import Contexto from "../Context/Context";
 
 export default function Home(){
 
-    const { user} = useAuth0();
-
-
+    //const { user} = useAuth0();
+    //Recibo el valor para hacer una comparacion y mostrar el componente que necesito
+    const {RouteComponent} = useContext(Contexto);
 
     return(
         <>
@@ -21,7 +21,19 @@ export default function Home(){
                 </div>
 
                 <div className="BodyHomeUsuario">
-                    <BotonDeportes></BotonDeportes>
+                    {/* Utilizo condicionales y muestro el componente*/}
+                    {(() => {
+                        if (RouteComponent === "Dashboard") {
+                            return <BotonDeportes></BotonDeportes>;
+                        } 
+                        if (RouteComponent === "News") {
+                            return  <h1 style={{textAlign: "Center"}}>News</h1>;
+                        }
+                        if (RouteComponent === "Historial") {
+                            return  <h1 style={{textAlign: "Center"}}>Historial</h1>;
+                        }
+                    })()}
+                    
                     {/*<CardDeportes></CardDeportes>*/}
                 </div>
 

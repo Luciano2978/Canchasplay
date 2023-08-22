@@ -5,24 +5,24 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { HomeOutlined, AccountCircle} from '@mui/icons-material';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import { green } from '@mui/material/colors';
-
-//import { Navigate } from "react-router-dom";
-
+import { useState,useContext } from 'react';
+import Contexto from '../Context/Context';
 
 export default function FooterNavigation() {
-  const [value, setValue] = React.useState(0);
-  const color = green[300];
+  const [value, setValue] = useState(0);
+  const {RouteNavigation} = useContext(Contexto)
 
 
-    /*
-  if (value === 0) return <Navigate to="/home" />
+  //Envio el valor del bottomNavigation a una funcion en el context
+  if(value === 0){
+    RouteNavigation("Dashboard")
+  }
   if(value === 1){
-    console.log("Historial")
+    RouteNavigation("News")
   }
   if(value === 2){
-    console.log("perfil")
-  } */
+    RouteNavigation("Historial")
+  }
 
   return (
     <Box sx={{ 
