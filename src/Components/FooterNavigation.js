@@ -3,29 +3,35 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom'; // Importa el componente Link
+
 
 const images = [
-    {
-      url: 'https://static.vecteezy.com/system/resources/previews/010/366/317/non_2x/cartoon-basketball-court-vector.jpg',
-      title: 'Agregar Cancha',
-      width: '25%',
-    },
-    {
-      url: 'https://los40xalapa.com/wp-content/uploads/2020/04/grupo-modelo-cerveza_crop1586034287646.jpg_423682103-1024x1024.jpg',
-      title: 'Productos',
-      width: '25%',
-    },
-    {
-      url: 'https://cdn-icons-png.flaticon.com/512/2808/2808667.png',
-      title: 'Reservas',
-      width: '25%',
-    },
-    {
-      url: 'https://yca.org.ar/wp-content/uploads/sites/4/2019/06/perfil-avatar-hombre-icono-redondo_24640-14044.jpg',
-      title: 'Perfil',
-      width: '25%',
-    }
-  ];
+  {
+    url: 'https://static.vecteezy.com/system/resources/previews/010/366/317/non_2x/cartoon-basketball-court-vector.jpg',
+    title: 'Agregar Cancha',
+    width: '25%',
+    route: '/agregar-cancha', // Agrega la ruta correspondiente
+  },
+  {
+    url: 'https://los40xalapa.com/wp-content/uploads/2020/04/grupo-modelo-cerveza_crop1586034287646.jpg_423682103-1024x1024.jpg',
+    title: 'Productos',
+    width: '25%',
+    route: '/productos', 
+  },
+  {
+    url: 'https://cdn-icons-png.flaticon.com/512/7412/7412601.png',
+    title: 'Reservas',
+    width: '25%',
+    route: '/reservas', 
+  },
+  {
+    url: 'https://cdn-icons-png.flaticon.com/512/2906/2906401.png',
+    title: 'Perfil',
+    width: '25%',
+    route: '/perfil', 
+  }
+];
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
@@ -55,7 +61,7 @@ const ImageSrc = styled('span')({
   top: 0,
   bottom: 0,
   backgroundSize: 'cover',
-  backgroundPosition: 'center 40%',
+  backgroundPosition: 'center 60%',
 });
 
 const Image = styled('span')(({ theme }) => ({
@@ -92,18 +98,29 @@ const ImageMarked = styled('span')(({ theme }) => ({
 }));
 
 export default function FooterPropietario() {
+
   return (
     <Box sx={{
-        display: 'flex',
-        justifyContent: 'center', // Para centrar horizontalmente
-        flexWrap: 'wrap',
-        flexDirection: "initial",
-        minWidth: 300,
-        width: '100%',
-        position : "absolute",
-        bottom: 0,
-      }}>
-        {images.map((image) => (
+      display: 'flex',
+      justifyContent: 'center', // Para centrar horizontalmente
+      flexWrap: 'wrap',
+      flexDirection: "initial",
+      minWidth: 300,
+      width: '100%',
+      position: "absolute",
+      bottom: 0,
+    }}>
+      {images.map((image) => (
+        <Link
+          key={image.title}
+          to={image.route} // Usa la propiedad 'route' del objeto para la redirección
+          style={{
+            width: '100%', // Usamos el 100% para que ocupe todo el ancho disponible
+            maxWidth: 400, // Define un ancho máximo para las imágenes (ajusta según tus necesidades)
+            margin: '10px', // Añade un margen entre las imágenes
+
+          }} // Estilo opcional para quitar la decoración de enlace
+        >
           <ImageButton
             focusRipple
             key={image.title}
@@ -111,7 +128,9 @@ export default function FooterPropietario() {
               width: '100%', // Usamos el 100% para que ocupe todo el ancho disponible
               maxWidth: 400, // Define un ancho máximo para las imágenes (ajusta según tus necesidades)
               margin: '10px', // Añade un margen entre las imágenes
+
             }}
+
           >
             <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
             <ImageBackdrop className="MuiImageBackdrop-root" />
@@ -132,7 +151,9 @@ export default function FooterPropietario() {
               </Typography>
             </Image>
           </ImageButton>
-        ))}
-      </Box>
+        </Link>
+      ))}
+
+    </Box >
   );
 }
