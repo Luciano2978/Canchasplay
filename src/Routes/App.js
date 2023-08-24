@@ -8,6 +8,7 @@ import ProtectedRoute from '../Components/ProtectedRoute';
 import NoticiasDeportes from '../Components/HomeUsuario/NoticiasDeportes';
 import NavigationContext from '../Context/NavigationContext';
 import  SeleccionCanchas from '../Container/SeleccionCanchas';
+import InformacionUsuario from '../Components/SeleccionCanchas/InformacionUsuario';
 
 
 
