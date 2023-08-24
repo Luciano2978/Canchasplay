@@ -12,6 +12,7 @@ import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
 import LogoRecova from "../../Assets/Logo_Recova.jpg";
 import { useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 
 const Img = styled('img')({
@@ -71,14 +72,13 @@ export default function VistaCanchas(){
         }
     });
     const DisponibilidadStyle = ({
-        color: "#44FF02",
-        fontWeight: "bold",
-        fontSize:"25px",
+        
         
         [theme.breakpoints.down('sm')]: {
             /* Estilos específicos para pantallas pequeñas */
             // Por ejemplo:
-            fontSize: "10px",
+            fontSize: "8px",
+            width: "auto",
         }
     });
 
@@ -97,9 +97,9 @@ export default function VistaCanchas(){
         {"idCancha" : 2,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs1IaT3OBcaQWoMmjKSH407F0sH1jmW9ASAFpZLIC_1-ZTusKpnR1BBCQJyh86Q3400JY&usqp=CAU", "NombreCancha": "Centro","PuntuacionCancha": 1, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
         {"idCancha" : 3,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAQcF1AgHRAxBGQiah2TBSr2nObKmRw3XwMYJ8PByMdq3YnHx2mDqMA3tNtr7_aNmNVFI&usqp=CAU", "NombreCancha": "Union sovietica","PuntuacionCancha": 5, "Numero_Comentarios":20,"EstadoDisponibilidad": false},
         {"idCancha" : 4,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-        {"idCancha" : 4,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-        {"idCancha" : 4,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-        {"idCancha" : 4,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+        {"idCancha" : 5,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+        {"idCancha" : 6,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+        {"idCancha" : 7,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
     ]
 
 
@@ -111,6 +111,7 @@ export default function VistaCanchas(){
                 justifyContent: 'center',
                 alignItems: 'center',
                 minHeight: '100vh', // Centrar verticalmente en la pantalla
+                marginTop: "-70px",
                 
             }}>
 
@@ -152,13 +153,18 @@ export default function VistaCanchas(){
                                     </Stack> 
                                     
                                     <Typography sx={ComentariosStyle} variant="body2" >
-                                        {CanchasData.Numero_Comentarios}
+                                        {CanchasData.Numero_Comentarios == 1? CanchasData.Numero_Comentarios + ' Comentario' : CanchasData.Numero_Comentarios + " Comentarios"}
                                     </Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant="h6" component="div" mt={2} sx={DisponibilidadStyle} style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
-                                    {CanchasData.EstadoDisponibilidad ? "Disponible": "No Disponible "}
+                                    <Typography variant="h6" component="div" mt={2}  style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
+                                        {CanchasData.EstadoDisponibilidad
+                                        ? 
+                                            <Button variant="contained" sx={DisponibilidadStyle} color="success">ReservaYa</Button>
+                                        : 
+                                            <Button variant="contained" sx={DisponibilidadStyle} color="error" >No Disponible</Button>
+                                        }
                                     </Typography>
                                 </Grid>
                                 </Grid>
