@@ -17,13 +17,28 @@ export default function NavigationContext(props){
         }
         setRouteComponent(route)
     }
+
+
+
+    const [nombreCancha, setNombreCancha ] = useState("");
+    const [estadoDisplay, setEstadoDisplay] = useState(false);
+    
+    const displayHorarios = (NombreCancha) =>{
+        console.log(nombreCancha)
+        setNombreCancha(NombreCancha);
+        setEstadoDisplay(true)
+    }
+
     return(
         <>
         
         <ContextoNav.Provider   
         value={{
             RouteNavigation,
-            RouteComponent
+            RouteComponent,
+            displayHorarios,
+            nombreCancha,
+            estadoDisplay
         }}>
 
         {children}

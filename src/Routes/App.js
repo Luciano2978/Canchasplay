@@ -10,7 +10,7 @@ import NavigationContext from '../Context/NavigationContext';
 import  SeleccionCanchas from '../Container/SeleccionCanchas';
 import InformacionUsuario from '../Components/SeleccionCanchas/InformacionUsuario';
 import Logout from "../Components/Logout.js";
-import FilterCanchas from "../Components/SeleccionCanchas/FilterCanchas.js";
+import HorariosDisponibles from "../Components/SeleccionCanchas/HorariosDisponibles.js";
 
 export default function App(){
     return(
@@ -19,7 +19,7 @@ export default function App(){
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
                     <Route exact path="/home" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<ProtectedRoute><FilterCanchas/></ProtectedRoute>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<ProtectedRoute><HorariosDisponibles/></ProtectedRoute>}></Route>
                 </Routes>
             </BrowserRouter>
         </>

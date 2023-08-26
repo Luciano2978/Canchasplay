@@ -14,6 +14,11 @@ import LogoRecova from "../../Assets/Logo_Recova.jpg";
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
+///Utilizamos Contexto para mandar el prop del nombre y llamar al dialogo
+import Contexto from '../../Context/Context';
+
+
+
 
 const Img = styled('img')({
     margin: 'auto',
@@ -26,6 +31,14 @@ const Img = styled('img')({
 export default function VistaCanchas(){
 
     const theme = useTheme();
+
+    const {displayHorarios} = React.useContext(Contexto)
+
+
+    const getHorarios =  async (NombreCancha) => {
+
+        await displayHorarios(NombreCancha)
+    }
     
     const PaperStyle = ({
         p: 2,
@@ -161,7 +174,7 @@ export default function VistaCanchas(){
                                     <Typography variant="h6" component="div" mt={2}  style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
                                         {CanchasData.EstadoDisponibilidad
                                         ? 
-                                            <Button variant="contained" sx={DisponibilidadStyle} color="success">Disponible</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => getHorarios(CanchasData.NombreCancha)} color="success">Disponible</Button>
                                         : 
                                             <Button variant="contained" sx={DisponibilidadStyle} color="error" >Deshabilitado</Button>
                                         }
