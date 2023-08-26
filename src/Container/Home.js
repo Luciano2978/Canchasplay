@@ -5,7 +5,7 @@ import HeaderUsuario from "../Components/HeaderUsuario";
 import BotonDeportes from "../Components/HomeUsuario/BotonDeportes";
 import { useContext } from "react";
 import Contexto from "../Context/Context";
-
+import SeleccionCanchas from "./SeleccionCanchas.js";
 export default function Home(){
 
     //const { user} = useAuth0();
@@ -16,15 +16,15 @@ export default function Home(){
         <>
             <div className="BackgroundHomeUsuario">
 
-                <div className="HeaderHomeUsuario">
+                {/* <div className="HeaderHomeUsuario">
                     <HeaderUsuario></HeaderUsuario>
-                </div>
+                </div> */}
 
                 <div className="BodyHomeUsuario">
                     {/* Utilizo condicionales y muestro el componente*/}
                     {(() => {
                         if (RouteComponent === "Dashboard") {
-                            return <BotonDeportes></BotonDeportes>;
+                            return <SeleccionCanchas></SeleccionCanchas>
                         } 
                         if (RouteComponent === "News") {
                             return  <h1 style={{textAlign: "Center"}}>News</h1>;

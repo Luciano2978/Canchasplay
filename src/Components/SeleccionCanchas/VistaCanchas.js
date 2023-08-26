@@ -161,9 +161,9 @@ export default function VistaCanchas(){
                                     <Typography variant="h6" component="div" mt={2}  style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
                                         {CanchasData.EstadoDisponibilidad
                                         ? 
-                                            <Button variant="contained" sx={DisponibilidadStyle} color="success">ReservaYa</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} color="success">Disponible</Button>
                                         : 
-                                            <Button variant="contained" sx={DisponibilidadStyle} color="error" >No Disponible</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} color="error" >Deshabilitado</Button>
                                         }
                                     </Typography>
                                 </Grid>

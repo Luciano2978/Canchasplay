@@ -9,7 +9,7 @@ import NoticiasDeportes from '../Components/HomeUsuario/NoticiasDeportes';
 import NavigationContext from '../Context/NavigationContext';
 import  SeleccionCanchas from '../Container/SeleccionCanchas';
 import InformacionUsuario from '../Components/SeleccionCanchas/InformacionUsuario';
-
+import Logout from "../Components/Logout.js";
 
 
 export default function App(){
@@ -19,7 +19,7 @@ export default function App(){
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
                     <Route exact path="/home" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<ProtectedRoute><SeleccionCanchas/></ProtectedRoute>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<ProtectedRoute><Logout/></ProtectedRoute>}></Route>
                 </Routes>
             </BrowserRouter>
         </>
