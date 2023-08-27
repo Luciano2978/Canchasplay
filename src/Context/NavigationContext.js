@@ -23,12 +23,12 @@ export default function NavigationContext(props){
     const [nombreCancha, setNombreCancha ] = useState("");
     const [estadoDisplay, setEstadoDisplay] = useState(false);
     
+
     const displayHorarios = (NombreCancha) =>{
-        console.log(nombreCancha)
+        
         setNombreCancha(NombreCancha);
         setEstadoDisplay(true)
     }
-
     return(
         <>
         

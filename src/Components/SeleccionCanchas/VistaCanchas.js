@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Stack } from '@mui/material';
+import { Autocomplete, Stack, TextField } from '@mui/material';
         
 //PARA LAS CANCHAS
 import Grid from '@mui/material/Grid';
@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 
 ///Utilizamos Contexto para mandar el prop del nombre y llamar al dialogo
 import Contexto from '../../Context/Context';
+import HorariosDisponibles from './HorariosDisponibles';
 
 
 
@@ -26,20 +27,44 @@ const Img = styled('img')({
     maxWidth: '55%',
     borderRadius: "60%"
 });
+//Maps
+const Canchas = [
+    {"idCancha" : 1,"Deporte":"futbol5","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm_JmP9Gf6geUfLNX8429rxgL15VqIJf5DupJTRIaUn5FqCKqf2BjTFHgzayPqZR188as&usqp=CAU", "NombreCancha": "La Nueva Recova 2","PuntuacionCancha": 3, "Numero_Comentarios":4, "EstadoDisponibilidad": true},
+    {"idCancha" : 2,"Deporte":"futbol5","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs1IaT3OBcaQWoMmjKSH407F0sH1jmW9ASAFpZLIC_1-ZTusKpnR1BBCQJyh86Q3400JY&usqp=CAU", "NombreCancha": "Centro","PuntuacionCancha": 1, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+    {"idCancha" : 3,"Deporte":"Padel","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAQcF1AgHRAxBGQiah2TBSr2nObKmRw3XwMYJ8PByMdq3YnHx2mDqMA3tNtr7_aNmNVFI&usqp=CAU", "NombreCancha": "Union sovietica","PuntuacionCancha": 5, "Numero_Comentarios":20,"EstadoDisponibilidad": false},
+    {"idCancha" : 4,"Deporte":"Padel","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+    {"idCancha" : 5,"Deporte":"futbol5","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Contadores","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+    {"idCancha" : 6,"Deporte":"Voley","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Poli","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+    {"idCancha" : 7,"Deporte":"Tenis","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "SportTeam","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+]
 
+const deportesUnicos = [...new Set(Canchas.map(cancha => cancha.Deporte))];
 
 export default function VistaCanchas(){
 
     const theme = useTheme();
 
     const {displayHorarios} = React.useContext(Contexto)
+    const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
+    const [nombreCanchaSeleccionada, setNombreCanchaSeleccionada] = React.useState('');
+    const [filtroDeporte, setFiltroDeporte] = React.useState(null); // Nuevo estado para el filtro
 
 
-    const getHorarios =  async (NombreCancha) => {
+   
+    const handleOpenHorariosDialog = (nombreCancha) => {
+      setNombreCanchaSeleccionada(nombreCancha);
+      setShowHorariosDialog(true);
+    };
 
-        await displayHorarios(NombreCancha)
-    }
-    
+    const handleCloseHorariosDialog = () => {
+        setNombreCanchaSeleccionada('');
+        setShowHorariosDialog(false);
+    };
+
+    const filteredCanchas = filtroDeporte
+        ? Canchas.filter(cancha => cancha.Deporte === filtroDeporte)
+        : Canchas;
+        
     const PaperStyle = ({
         p: 2,
         margin: 'auto',
@@ -103,19 +128,11 @@ export default function VistaCanchas(){
     })
 
 
-    //Maps
-
-    const Canchas = [
-        {"idCancha" : 1,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm_JmP9Gf6geUfLNX8429rxgL15VqIJf5DupJTRIaUn5FqCKqf2BjTFHgzayPqZR188as&usqp=CAU", "NombreCancha": "La Nueva Recova 2","PuntuacionCancha": 3, "Numero_Comentarios":4, "EstadoDisponibilidad": true},
-        {"idCancha" : 2,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs1IaT3OBcaQWoMmjKSH407F0sH1jmW9ASAFpZLIC_1-ZTusKpnR1BBCQJyh86Q3400JY&usqp=CAU", "NombreCancha": "Centro","PuntuacionCancha": 1, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-        {"idCancha" : 3,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAQcF1AgHRAxBGQiah2TBSr2nObKmRw3XwMYJ8PByMdq3YnHx2mDqMA3tNtr7_aNmNVFI&usqp=CAU", "NombreCancha": "Union sovietica","PuntuacionCancha": 5, "Numero_Comentarios":20,"EstadoDisponibilidad": false},
-        {"idCancha" : 4,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-        {"idCancha" : 5,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-        {"idCancha" : 6,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-        {"idCancha" : 7,"urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-    ]
+    
+    
 
 
+   
     return (
         <>      
             <Box
@@ -129,6 +146,17 @@ export default function VistaCanchas(){
             }}>
 
                 <Container fixed>
+                    <Autocomplete
+                            options={deportesUnicos}
+                            getOptionLabel={option => option}
+                            onChange={(event, value) => setFiltroDeporte(value)}
+                            value={filtroDeporte || null}
+                            renderInput={params => (
+                            <TextField {...params} label="Filtrar por deporte" variant="outlined" />
+                            
+                            )}
+                            style={{ width: '50%', display:"flex",justifyContent:"flex-end",marginLeft: '50%'}}
+                        />
                     <Box sx={{ bgcolor: 'rgba(52, 52, 52, 0.29)', height: '80vh',padding:"1%", overflow: "auto",
                         "&::-webkit-scrollbar": {
                             width: "0.4em", // Ancho de la barra
@@ -141,8 +169,9 @@ export default function VistaCanchas(){
                             background: "transparent", // Color del fondo de la barra
                         },
                     }}>
+                       
                         {/* Aca se debe realizar un map de todas las canchas (dependiendo el deporte) esten disponibles*/}
-                        {Canchas.map((CanchasData) => (
+                        {filteredCanchas.map((CanchasData) => (
                         <Paper
                             key={CanchasData.id}
                             sx={PaperStyle}
@@ -174,21 +203,27 @@ export default function VistaCanchas(){
                                     <Typography variant="h6" component="div" mt={2}  style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
                                         {CanchasData.EstadoDisponibilidad
                                         ? 
-                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => getHorarios(CanchasData.NombreCancha)} color="success">Disponible</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CanchasData.NombreCancha)} color="success">Disponible</Button>
                                         : 
-                                            <Button variant="contained" sx={DisponibilidadStyle} color="error" >Deshabilitado</Button>
+                                            <Button variant="contained" disabled sx={DisponibilidadStyle} color="error" >Disponible</Button>
                                         }
                                     </Typography>
                                 </Grid>
                                 </Grid>
-                            </Grid>
+                            </Grid> 
                         </Paper>
                         ))}
                     </Box>                    
                 </Container>
             </Box>
-                
 
+            <div>
+            <HorariosDisponibles
+                open={showHorariosDialog}
+                nombreCancha={nombreCanchaSeleccionada}
+                onClose={handleCloseHorariosDialog}
+            />
+            </div>
         </>
     )
 }

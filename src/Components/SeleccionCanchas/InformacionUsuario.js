@@ -29,7 +29,7 @@ return (
         </ListItemAvatar>
         { metadata.map((dato,index) => (
           <div key={index}>
-           <ListItemText primary={dato.Nombre + " " + dato.Apellido} secondary={dato.dni} />
+           <ListItemText primary={dato.Nombre + " " + dato.Apellido} secondary={"Formosa,Argentina"} />
           </div>
         ))}
         

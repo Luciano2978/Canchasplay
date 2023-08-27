@@ -16,7 +16,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+
+
 import Contexto from '../../Context/Context';
+import DialogMetodoPago from './DialogMetodoPago';
 
 
 
@@ -26,28 +29,35 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function HorariosDisponibles() {
-  const [open, setOpen] = React.useState(false);
+export default function HorariosDisponibles({ nombreCancha, open, onClose }) {
 
-  const {nombreCancha,estadoDisplay} = React.useContext(Contexto);
+  const [localOpen, setLocalOpen] = React.useState(false);
 
-  console.log(nombreCancha,estadoDisplay)
+  React.useEffect(() => {
+    setLocalOpen(open);
+  }, [open]);
 
-  setOpen(estadoDisplay)
   const handleClose = () => {
-    setOpen(false);
+    setLocalOpen(false);
+    onClose(); // Llamar a la función onClose proporcionada por el padre
   };
+
+  //console.log(estadoDisplay,nombreCancha)
 
   //lo que tendria que recibir del propietario,desde la sql digamos
   const HorariosDisponibles = 
   [
-    {"id":1,"Horario":"21:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
-    {"id":2,"Horario":"22:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
-    {"id":3,"Horario":"23:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
-    {"id":4,"Horario":"00:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
-    {"id":5,"Horario":"10:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
-    {"id":6,"Horario":"11:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
-    {"id":7,"Horario":"14:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
+    {"id":1,"nombreCanchas":"La Nueva Recova 2","Horario":"21:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
+    {"id":2,"nombreCanchas":"Centro","Horario":"22:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
+    {"id":3,"nombreCanchas":"Juancito Futbol5","Horario":"23:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
+    {"id":4,"nombreCanchas":"La Nueva Recova 2","Horario":"00:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
+    {"id":5,"nombreCanchas":"La Nueva Recova 2","Horario":"10:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
+    {"id":6,"nombreCanchas":"Centro","Horario":"11:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
+    {"id":7,"nombreCanchas":"Centro","Horario":"14:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
+    {"id":8,"nombreCanchas":"Juancito Futbol5","Horario":"11:00","Dia":28,"Mes":8,"Año":2023,"estado":true},
+    {"id":9,"nombreCanchas":"Centro","Horario":"20:00","Dia":28,"Mes":8,"Año":2023,"estado":true},
+    {"id":10,"nombreCanchas":"La Nueva Recova 2","Horario":"21:00","Dia":28,"Mes":8,"Año":2023,"estado":true},
+    {"id":11,"nombreCanchas":"Centro","Horario":"22:00","Dia":28,"Mes":8,"Año":2023,"estado":true},
 
   ]
 
@@ -62,17 +72,27 @@ export default function HorariosDisponibles() {
   const dia = (value.$D);
   const mes = (value.$M)+1;
   const año = (value.$y);
-  
 
+  const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
+
+  const handleOpenHorariosDialog = () => {
+    setShowHorariosDialog(true);
+  };
+
+  const handleCloseHorariosDialog = () => {
+      setShowHorariosDialog(false);
+  };
   return (
+    
     <div>
+      
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: 'relative' }}>
+        <AppBar sx={{ position: 'relative'}}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -100,9 +120,10 @@ export default function HorariosDisponibles() {
           </ListItem>
           <Divider />
           {HorariosDisponibles.map((DataHorarios) => (    
-            dia == DataHorarios.Dia && mes == DataHorarios.Mes && año == DataHorarios.Año  && (
+            dia == DataHorarios.Dia && mes == DataHorarios.Mes && año == DataHorarios.Año && DataHorarios.nombreCanchas == nombreCancha  && (
             <>
-              <ListItem button key={DataHorarios.id}> 
+              <ListItem button key={DataHorarios.id} onClick={() => handleOpenHorariosDialog()}>
+                
                 <ListItemText
                   primary={DataHorarios.Horario}
                   secondary="Turno Disponible"
@@ -114,6 +135,10 @@ export default function HorariosDisponibles() {
             ))}   
         </List>
       </Dialog>
+      <DialogMetodoPago
+          open={showHorariosDialog}
+          onClose={handleCloseHorariosDialog}
+        />
     </div>
   );
 }

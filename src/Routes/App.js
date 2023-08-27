@@ -19,7 +19,7 @@ export default function App(){
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
                     <Route exact path="/home" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<ProtectedRoute><HorariosDisponibles/></ProtectedRoute>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><HorariosDisponibles/></ProtectedRoute></NavigationContext>}></Route>
                 </Routes>
             </BrowserRouter>
         </>
