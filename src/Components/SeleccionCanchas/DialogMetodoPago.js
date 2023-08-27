@@ -8,6 +8,15 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import Fab from '@mui/material/Fab';
+import SportsSoccerRoundedIcon from '@mui/icons-material/SportsSoccerRounded';
+import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
+import WatchLaterRoundedIcon from '@mui/icons-material/WatchLaterRounded';
+import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
+import Box from '@mui/material/Box';
+import { Avatar, Divider, FormControlLabel, ListItem, ListItemAvatar, ListItemText, Radio, RadioGroup } from '@mui/material';
+import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
+import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -31,7 +40,14 @@ export default function DialogMetodoPago({ open, onClose}) {
     onClose(); // Llamar a la función onClose proporcionada por el padre
   };
 
-  
+  const [value, setValue] = React.useState('female');
+
+  const [selectedValue, setSelectedValue] = React.useState('');
+
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
   return (
     <div>
       <BootstrapDialog
@@ -40,7 +56,7 @@ export default function DialogMetodoPago({ open, onClose}) {
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+          Detalles de Reserva
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -55,12 +71,90 @@ export default function DialogMetodoPago({ open, onClose}) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
+        <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            marginTop={1}
+            gap={2}
+            
+          >
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Fab color="primary" aria-label="add">
+                <SportsSoccerRoundedIcon />
+              </Fab>
+              <Typography variant="caption" color="textSecondary">
+                futbol5
+              </Typography>
+            </Box>
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Fab color="secondary" aria-label="edit">
+                <CalendarMonthRoundedIcon />
+              </Fab>
+              <Typography variant="caption" color="textSecondary">
+                27/08
+              </Typography>
+            </Box>
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Fab color="secondary" aria-label="edit">
+                <WatchLaterRoundedIcon />
+              </Fab>
+              <Typography variant="caption" color="textSecondary">
+                12:00
+              </Typography>
+            </Box>
+            <Box display="flex" flexDirection="column" alignItems="center">
+              <Fab color="secondary" aria-label="edit">
+                <PaidRoundedIcon />
+              </Fab>
+              <Typography variant="caption" color="textSecondary">
+                $ 5000
+              </Typography>
+            </Box>
+          </Box>
+          <Divider />
+          <RadioGroup
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            value={value}
+            onChange={handleChange}
+            >
+            <ListItem>  
+                <ListItemAvatar>   
+                  <LocalAtmRoundedIcon/>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Efectivo"
+                  secondary="Pagaras en la cancha una vez finalizado el horario"
+                />
+                <FormControlLabel value="Efectivo" control={<Radio />}/>
+            </ListItem>
+            
+            <Divider />
+            <ListItem>  
+                <Box display="flex" flexDirection="column" alignItems="center">
+                  <FormControlLabel
+                    value="MercadoPago"
+                    control={
+                      <Radio
+                        icon={<AccountBalanceRoundedIcon />}
+                        checkedIcon={<AccountBalanceRoundedIcon  sx={{backgroundColor: "pink"[800],'&.Mui-checked': {backgroundColor: "pink"[600],},}}
+                         />}
+                        value="MercadoPago"
+                        checked={selectedValue === 'MercadoPago'}
+                        onChange={handleChange}
+                      />
+                    }/>
+                </Box>
+                <ListItemText
+                  primary="MercadoPago"
+                  secondary="Podras Pagar anticipadamente la cancha"
+                />
+                
+            </ListItem>
+          </RadioGroup>
+          {/* <Typography gutterBottom>
             Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
             Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
           </Typography>
@@ -68,11 +162,11 @@ export default function DialogMetodoPago({ open, onClose}) {
             Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
             magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
             ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+          </Typography> */}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-            Save changes
+            Reservar Horario
           </Button>
         </DialogActions>
       </BootstrapDialog>
