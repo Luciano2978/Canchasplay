@@ -29,7 +29,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function HorariosDisponibles({ nombreCancha, open, onClose }) {
+export default function HorariosDisponibles({ nombreCancha, open, onClose,nombreDeporte}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
 
@@ -74,8 +74,20 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose }) {
   const año = (value.$y);
 
   const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
+  const [horarioSeleccionado,setHorarioSeleccionado] = React.useState();
+  const [diaSeleccionado,setDiaSeleccionado] = React.useState();
+  const [mesSeleccionado,setMesSeleccionado] = React.useState();
+  const [añoSeleccionado,setAñoSeleccionado] = React.useState();
 
-  const handleOpenHorariosDialog = () => {
+
+
+
+
+  const handleOpenHorariosDialog = (HorarioSelec,DiaSele,MesSelec,AñoSelec) => {
+    setHorarioSeleccionado(HorarioSelec);
+    setDiaSeleccionado(DiaSele);
+    setMesSeleccionado(MesSelec);
+    setAñoSeleccionado(AñoSelec);
     setShowHorariosDialog(true);
   };
 
@@ -122,7 +134,7 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose }) {
           {HorariosDisponibles.map((DataHorarios) => (    
             dia == DataHorarios.Dia && mes == DataHorarios.Mes && año == DataHorarios.Año && DataHorarios.nombreCanchas == nombreCancha  && (
             <>
-              <ListItem button key={DataHorarios.id} onClick={() => handleOpenHorariosDialog()}>
+              <ListItem button key={DataHorarios.id} onClick={() => handleOpenHorariosDialog(DataHorarios.Horario,DataHorarios.Dia,DataHorarios.Mes,DataHorarios.Año)}>
                 
                 <ListItemText
                   primary={DataHorarios.Horario}
@@ -138,6 +150,11 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose }) {
       <DialogMetodoPago
           open={showHorariosDialog}
           onClose={handleCloseHorariosDialog}
+          HorarioSelec={horarioSeleccionado}
+          DiaSelec={diaSeleccionado}
+          MesSelec={mesSeleccionado}
+          AñoSelec={añoSeleccionado}
+          nombreDeporte={nombreDeporte}
         />
     </div>
   );

@@ -17,6 +17,7 @@ import Box from '@mui/material/Box';
 import { Avatar, Divider, FormControlLabel, ListItem, ListItemAvatar, ListItemText, Radio, RadioGroup } from '@mui/material';
 import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
+import { blue } from '@mui/material/colors';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -27,9 +28,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function DialogMetodoPago({ open, onClose}) {
+export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,MesSelec,AñoSelec,nombreDeporte}) {
 
-    const [localOpen, setLocalOpen] = React.useState(false);
+  const [localOpen, setLocalOpen] = React.useState(false);
 
   React.useEffect(() => {
     setLocalOpen(open);
@@ -40,14 +41,14 @@ export default function DialogMetodoPago({ open, onClose}) {
     onClose(); // Llamar a la función onClose proporcionada por el padre
   };
 
-  const [value, setValue] = React.useState('female');
-
-  const [selectedValue, setSelectedValue] = React.useState('');
+  const [value, setValue] = React.useState('Efectivo');
 
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
+  const fecha = DiaSelec + MesSelec
   return (
     <div>
       <BootstrapDialog
@@ -85,7 +86,7 @@ export default function DialogMetodoPago({ open, onClose}) {
                 <SportsSoccerRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                futbol5
+                {nombreDeporte}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">
@@ -93,7 +94,7 @@ export default function DialogMetodoPago({ open, onClose}) {
                 <CalendarMonthRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                27/08
+                {DiaSelec}/{MesSelec}/{AñoSelec}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">
@@ -101,7 +102,7 @@ export default function DialogMetodoPago({ open, onClose}) {
                 <WatchLaterRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                12:00
+                {HorarioSelec}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">
@@ -121,16 +122,23 @@ export default function DialogMetodoPago({ open, onClose}) {
             onChange={handleChange}
             >
             <ListItem>  
-                <ListItemAvatar>   
-                  <LocalAtmRoundedIcon/>
-                </ListItemAvatar>
+                <Box display="flex" flexDirection="column" alignItems="center">
+                  <FormControlLabel
+                    value="MercadoPago"
+                    control={
+                      <Radio
+                        icon={<LocalAtmRoundedIcon />}
+                        checkedIcon={<LocalAtmRoundedIcon sx={{ color: blue[600] }}/>}
+                        value="Efectivo"
+                        onChange={handleChange}
+                      />
+                    }/>
+                </Box>
                 <ListItemText
                   primary="Efectivo"
                   secondary="Pagaras en la cancha una vez finalizado el horario"
                 />
-                <FormControlLabel value="Efectivo" control={<Radio />}/>
             </ListItem>
-            
             <Divider />
             <ListItem>  
                 <Box display="flex" flexDirection="column" alignItems="center">
@@ -139,10 +147,8 @@ export default function DialogMetodoPago({ open, onClose}) {
                     control={
                       <Radio
                         icon={<AccountBalanceRoundedIcon />}
-                        checkedIcon={<AccountBalanceRoundedIcon  sx={{backgroundColor: "pink"[800],'&.Mui-checked': {backgroundColor: "pink"[600],},}}
-                         />}
+                        checkedIcon={<AccountBalanceRoundedIcon sx={{ color: blue[600] }}/>}
                         value="MercadoPago"
-                        checked={selectedValue === 'MercadoPago'}
                         onChange={handleChange}
                       />
                     }/>
@@ -157,7 +163,7 @@ export default function DialogMetodoPago({ open, onClose}) {
           {/* <Typography gutterBottom>
             Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
             Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
+          </Typography> 
           <Typography gutterBottom>
             Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
             magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec

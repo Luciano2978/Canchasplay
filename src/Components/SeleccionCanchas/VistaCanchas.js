@@ -47,13 +47,15 @@ export default function VistaCanchas(){
     const {displayHorarios} = React.useContext(Contexto)
     const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
     const [nombreCanchaSeleccionada, setNombreCanchaSeleccionada] = React.useState('');
+    const [nombreDeporteSeleccionado, setNombreDeporteSeleccionado] = React.useState('');
     const [filtroDeporte, setFiltroDeporte] = React.useState(null); // Nuevo estado para el filtro
 
 
    
-    const handleOpenHorariosDialog = (nombreCancha) => {
-      setNombreCanchaSeleccionada(nombreCancha);
-      setShowHorariosDialog(true);
+    const handleOpenHorariosDialog = (nombreCancha,nombreDeporte) => {
+        setNombreCanchaSeleccionada(nombreCancha);
+        setNombreDeporteSeleccionado(nombreDeporte);
+        setShowHorariosDialog(true);
     };
 
     const handleCloseHorariosDialog = () => {
@@ -203,7 +205,7 @@ export default function VistaCanchas(){
                                     <Typography variant="h6" component="div" mt={2}  style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
                                         {CanchasData.EstadoDisponibilidad
                                         ? 
-                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CanchasData.NombreCancha)} color="success">Disponible</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CanchasData.NombreCancha,CanchasData.Deporte)} color="success">Disponible</Button>
                                         : 
                                             <Button variant="contained" disabled sx={DisponibilidadStyle} color="error" >Disponible</Button>
                                         }
@@ -221,6 +223,7 @@ export default function VistaCanchas(){
             <HorariosDisponibles
                 open={showHorariosDialog}
                 nombreCancha={nombreCanchaSeleccionada}
+                nombreDeporte={nombreDeporteSeleccionado}
                 onClose={handleCloseHorariosDialog}
             />
             </div>
