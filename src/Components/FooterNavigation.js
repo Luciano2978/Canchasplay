@@ -7,6 +7,8 @@ import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { useState,useContext } from 'react';
 import Contexto from '../Context/Context';
+import LogoutIcon from '@mui/icons-material/Logout';
+import DialogLogout from './DialogLogout';
 
 export default function FooterNavigation() {
   const [value, setValue] = useState(0);
@@ -22,9 +24,22 @@ export default function FooterNavigation() {
   }
   if(value === 2){
     RouteNavigation("Historial")
-  }
+  }  
+
+
+  const [showDialogLogout, setshowDialogLogout] = useState(false);
+
+  const handleOpenDialogLogout = () => {
+    setshowDialogLogout(true);
+  };
+
+  const handleCloseDialogLogout = () => {
+    setshowDialogLogout(false);
+  };
+
 
   return (
+    <>
     <Box sx={{ 
         width: "100%",  
         position: "fixed",
@@ -45,7 +60,14 @@ export default function FooterNavigation() {
         <BottomNavigationAction label="News" icon={<ArticleOutlinedIcon />} style={{color: "white"}}/>
         <BottomNavigationAction label="Historial" icon={<HistoryOutlinedIcon />} style={{color: "white"}}/>
         <BottomNavigationAction label="Perfil" icon={<AccountCircle />} style={{color: "white"}}/>
+        <BottomNavigationAction label="Logout" icon={<LogoutIcon />} style={{color: "white"}} onClick={() => handleOpenDialogLogout()} />
       </BottomNavigation>
     </Box>
+
+    <DialogLogout
+        open={showDialogLogout}
+        onClose={handleCloseDialogLogout}
+      />
+    </>
   );
 }

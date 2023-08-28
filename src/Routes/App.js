@@ -9,8 +9,8 @@ import NoticiasDeportes from '../Components/HomeUsuario/NoticiasDeportes';
 import NavigationContext from '../Context/NavigationContext';
 import  SeleccionCanchas from '../Container/SeleccionCanchas';
 import InformacionUsuario from '../Components/SeleccionCanchas/InformacionUsuario';
-import Logout from "../Components/Logout.js";
 import HorariosDisponibles from "../Components/SeleccionCanchas/HorariosDisponibles.js";
+import SlideDialogComentarios from '../Components/HomeUsuario/SlideDialogComentarios';
 
 export default function App(){
     return(
@@ -19,7 +19,7 @@ export default function App(){
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
                     <Route exact path="/home" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><HorariosDisponibles/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><SlideDialogComentarios/></ProtectedRoute></NavigationContext>}></Route>
                 </Routes>
             </BrowserRouter>
         </>

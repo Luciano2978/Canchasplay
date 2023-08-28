@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 ///Utilizamos Contexto para mandar el prop del nombre y llamar al dialogo
 import Contexto from '../../Context/Context';
 import HorariosDisponibles from './HorariosDisponibles';
+import SlideDialogComentarios from '../HomeUsuario/SlideDialogComentarios';
 
 
 
@@ -46,11 +47,23 @@ export default function VistaCanchas(){
 
     const {displayHorarios} = React.useContext(Contexto)
     const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
+    const [showComentsDialog, setShowComentsDialog] = React.useState(false);
     const [nombreCanchaSeleccionada, setNombreCanchaSeleccionada] = React.useState('');
     const [nombreDeporteSeleccionado, setNombreDeporteSeleccionado] = React.useState('');
     const [filtroDeporte, setFiltroDeporte] = React.useState(null); // Nuevo estado para el filtro
 
+    //para abrir los comentarios//
 
+    const handleOpenComentsDialog = (nombreCancha) =>{
+        setNombreCanchaSeleccionada(nombreCancha);
+        setShowComentsDialog(true);
+    }
+    const handleCloseComentsDialog = () =>{
+        setNombreCanchaSeleccionada('');
+        setShowComentsDialog(false);
+    }
+
+    ///
    
     const handleOpenHorariosDialog = (nombreCancha,nombreDeporte) => {
         setNombreCanchaSeleccionada(nombreCancha);
@@ -196,9 +209,11 @@ export default function VistaCanchas(){
                                         <Rating name="half-rating-read" defaultValue={CanchasData.PuntuacionCancha} precision={0.5} readOnly style={RatingStyle} />
                                     </Stack> 
                                     
-                                    <Typography sx={ComentariosStyle} variant="body2" >
-                                        {CanchasData.Numero_Comentarios == 1? CanchasData.Numero_Comentarios + ' Comentario' : CanchasData.Numero_Comentarios + " Comentarios"}
-                                    </Typography>
+                                    <Button onClick={() => handleOpenComentsDialog(CanchasData.NombreCancha)}  variant="text" color="inherit">
+                                        <Typography sx={ComentariosStyle} variant="body2">
+                                            {CanchasData.Numero_Comentarios == 1 ? CanchasData.Numero_Comentarios + ' Comentario' : CanchasData.Numero_Comentarios + " Comentarios"}
+                                        </Typography>
+                                    </Button>
                                     </Grid>
                                 </Grid>
                                 <Grid item>
@@ -226,6 +241,12 @@ export default function VistaCanchas(){
                 nombreDeporte={nombreDeporteSeleccionado}
                 onClose={handleCloseHorariosDialog}
             />
+            <SlideDialogComentarios
+                open={showComentsDialog}
+                nombreCancha={nombreCanchaSeleccionada}
+                onClose={handleCloseComentsDialog}
+            />
+
             </div>
         </>
     )
