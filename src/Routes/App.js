@@ -11,6 +11,7 @@ import  SeleccionCanchas from '../Container/SeleccionCanchas';
 import InformacionUsuario from '../Components/SeleccionCanchas/InformacionUsuario';
 import HorariosDisponibles from "../Components/SeleccionCanchas/HorariosDisponibles.js";
 import SlideDialogComentarios from '../Components/HomeUsuario/SlideDialogComentarios';
+import CalendarioPrueba from '../Components/SeleccionCanchas/FilterCanchas';
 
 export default function App(){
     return(
@@ -19,7 +20,7 @@ export default function App(){
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
                     <Route exact path="/home" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><SlideDialogComentarios/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><CalendarioPrueba/></ProtectedRoute></NavigationContext>}></Route>
                 </Routes>
             </BrowserRouter>
         </>
