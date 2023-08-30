@@ -3,7 +3,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import * as React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { AlignHorizontalCenter } from "@mui/icons-material";
 
 
 export default function ProtectedRoute({children}){
