@@ -12,15 +12,15 @@ import InformacionUsuario from '../Components/SeleccionCanchas/InformacionUsuari
 import HorariosDisponibles from "../Components/SeleccionCanchas/HorariosDisponibles.js";
 import SlideDialogComentarios from '../Components/HomeUsuario/SlideDialogComentarios';
 import CalendarioPrueba from '../Components/SeleccionCanchas/FilterCanchas';
-
+import MpProductos from '../Components/MpProductos';
 export default function App(){
     return(
         <>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
-                    <Route exact path="/home" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><CalendarioPrueba/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><MpProductos/></ProtectedRoute></NavigationContext>}></Route>
                 </Routes>
             </BrowserRouter>
         </>

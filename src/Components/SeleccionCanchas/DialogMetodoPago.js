@@ -1,23 +1,22 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import axios from 'axios';
 import { styled } from '@mui/material/styles';
+import { Avatar, Box, Button, Divider, FormControlLabel, IconButton, ListItem, ListItemAvatar, ListItemText, Radio, RadioGroup, Typography} from '@mui/material';
+import { blue } from '@mui/material/colors';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import Fab from '@mui/material/Fab';
 import SportsSoccerRoundedIcon from '@mui/icons-material/SportsSoccerRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import WatchLaterRoundedIcon from '@mui/icons-material/WatchLaterRounded';
 import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
-import Box from '@mui/material/Box';
-import { Avatar, Divider, FormControlLabel, ListItem, ListItemAvatar, ListItemText, Radio, RadioGroup } from '@mui/material';
 import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
-import { blue } from '@mui/material/colors';
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -46,7 +45,40 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    
   };
+
+  ///MERCADOPAGO///
+  const [preferenceId, setPreferenceId] = React.useState(null);
+
+  initMercadoPago("TEST-535a7b1f-123c-4661-8ccb-f534d3f126b8")
+
+  const createPreference = async () => {
+      try {
+        const response = await axios.post("http://localhost:8080/create_preference", {
+          description: "La Nueva Recova",
+          price: 5000,
+          quantity: 1,
+          currency_id:"ARS"
+        });
+  
+        const { id } = response.data;
+        return id;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+  const metodoPagoReserva = async (req, res) => {
+    if(value != "Efectivo"){
+      const id = await createPreference();
+        if (id) {
+          setPreferenceId(id);
+      }
+    }
+     
+  };
+  
 
   const fecha = DiaSelec + MesSelec
   return (
@@ -171,9 +203,13 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
           </Typography> */}
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Reservar Horario
-          </Button>
+
+            {preferenceId && value != "Efectivo" ? <Wallet initialization={{ preferenceId , redirectMode: 'modal'}} />
+            
+            :
+            <Button autoFocus onClick={metodoPagoReserva}>
+              Reservar Horario
+            </Button>}
         </DialogActions>
       </BootstrapDialog>
     </div>

@@ -47,11 +47,11 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose,nombre
   //lo que tendria que recibir del propietario,desde la sql digamos
   const HorariosDisponibles = 
   [
-    {"id":1,"nombreCanchas":"La Nueva Recova 2","Horario":"21:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
-    {"id":2,"nombreCanchas":"Centro","Horario":"22:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
-    {"id":3,"nombreCanchas":"Juancito Futbol5","Horario":"23:00","Dia":26,"Mes":8,"Año":2023,"estado":true},
-    {"id":4,"nombreCanchas":"La Nueva Recova 2","Horario":"00:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
-    {"id":5,"nombreCanchas":"La Nueva Recova 2","Horario":"10:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
+    {"id":1,"nombreCanchas":"La Nueva Recova 2","Horario":"21:00","Dia":1,"Mes":9,"Año":2023,"estado":true},
+    {"id":2,"nombreCanchas":"Centro","Horario":"22:00","Dia":1,"Mes":9,"Año":2023,"estado":true},
+    {"id":3,"nombreCanchas":"Juancito Futbol5","Horario":"23:00","Dia":1,"Mes":9,"Año":2023,"estado":true},
+    {"id":4,"nombreCanchas":"La Nueva Recova 2","Horario":"00:00","Dia":2,"Mes":8,"Año":2023,"estado":true},
+    {"id":5,"nombreCanchas":"La Nueva Recova 2","Horario":"10:00","Dia":2,"Mes":9,"Año":2023,"estado":true},
     {"id":6,"nombreCanchas":"Centro","Horario":"11:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
     {"id":7,"nombreCanchas":"Centro","Horario":"14:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
     {"id":8,"nombreCanchas":"Juancito Futbol5","Horario":"11:00","Dia":28,"Mes":8,"Año":2023,"estado":true},
@@ -63,6 +63,7 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose,nombre
 
  
   //obtengo la fecha
+  console.log(dayjs().daysInMonth())
   const diaDefault = dayjs().get('date')
   const mesDefault = (dayjs().get('month')) +1
   const añoDefault = dayjs().get('year')
