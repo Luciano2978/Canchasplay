@@ -16,6 +16,7 @@ import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
 import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -192,20 +193,9 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
                 
             </ListItem>
           </RadioGroup>
-          {/* <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography> 
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
-          </Typography> */}
         </DialogContent>
         <DialogActions>
-
             {preferenceId && value != "Efectivo" ? <Wallet initialization={{ preferenceId , redirectMode: 'modal'}} />
-            
             :
             <Button autoFocus onClick={metodoPagoReserva}>
               Reservar Horario

@@ -1,122 +1,116 @@
-
-import * as React from 'react';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Slide from '@mui/material/Slide';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { Box, Container, Fab } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function CalendarioPrueba() {
-  const [value, setValue] = React.useState(dayjs());
 
-  const aaño = value.year();
-  const mmes = value.month();
+  const [currentDate, setCurrentDate] = useState(dayjs());
 
-  const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-  const numDiasMesActual = dayjs(`${aaño}-${mmes + 1}`).daysInMonth();
-  const diaDefault = dayjs().get('date')
-  const dias = [];
+  const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-  // Agregar los días del mes actual
-  for (let ddia = 1; ddia <= numDiasMesActual; ddia++) {
-    const indice = new Date(aaño, mmes, ddia).getDay();
-    dias.push({
-      dia: ddia,
-      mes: mmes + 1,
-      año: aaño,
-      diasSemana: diasSemana[indice]
+  const numDaysInMonth = currentDate.daysInMonth();
+
+  const days = [];
+  const diaDefault = (dayjs().get('date')-1)
+  const mesDefault = (dayjs().get('month')) +1
+  //dia de hoy
+
+
+  for (let day = 1; day <= numDaysInMonth; day++) {
+    const dayDate = currentDate.date(day);
+    const dayOfWeek = daysOfWeek[dayDate.day()];
+    days.push({
+      day: dayDate.format('D'),
+      month: dayDate.format('MMM'),
+      dayOfWeek,
     });
   }
 
-  // Obtener los días del siguiente mes
-  const numDiasSiguienteMes = dayjs(`${aaño}-${mmes + 2}`).daysInMonth();
-  for (let ddia = 1; ddia <= numDiasSiguienteMes; ddia++) {
-    const indice = new Date(aaño, mmes + 1, ddia).getDay();
-    dias.push({
-      dia: ddia,
-      mes: mmes + 2, // siguiente mes
-      año: aaño,
-      diasSemana: diasSemana[indice]
-    });
-  }
-
-  const containerRef = React.useRef(null);
-  const [scrollLeft, setScrollLeft] = React.useState(0);
-
-  const handleScroll = (scrollDirection) => {
-    const container = containerRef.current;
-    if (container) {
-      const containerWidth = container.clientWidth;
-      if (scrollDirection === 'left') {
-        setScrollLeft(scrollLeft - containerWidth);
-      } else if (scrollDirection === 'right') {
-        setScrollLeft(scrollLeft + containerWidth);
-      }
-      container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-    }
+  const handlePrevMonth = () => {
+    setCurrentDate(currentDate.subtract(1, 'month'));
   };
+
+  const handleNextMonth = () => {
+    setCurrentDate(currentDate.add(1, 'month'));
+  };
+
+
 
   return (
     <div>
       <Box
         sx={{
+          
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          minHeight: '50vh',
+          
         }}
       >
-        <Container ref={containerRef} fixed>
-          <Box
-            sx={{
-              display: 'flex',
-              bgcolor: 'rgba(52, 52, 52, 0.29)',
-              padding: '1%',
-              overflow: 'hidden',
-            }}
-          >
-
-            {scrollLeft > 0 && (
-              <ChevronLeftIcon
-              onClick={() => handleScroll('left')}
-              style={{ alignSelf: 'center', cursor: 'pointer' }}
+        <Container
+          sx={{
+            display: 'flex',
+            overflowX: 'auto',
+            alignItems: 'center',
+            "&::-webkit-scrollbar": {
+              width: "0.4em", // Ancho de la barra
+              height: "0.4em", // Altura de la barra
+            },
+            "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "rgba(0, 0, 0, 0.2)", // Color del "pulgar" de la barra
+            },
+            "&::-webkit-scrollbar-track": {
+                background: "transparent", // Color del fondo de la barra
+            },
+          }}
+        >
+          
+          {currentDate.isAfter(dayjs(), 'month') && (
+            <ChevronLeftIcon
+              onClick={handlePrevMonth}
+              sx={{
+                cursor: 'pointer',
+              }}
             />
-            )}
-            {dias.map((dataDias, index) => (
+          )}
+
+          {days.map((dataDias, index) => (
+            <>
               <Fab
                 variant="extended"
                 size="small"
                 color="primary"
                 key={index}
-                style={{
+                sx={{
                   flexDirection: 'column',
                   alignItems: 'center',
                   height: '10%',
                   width: '10%',
                   margin: '10px',
+                  minWidth: "80px",
                   flexShrink: 0,
                 }}
-              >
-                <div>{dataDias.diasSemana}</div>
+                disabled={dataDias.isPastDay || index < diaDefault || index > (diaDefault+7)}
+              > 
+              
+                <div>{dataDias.dayOfWeek}</div>
                 <div>
-                  {dataDias.dia} - {dayjs().month(dataDias.mes - 1).format('MMM')}
+                  {dataDias.day} - {dataDias.month}
                 </div>
-              </Fab>
+              </Fab> 
+            </>
             ))}
-            {scrollLeft < containerRef.current?.scrollWidth - containerRef.current?.clientWidth && (
-              <ChevronRightIcon
-                onClick={() => handleScroll('right')}
-                style={{ alignSelf: 'center', cursor: 'pointer',position:"absolute"}}
-              />
-            )}
-          </Box>
+
+
+          <ChevronRightIcon
+            onClick={handleNextMonth}
+            sx={{
+              cursor: 'pointer',
+            }}
+          />
         </Container>
       </Box>
     </div>
