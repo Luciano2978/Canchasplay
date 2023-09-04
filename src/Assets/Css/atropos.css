@@ -1,0 +1,14 @@
+.my-atropos {
+    width: 320px;
+    height: 160px;
+  }
+
+
+/* Media Query para pantallas con ancho máximo de 600px (responsive o móvil) */
+@media (max-width: 600px) {
+  .atropos-custom-responsive {
+    width: 80%; /* Cambia el ancho del botón al 100% */
+    margin-bottom: 16px; /* Ajusta el margen inferior */
+    /* Otros estilos para el diseño responsive */
+  }
+}
