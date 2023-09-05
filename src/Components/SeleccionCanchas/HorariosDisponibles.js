@@ -11,16 +11,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
-
-
 import Contexto from '../../Context/Context';
 import DialogMetodoPago from './DialogMetodoPago';
-
+import CalendarioUI from './CalendarioUI';
 
 
     
@@ -47,11 +40,11 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose,nombre
   //lo que tendria que recibir del propietario,desde la sql digamos
   const HorariosDisponibles = 
   [
-    {"id":1,"nombreCanchas":"La Nueva Recova 2","Horario":"21:00","Dia":1,"Mes":9,"Año":2023,"estado":true},
+    {"id":1,"nombreCanchas":"La Nueva Recova 2","Horario":"21:00","Dia":5,"Mes":9,"Año":2023,"estado":true},
     {"id":2,"nombreCanchas":"Centro","Horario":"22:00","Dia":1,"Mes":9,"Año":2023,"estado":true},
     {"id":3,"nombreCanchas":"Juancito Futbol5","Horario":"23:00","Dia":1,"Mes":9,"Año":2023,"estado":true},
-    {"id":4,"nombreCanchas":"La Nueva Recova 2","Horario":"00:00","Dia":2,"Mes":8,"Año":2023,"estado":true},
-    {"id":5,"nombreCanchas":"La Nueva Recova 2","Horario":"10:00","Dia":2,"Mes":9,"Año":2023,"estado":true},
+    {"id":4,"nombreCanchas":"La Nueva Recova 2","Horario":"00:00","Dia":5,"Mes":9,"Año":2023,"estado":true},
+    {"id":5,"nombreCanchas":"La Nueva Recova 2","Horario":"10:00","Dia":6,"Mes":9,"Año":2023,"estado":true},
     {"id":6,"nombreCanchas":"Centro","Horario":"11:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
     {"id":7,"nombreCanchas":"Centro","Horario":"14:00","Dia":27,"Mes":8,"Año":2023,"estado":true},
     {"id":8,"nombreCanchas":"Juancito Futbol5","Horario":"11:00","Dia":28,"Mes":8,"Año":2023,"estado":true},
@@ -62,17 +55,13 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose,nombre
   ]
 
  
-  //obtengo la fecha
-  console.log(dayjs().daysInMonth())
-  const diaDefault = dayjs().get('date')
-  const mesDefault = (dayjs().get('month')) +1
-  const añoDefault = dayjs().get('year')
-  const defaultDate = dayjs().set('date', diaDefault).set('month', mesDefault -1).set('year', añoDefault); //Inicia el caleandrio con la fecha actual
+  const {dia,mes,año} = React.useContext(Contexto)
 
-  const  [value,setValue] = React.useState(defaultDate);   
-  const dia = (value.$D);
-  const mes = (value.$M)+1;
-  const año = (value.$y);
+
+
+  //fin fecha
+
+
 
   const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
   const [horarioSeleccionado,setHorarioSeleccionado] = React.useState();
@@ -80,10 +69,7 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose,nombre
   const [mesSeleccionado,setMesSeleccionado] = React.useState();
   const [añoSeleccionado,setAñoSeleccionado] = React.useState();
 
-
-
-
-
+  //otra cosa
   const handleOpenHorariosDialog = (HorarioSelec,DiaSele,MesSelec,AñoSelec) => {
     setHorarioSeleccionado(HorarioSelec);
     setDiaSeleccionado(DiaSele);
@@ -118,18 +104,11 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose,nombre
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               {nombreCancha}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              InF
-            </Button>
           </Toolbar>
         </AppBar>
         <List>
           <ListItem >
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DatePicker']}  >
-                <DatePicker label="Seleccione una Fecha"  value={value ||  defaultDate} onChange={(newValue) => setValue(newValue)}/>
-            </DemoContainer>
-            </LocalizationProvider>
+            <CalendarioUI></CalendarioUI>
           </ListItem>
           <Divider />
           {HorariosDisponibles.map((DataHorarios) => (    

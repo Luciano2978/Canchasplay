@@ -14,8 +14,8 @@ export default function App(){
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
-                    <Route exact path="/" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><CalendarioPrueba/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/" element={<NavigationContext><Home/></NavigationContext>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><CalendarioPrueba/></NavigationContext>}></Route>
                 </Routes>
             </BrowserRouter>
         </>
