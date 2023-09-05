@@ -8,12 +8,14 @@ import NavigationContext from '../Context/NavigationContext';
 import CalendarioPrueba from '../Components/SeleccionCanchas/FilterCanchas';
 
 
+
 export default function App(){
     return(
         <>
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
+
                     <Route exact path="/" element={<NavigationContext><Home/></NavigationContext>}></Route>
                     <Route exact path="/SeccionPrueba" element={<NavigationContext><CalendarioPrueba/></NavigationContext>}></Route>
                 </Routes>
