@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ContextoNav from "./Context";
+import dayjs from 'dayjs';
 
 
 
@@ -17,18 +18,23 @@ export default function NavigationContext(props){
         }
         setRouteComponent(route)
     }
-
-
-
-    const [nombreCancha, setNombreCancha ] = useState("");
-    const [estadoDisplay, setEstadoDisplay] = useState(false);
     
 
-    const displayHorarios = (NombreCancha) =>{
-        
-        setNombreCancha(NombreCancha);
-        setEstadoDisplay(true)
+    const diaDefault = dayjs().get('date')
+    const mesDefault = (dayjs().get('month')) +1
+    const añoDefault = dayjs().get('year')
+
+    const [dia,setDia ] = useState(diaDefault)
+    const [mes,setMes] = useState(mesDefault)
+    const [año,setAño] = useState(añoDefault)
+
+    const ObtenerFecha = (dia,mes,año) =>{
+        setDia(dia)
+        setMes(mes)
+        setAño(año)
     }
+
+
     return(
         <>
         
@@ -36,9 +42,10 @@ export default function NavigationContext(props){
         value={{
             RouteNavigation,
             RouteComponent,
-            displayHorarios,
-            nombreCancha,
-            estadoDisplay
+            ObtenerFecha,
+            dia,
+            mes,
+            año
         }}>
 
         {children}
