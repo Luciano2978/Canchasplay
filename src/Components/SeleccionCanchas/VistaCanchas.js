@@ -56,35 +56,37 @@ export default function VistaCanchas(){
 
     //para abrir los comentarios//
 
-    const handleOpenComentsDialog = (nombreCancha) =>{
+    const handleOpenComentsDialog = React.useCallback((nombreCancha) =>{
         setNombreCanchaSeleccionada(nombreCancha);
         setShowComentsDialog(true);
-    }
-    const handleCloseComentsDialog = () =>{
+    },[])
+
+    const handleCloseComentsDialog = React.useCallback(() =>{
         setNombreCanchaSeleccionada('');
         setShowComentsDialog(false);
-    }
+    },[])
 
     ///
    
-    const handleOpenHorariosDialog = (nombreCancha,nombreDeporte) => {
+    const handleOpenHorariosDialog = React.useCallback((nombreCancha,nombreDeporte) => {
         setNombreCanchaSeleccionada(nombreCancha);
         setNombreDeporteSeleccionado(nombreDeporte);
         setShowHorariosDialog(true);
-    };
+    },[])
 
-    const handleCloseHorariosDialog = () => {
+    const handleCloseHorariosDialog = React.useCallback(() => {
         setNombreCanchaSeleccionada('');
         setShowHorariosDialog(false);
-    };
+    },[])
 
-    const handleOpenDialogInfoCanchas = () =>{
+    const handleOpenDialogInfoCanchas = React.useCallback(() =>{
        // setNombreCanchaSeleccionada(nombreCancha);
         setShowInfoDialog(true);
-    }
-    const handleCloseDialogInfoCanchas = () =>{
+    },[])
+    const handleCloseDialogInfoCanchas = React.useCallback(() =>{
         setShowInfoDialog(false);
-    }
+    },[])
+    
     const filteredCanchas = filtroDeporte
         ? Canchas.filter(cancha => cancha.Deporte === filtroDeporte)
         : Canchas;

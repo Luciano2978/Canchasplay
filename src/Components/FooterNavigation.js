@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { HomeOutlined, AccountCircle} from '@mui/icons-material';
-import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { useState,useContext } from 'react';
 import Contexto from '../Context/Context';
@@ -23,7 +23,7 @@ export default function FooterNavigation() {
     RouteNavigation("News")
   }
   if(value === 2){
-    RouteNavigation("Historial")
+    RouteNavigation("MisReservas")
   }  
 
 
@@ -58,7 +58,7 @@ export default function FooterNavigation() {
       >
         <BottomNavigationAction label="Home" icon={< HomeOutlined />}style={{color: "white"}} />
         <BottomNavigationAction label="News" icon={<ArticleOutlinedIcon />} style={{color: "white"}}/>
-        <BottomNavigationAction label="Historial" icon={<HistoryOutlinedIcon />} style={{color: "white"}}/>
+        <BottomNavigationAction label="MisReservas" icon={<VisibilityRoundedIcon />} style={{color: "white"}}/>
         <BottomNavigationAction label="Perfil" icon={<AccountCircle />} style={{color: "white"}}/>
         <BottomNavigationAction label="Logout" icon={<LogoutIcon />} style={{color: "white"}} onClick={() => handleOpenDialogLogout()} />
       </BottomNavigation>

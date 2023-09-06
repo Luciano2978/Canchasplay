@@ -91,7 +91,7 @@ export default function HorariosDisponibles({ nombreCancha, open, onClose,nombre
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <AppBar sx={{ position: 'relative'}}>
+        <AppBar sx={{ position: 'relative',backgroundColor:"black"}}>
           <Toolbar>
             <IconButton
               edge="start"
