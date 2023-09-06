@@ -18,6 +18,7 @@ import Button from '@mui/material/Button';
 import Contexto from '../../Context/Context';
 import HorariosDisponibles from './HorariosDisponibles';
 import SlideDialogComentarios from '../HomeUsuario/SlideDialogComentarios';
+import DialogInfoCancha from './DialogInfoCancha';
 
 
 
@@ -48,6 +49,7 @@ export default function VistaCanchas(){
     const {displayHorarios} = React.useContext(Contexto)
     const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
     const [showComentsDialog, setShowComentsDialog] = React.useState(false);
+    const [showInfoDialog, setShowInfoDialog] = React.useState(false);
     const [nombreCanchaSeleccionada, setNombreCanchaSeleccionada] = React.useState('');
     const [nombreDeporteSeleccionado, setNombreDeporteSeleccionado] = React.useState('');
     const [filtroDeporte, setFiltroDeporte] = React.useState(null); // Nuevo estado para el filtro
@@ -76,6 +78,13 @@ export default function VistaCanchas(){
         setShowHorariosDialog(false);
     };
 
+    const handleOpenDialogInfoCanchas = () =>{
+       // setNombreCanchaSeleccionada(nombreCancha);
+        setShowInfoDialog(true);
+    }
+    const handleCloseDialogInfoCanchas = () =>{
+        setShowInfoDialog(false);
+    }
     const filteredCanchas = filtroDeporte
         ? Canchas.filter(cancha => cancha.Deporte === filtroDeporte)
         : Canchas;
@@ -143,7 +152,7 @@ export default function VistaCanchas(){
     })
 
 
-    
+   
     
 
 
@@ -193,7 +202,7 @@ export default function VistaCanchas(){
                             >
                             <Grid container spacing={2}>
                                 <Grid item style={{paddingLeft: "0px"}} >
-                                    <ButtonBase sx={LogoStyle}>
+                                    <ButtonBase sx={LogoStyle} onClick={() => handleOpenDialogInfoCanchas()}>
                                         <Img alt="complex" src={CanchasData.urlLogo}  />
                                     </ButtonBase>
                                 </Grid>
@@ -245,6 +254,10 @@ export default function VistaCanchas(){
                 open={showComentsDialog}
                 nombreCancha={nombreCanchaSeleccionada}
                 onClose={handleCloseComentsDialog}
+            />
+            <DialogInfoCancha
+                open={showInfoDialog}
+                onClose={handleCloseDialogInfoCanchas}
             />
 
             </div>

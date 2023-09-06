@@ -5,7 +5,7 @@ import Login from '../Components/Login';
 import ProtectedRoute from '../Components/ProtectedRoute';
 import NoticiasDeportes from '../Components/HomeUsuario/NoticiasDeportes';
 import NavigationContext from '../Context/NavigationContext';
-import CalendarioPrueba from '../Components/SeleccionCanchas/FilterCanchas';
+import DialogInfoCancha from '../Components/SeleccionCanchas/DialogInfoCancha';
 
 
 
@@ -14,10 +14,9 @@ export default function App(){
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/login" element={<Login />}></Route>   
-
+                    <Route exact path="/login" element={<Login />}></Route>
                     <Route exact path="/" element={<NavigationContext><Home/></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<NavigationContext><CalendarioPrueba/></NavigationContext>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><DialogInfoCancha/></NavigationContext>}></Route>
                 </Routes>
             </BrowserRouter>
         </>

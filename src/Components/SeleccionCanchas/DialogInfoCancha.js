@@ -25,6 +25,9 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import PlaceIcon from '@mui/icons-material/Place';
 import InfoIcon from '@mui/icons-material/Info';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2)
@@ -53,14 +56,18 @@ const images = [
   }
 ];
 
-export default function DialogInfoCancha() {
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function DialogInfoCancha({open,onClose}) {
+
+  const [localOpen, setLocalOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    setLocalOpen(open);
+  }, [open]);
+
   const handleClose = () => {
-    setOpen(false);
+    setLocalOpen(false);
+    onClose(); // Llamar a la función onClose proporcionada por el padre
   };
 
   const theme = useTheme();
@@ -81,31 +88,31 @@ export default function DialogInfoCancha() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Detalles de Cancha
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500]
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
+        <AppBar sx={{ position: 'relative',backgroundColor:"black"}}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Informacion de la Cancha
+            </Typography>
+          </Toolbar>
+        </AppBar>
         <DialogContent dividers>
-          <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+          <Box sx={{
+              maxWidth: 400,
+              flexGrow: 1,
+              }}>
             <Paper
               square
               elevation={0}
@@ -186,7 +193,7 @@ export default function DialogInfoCancha() {
                             <MonetizationOnIcon />
                         </Avatar>
                     </ListItemAvatar>
-                <ListItemText primary="Precio Por Hora" secondary="$5000" />
+                <ListItemText primary="Precio Por Hora" secondary="Dia: $5000  - Noche: $6000" />
             </ListItem>
             <Divider/>
             <ListItem>
