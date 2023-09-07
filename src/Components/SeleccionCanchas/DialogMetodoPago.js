@@ -26,8 +26,22 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
+
+  
 }));
 
+const customization = {
+  texts: {
+    action: 'pay',
+    valueProp: 'security_details',
+  },
+  visual: {
+      buttonBackground: 'black',
+      borderRadius: '6px',
+  },
+
+ }
+ 
 export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,MesSelec,AñoSelec,nombreDeporte}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
@@ -60,7 +74,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
           description: "La Nueva Recova",
           price: 5000,
           quantity: 1,
-          currency_id:"ARS"
+          currency_id:"ARS",  
         });
   
         const { id } = response.data;
@@ -195,7 +209,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-            {preferenceId && value != "Efectivo" ? <Wallet initialization={{ preferenceId , redirectMode: 'modal'}} />
+            {preferenceId && value != "Efectivo" ? <Wallet customization={customization} initialization={{ preferenceId , redirectMode: 'modal'}} />
             :
             <Button autoFocus onClick={metodoPagoReserva}>
               Reservar Horario

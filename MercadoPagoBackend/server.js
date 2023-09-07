@@ -21,14 +21,38 @@ app.post("/create_preference", (req, res) => {
         title: req.body.description,
         unit_price: Number(req.body.price),
         quantity: Number(req.body.quantity),
+        
       },
     ],
+    payer: {
+      name: "Luciano",
+      surname: "Rojas",
+      email: "luciano297801@hotmail.com",
+      phone: {
+          area_code: "3704",
+          number: 518541
+      },
+      identification: {
+          type: "DNI",
+          number: "43452239"
+      },
+
+    },
     back_urls: {
       success: "http://localhost:3000",
       failure: "http://localhost:3000",
       pending: "",
     },
+    binary_mode: true,
     auto_return: "approved",
+    payment_methods: {
+      excluded_payment_types: [
+        {
+          id: "ticket"
+        }
+      ],
+      installments: 3
+    }
   };
 
   mercadopago.preferences
