@@ -8,6 +8,8 @@ import AddCancha from '../Components/AddCancha';
 import Productos from '../Components/Productos';
 import Reservas from '../Components/Reservas';
 import Profile from '../Components/Profile';
+import NavigationContext from '../Context/NavigationContext';
+import MaPrueba from '../Components/maPrueba';
 
 export default function App(){
     return(
@@ -15,12 +17,9 @@ export default function App(){
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>   
-                    <Route exact path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
-                    <Route exact path="/prueba" element={<ProtectedRoute><FooterNavigation/></ProtectedRoute>}></Route>
-                    <Route exact path="/agregar-cancha" element={<ProtectedRoute><AddCancha/></ProtectedRoute>}></Route>
-                    <Route exact path="/productos" element={<ProtectedRoute><Productos/></ProtectedRoute>}></Route>
-                    <Route exact path="/reservas" element={<ProtectedRoute><Reservas/></ProtectedRoute>}></Route>
-                    <Route exact path="/perfil" element={<ProtectedRoute><Profile/></ProtectedRoute>}></Route>
+                    <Route exact path="/home" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/prueba" element={<ProtectedRoute><MaPrueba/></ProtectedRoute>}></Route>
+                    <Route exact path="/agregar-cancha" element={<NavigationContext><ProtectedRoute><AddCancha/></ProtectedRoute></NavigationContext>}></Route>
 
 
 
