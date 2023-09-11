@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import {
   Box, Container, useMediaQuery, Button, Paper, TextField,
-  Select, MenuItem, InputLabel, FormControl,
+  Select, MenuItem, InputLabel, FormControl, Fab,
   createTheme, ThemeProvider, AppBar, Toolbar, Grid, BottomNavigationAction, BottomNavigation
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -161,6 +161,8 @@ export default function AddCancha() {
           ml: isMobile ? '' : '',
           backgroundImage: `url(https://img.freepik.com/vector-gratis/papel-pintado-abstracto-blanco_23-2148830027.jpg?w=2000)`,
           backgroundRepeat: "no-repeat",
+          backgroundSize: "cover", // Ajusta la imagen al tamaño del contenedor sin distorsionarla
+
           width: isDesktop ? "100%" : (isMobile ? "25rem" : "")
 
         }}
@@ -378,14 +380,14 @@ export default function AddCancha() {
                   <TextField
                     sx={{
 
-                      width: isMobile? "100%" : "50%",
+                      width: isMobile ? "100%" : "50%",
 /*                       marginLeft: "",
  */                     textAlign: "center",
                       '& .MuiInputLabel-root': {
                         fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
                         color: 'black',
                         fontWeight: 'bolder',
-                        
+
                       },
                       '& .MuiInputBase-root': {
                         width: isMobile ? "16rem" : (isDesktop ? "30rem" : ""),
@@ -451,6 +453,27 @@ export default function AddCancha() {
                     setCaracteristicas(e.target.value);
                   }}
                 />
+                <Box>
+                  <label htmlFor="upload-photo">
+                    <input
+                      style={{ display: 'none', color: "purple" }}
+                      id="upload-photo"
+                      name="upload-photo"
+                      type="file"
+                    />
+
+                    <Fab
+                      color="secondary"
+                      size="small"
+                      component="span"
+                      aria-label="add"
+                      variant="extended"
+                    >
+                      <AddIcon /> Upload photo
+                    </Fab>
+                    
+                  </label>
+                </Box>
 
               </div>
               <Button
