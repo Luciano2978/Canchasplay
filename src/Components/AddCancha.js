@@ -7,8 +7,8 @@ import {
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useJsApiLoader, Autocomplete, } from '@react-google-maps/api';
-import FooterNavigation from './FooterNavigation';
-import axios, { Axios } from 'axios';
+/* import FooterNavigation from './FooterNavigation';
+ */import axios from 'axios';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
@@ -142,7 +142,7 @@ export default function AddCancha() {
     googleMapsApiKey: googleMapsApiKey,
   });
 
-  const isMobile = useMediaQuery(breakpoints.xs && breakpoints.sm);
+  const isMobile = useMediaQuery(breakpoints.xs);
   const isTablet = useMediaQuery(breakpoints.sm);
   const isDesktop = useMediaQuery(breakpoints.md && breakpoints.lg);
 
@@ -155,24 +155,25 @@ export default function AddCancha() {
         elevation={4}
         sx={{
           padding: '10px',
-          mt: isMobile ? '-15rem' : "",
-          marginRight: isMobile ? '10px' : isDesktop ? '5%' : '',
-          marginLeft: isDesktop ? '0' : isMobile ? '-10px' : '',
-          width: '100%',
-          pt: isDesktop ? '13rem' : '13rem',
-          paddingBottom: isDesktop ? '13rem' : "",
-          backgroundImage: `url(https://img.freepik.com/vector-gratis/papel-pintado-abstracto-blanco_23-2148830027.jpg?w=2000)` ,
-          textAlign: "center"
+          mt: '0', // Elimina el margen superior en dispositivos móviles
+          marginRight: isMobile ? 'auto' : isDesktop ? '5%' : '', // Centra en dispositivos móviles
+          marginLeft: isDesktop ? '0' : "0",
+          ml: isMobile ? '' : '',
+          backgroundImage: `url(https://img.freepik.com/vector-gratis/papel-pintado-abstracto-blanco_23-2148830027.jpg?w=2000)`,
+          backgroundRepeat: "no-repeat",
+          width: isDesktop ? "100%" : (isMobile ? "25rem" : "")
 
         }}
       >
+
+
         <Box
           sx={{
             marginLeft: isMobile ? '' : isDesktop ? '' : '',
             position: isMobile ? "absolute" : "" || isDesktop ? 'absolute' : '',
             marginTop: isDesktop ? '-5rem' : isMobile ? '4.5rem' : '',
             paddingLeft: isMobile ? '0.4rem' : '',
-            textAlign: isMobile ? "center" : (isDesktop?  "center" : " "),
+            textAlign: isMobile ? "center" : (isDesktop ? "center" : " "),
           }}
         >
           <img
@@ -188,79 +189,82 @@ export default function AddCancha() {
         </Box>
 
         <Box>
+
           <Container
             sx={{
-              textAlign: isMobile ? 'center' : isDesktop ? '' : '',
+              textAlign: isMobile ? 'center' : isDesktop ? 'center' : '',
               paddingTop: isMobile ? '40%' : isDesktop ? '3rem' : '0rem',
               marginLeft: isMobile ? '2px' : isDesktop ? 'center' : '',
             }}
           >
-            <Typography
-              sx={{
-                color: 'black', fontWeight: 'bolder',
-                textShadow: '1px 1px 0px white',
-                textAlign: "left",
-                marginLeft: isMobile? "8rem": ( isDesktop ? "18rem" : ""),
-                marginBottom: "-1rem"
-                
-
-              }}
-              variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
-
-            >
-              Deporte
-            </Typography>
-            <FormControl
-              sx={{
-                width: isDesktop ? '50%' : '100%',
-                mt: "1rem",
-                border: 'solid',
-                borderRadius: '10px',
-                color: 'white',
-              }}
-            >
-              <Select
+            <div>
+              <Typography
                 sx={{
+                  color: 'black', fontWeight: 'bolder',
+                  textShadow: '1px 1px 0px white',
+                  textAlign: "left",
+                  marginLeft: isMobile ? "8rem" : (isDesktop ? "18rem" : ""),
+                  marginBottom: "-1rem"
 
-                  textAlign: 'left',
-                  fontSize: '1.5rem',
-                  border: 'solid',
-                  borderRadius: '50px',
-                  borderColor: 'white',
-                  /*                   color: 'black',
-                   */
-                  /*                   background: '#ffff',
-                   */
 
                 }}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={deporte}
-                onChange={handleChange}
-              >
-                <MenuItem value={"futbol"} sx={{ mt: "1rem" }}>
-                  <span className="icon" ><SportsSoccerIcon sx={{ color: "purple", width: "2rem", }} /></span>Futbol </MenuItem>
-                <MenuItem value={"voley"}>
-                  <span className="icon"><SportsVolleyballIcon sx={{ color: "purple", width: "2rem" }} /></span>Voley</MenuItem>
-                <MenuItem value={"basket"}>
-                  <span className="icon"><SportsBasketballIcon sx={{ color: "purple", width: "2rem" }} /></span>Basket</MenuItem>
-                <MenuItem value={"padel"}>
-                  <span className="icon"><SportsTennisIcon sx={{ color: "purple", width: "2rem" }} /></span>Padel</MenuItem>
+                variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
 
-              </Select>
-            </FormControl>
+              >
+                Deporte
+              </Typography>
+              <FormControl
+                sx={{
+                  width: isDesktop ? '50%' : '100%',
+                  mt: "1rem",
+                  border: 'solid',
+                  borderRadius: '10px',
+                  color: 'white',
+                }}
+              >
+                <Select
+                  sx={{
+
+                    textAlign: 'left',
+                    fontSize: '1.5rem',
+                    border: 'solid',
+                    borderRadius: '50px',
+                    borderColor: 'white',
+                    /*                   color: 'black',
+                     */
+                    /*                   background: '#ffff',
+                     */
+
+                  }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={deporte}
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"futbol"} sx={{ mt: "1rem" }}>
+                    <span className="icon" ><SportsSoccerIcon sx={{ color: "purple", width: "2rem", }} /></span>Futbol </MenuItem>
+                  <MenuItem value={"voley"}>
+                    <span className="icon"><SportsVolleyballIcon sx={{ color: "purple", width: "2rem" }} /></span>Voley</MenuItem>
+                  <MenuItem value={"basket"}>
+                    <span className="icon"><SportsBasketballIcon sx={{ color: "purple", width: "2rem" }} /></span>Basket</MenuItem>
+                  <MenuItem value={"padel"}>
+                    <span className="icon"><SportsTennisIcon sx={{ color: "purple", width: "2rem" }} /></span>Padel</MenuItem>
+
+                </Select>
+              </FormControl>
+            </div>
+
             <Box>
 
 
               <div>
                 <TextField
                   sx={{
-                    width: isMobile ? '100%' : isDesktop ? '50%' : '', '& .MuiInputLabel-root': {
-                      color: 'black', fontSize: '1rem',
-                    },
+                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
+
                     '& .MuiInputLabel-root': {
                       fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
-                      color: 'black', fontWeight: 'bolder', fontWeight: 'bolder',
+                      color: 'black', fontWeight: 'bolder',
 
                     },
                     border: 'solid',
@@ -288,7 +292,7 @@ export default function AddCancha() {
                     color: 'black', fontWeight: 'bolder',
                     textShadow: '1px 1px 0px white',
                     textAlign: "left",
-                    marginLeft:  isMobile? "" : (isDesktop ? "18rem" : ""),
+                    marginLeft: isMobile ? "" : (isDesktop ? "18rem" : ""),
 
                   }}
                   variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
@@ -298,9 +302,7 @@ export default function AddCancha() {
 
                 <TextField
                   sx={{
-                    width: isMobile ? '100%' : isDesktop ? '50%' : '', '& .MuiInputLabel-root': {
-                      color: 'black', fontSize: '1rem',
-                    },
+                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
 
                     '& .MuiInputLabel-root': {
                       fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
@@ -354,49 +356,39 @@ export default function AddCancha() {
                   }}
                 />
               </div>
-              <Typography
-                sx={{
-                  color: 'black',
-                  fontWeight: 'bolder',
-                  textShadow: '1px 1px 0px white',
-                  textAlign: "left",
-                  marginLeft: isMobile? "" : (isDesktop ? "18rem" : ""),
-                }}
-                variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
-              >
-                Ubicación del complejo
-              </Typography>
-              <Paper
-                component="form"
-                sx={{
-                  p: '2px 4px', display: 'flex', alignItems: 'center', width: isMobile? "19.8rem" : (isDesktop?  "49%" : ""), background: "transparent",
-                  border: 'solid', ml: isDesktop ? "18rem" : "",
-                  borderRadius: '10px',
-                  color: 'white',
-                  ml: isMobile? "" : (isDesktop? "18rem": ""), 
-                  
-                }}
-              >
-                <IconButton sx={{ p: '10px' }} aria-label="menu"></IconButton>
+              <div>
+                <Typography
+                  sx={{
+                    color: 'black',
+                    fontWeight: 'bolder',
+                    textShadow: '1px 1px 0px white',
+                    textAlign: "left",
+                    marginLeft: isMobile ? "" : (isDesktop ? "18rem" : ""),
+                  }}
+                  variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
+                >
+                  Ubicación del complejo
+                </Typography>
+
+
                 <Autocomplete
                   onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
                   onPlaceChanged={handleAutocompleteSelect}
                 >
                   <TextField
                     sx={{
-                      ml: 1,
-                      width: "100%",
-                      marginLeft: "",
 
+                      width: isMobile? "100%" : "50%",
+/*                       marginLeft: "",
+ */                     textAlign: "center",
                       '& .MuiInputLabel-root': {
                         fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
                         color: 'black',
                         fontWeight: 'bolder',
-                        fontSize: '1rem',
-
+                        
                       },
                       '& .MuiInputBase-root': {
-                        width: isMobile? "16rem" : (isDesktop? "30rem" : ""),
+                        width: isMobile ? "16rem" : (isDesktop ? "30rem" : ""),
                         marginRight: "25rem",
                       },
                       border: 'solid',
@@ -421,10 +413,11 @@ export default function AddCancha() {
                     }}
                   />
                 </Autocomplete>
-                
-                
-                
-              </Paper>
+
+
+              </div>
+
+
 
               <div >
 
@@ -482,7 +475,7 @@ export default function AddCancha() {
           </Container>
         </Box>
       </Box >
-      <FooterNavigation></FooterNavigation>
+      {/*    <FooterNavigation></FooterNavigation> */}
     </div >
 
 
