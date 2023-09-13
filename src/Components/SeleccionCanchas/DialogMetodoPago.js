@@ -66,13 +66,28 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
   ///MERCADOPAGO///
   const [preferenceId, setPreferenceId] = React.useState(null);
 
-  initMercadoPago("TEST-535a7b1f-123c-4661-8ccb-f534d3f126b8")
+  React.useEffect(() => {
+    // Realiza una solicitud GET al backend para recibir el public_key
+    console.log("aaa")
+    const correo = "luciano297801@gmail.com";
+    axios.get(`/get_PublicKey`,correo)
+      .then(response => {
+        
+        initMercadoPago(response.data.publicKey);
+        
+      })
+      .catch(error => {
+        // Maneja cualquier error en la solicitud
+        console.error(error);
+      });
+  }, []);
 
   const createPreference = async () => {
       try {
         const response = await axios.post("http://localhost:8080/create_preference", {
+          Correo: "luciano297801@gmail.com",
           description: "La Nueva Recova",
-          price: 5000,
+          price: 200,
           quantity: 1,
           currency_id:"ARS",  
         });
