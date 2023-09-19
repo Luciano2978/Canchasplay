@@ -22,6 +22,8 @@ import AddIcon from '@mui/icons-material/Add';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 import SearchIcon from '@mui/icons-material/Search';
 import DirectionsIcon from '@mui/icons-material/Directions';
@@ -42,7 +44,7 @@ const breakpoints = {
 export default function AddCancha() {
   const [deporte, setDeporte] = useState("futbol");
   const [Caracteristicas, setCaracteristicas] = useState("");
-  const [Precio_Hora, setPrecio_Hora] = useState("");
+  const [precio_Hora, setPrecio_Hora] = useState(null);
   const [largo, setLargo] = useState("");
   const [ancho, setAncho] = useState("");
   const [ubicacion_Detallada, setUbicacion_Detallada] = useState("");
@@ -52,7 +54,10 @@ export default function AddCancha() {
   const [location, setLocation] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(null);
   const autocompleteRef = useRef();
-
+  const [archivo, setArchivo] = useState(null);
+  const dimensionesConcatenadas = `${largo} x ${ancho}`;
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   const handleInputChange = (e, setStateFunction) => {
     const input = e.target.value;
@@ -65,26 +70,48 @@ export default function AddCancha() {
 
 /*   const urlad = "http://localhost:9000/api";
  */  const handleSubmit = (event) => {
-    const dimensionesConcatenadas = `${largo} x ${ancho}`;
+
+    if (
+      deporte.trim() === '' ||
+      Caracteristicas.trim() === '' ||
+      precio_Hora.trim() === '' ||
+      largo.trim() === '' ||
+      ancho.trim() === '' ||
+      ubicacion_Detallada.trim() === ''
+    ) {
+      setShowErrorAlert(true);
+      return; // No enviar la solicitud si falta alguno de los campos requeridos
+    }
 
     // Enviar la solicitud POST
-    axios.post("http://localhost:8080/createCancha", {
-      deporte: deporte,
-      Caracteristicas: Caracteristicas,
-      Precio_Hora: Precio_Hora,
-      /* largo: largo,
-      ancho: ancho, */
-      info_Dimensiones: dimensionesConcatenadas,
-      ubicacion_Detallada: ubicacion_Detallada,
-      latitud: latitud, // Asegúrate de que las claves coincidan con los nombres de los campos en el servidor
-      longitud: longitud,
-
-    }).then(() => {
-      alert("registrado");
-    }).catch((error) => {
-      console.error("Error al registrar:", error);
-      alert("Ocurrió un error al registrar los datos.");
-    });
+    axios
+      .post("http://localhost:8080/createCancha", {
+        deporte: deporte,
+        Caracteristicas: Caracteristicas,
+        precio_Hora: precio_Hora,
+        /* largo: largo,
+        ancho: ancho, */
+        info_Dimensiones: dimensionesConcatenadas,
+        ubicacion_Detallada: ubicacion_Detallada,
+        latitud: latitud,
+        longitud: longitud,
+        /* archivo : archivo, */
+      })
+      .then(() => {
+        setShowSuccessAlert(true);
+        // Restablecer los campos después del éxito si es necesario
+        setDeporte('');
+        setCaracteristicas('');
+        setPrecio_Hora('');
+        setLargo('');
+        setAncho('');
+        setUbicacion_Detallada('');
+        // Restablecer otros estados si es necesario
+      })
+      .catch((error) => {
+        console.error("Error al registrar:", error);
+        setShowErrorAlert(true);
+      });
   };
 
   useEffect(() => {
@@ -95,45 +122,18 @@ export default function AddCancha() {
     setDeporte(e.target.value);
   };
 
-  /*  const handleAutocompleteSelect = () => {
-    if (autocompleteRef.current) {
-      const selectedPlace = autocompleteRef.current.getPlace();
-      if (selectedPlace.geometry && selectedPlace.geometry.location) {
-        const { latitud, longitud } = selectedPlace.geometry.location;
-        const newMarkerPosition = { latitud: latitud(), longitud: longitud() }; // Aquí obtén las coordenadas
- 
-         // Envía las coordenadas en el formato que necesitas
-         setMarkerPosition(newMarkerPosition);
- 
-         setLocation(selectedPlace.formatted_address);
-         console.log(newMarkerPosition);
-       }
-     }
-    }; */
 
   const handleAutocompleteSelect = () => {
     const place = autocompleteRef.current.getPlace();
     if (place.geometry && place.formatted_address) {
-      const { latitud, longitud } = place.geometry.location;
-      setLatitud(latitud);
-      setLongitud(longitud);
+      const { lat, lng } = place.geometry.location;
+      setLatitud(lat);
+      setLongitud(lng);
       setUbicacion_Detallada(place.formatted_address);
       console.log(latitud)
       console.log(longitud)
     }
   };
-  /*  const handleAutocompleteSelect = () => {
-    if (autocompleteRef.current){
-      const selectedPlace = autocompleteRef.current.getPlace();}
-      if (selectedPlace.geometry && selectedPlace.geometry.location) {
-        const { latitud, longitud } = selectedPlace.geometry.location;
-        setMarkerPosition({ latitud: latitud, longitud: longitud });
-        setUbicacion_Detallada(selectedPlace.formatted_address);
-        console.log(markerPosition)
-        console.log(location)
-  }
-} */
-
 
   const googleMapsApiKey = 'AIzaSyDfzAChOLCriCs3TcLULEtD7RH75ktqmI4'
 
@@ -142,7 +142,7 @@ export default function AddCancha() {
     googleMapsApiKey: googleMapsApiKey,
   });
 
-  const isMobile = useMediaQuery(breakpoints.xs);
+  const isMobile = useMediaQuery(breakpoints.xs && breakpoints.sm);
   const isTablet = useMediaQuery(breakpoints.sm);
   const isDesktop = useMediaQuery(breakpoints.md && breakpoints.lg);
 
@@ -150,6 +150,22 @@ export default function AddCancha() {
   return (
 
     <div >
+      <Box sx={{textAlign: "center"}}>
+        {showSuccessAlert && (
+          <Alert severity="success" onClose={() => setShowSuccessAlert(false)}>
+            <AlertTitle>Éxito</AlertTitle>
+
+            ¡La cancha se ha registrado con éxito!
+          </Alert>
+        )}
+        {showErrorAlert && (
+          <Alert severity="error" onClose={() => setShowErrorAlert(false)}>
+            <AlertTitle>Error</AlertTitle>
+            ¡Ocurrió un error al registrar los datos!
+          </Alert>
+        )}
+      </Box>
+
       <Box
         component={Paper}
         elevation={4}
@@ -171,9 +187,9 @@ export default function AddCancha() {
 
         <Box
           sx={{
-            marginLeft: isMobile ? '' : isDesktop ? '' : '',
+            marginLeft: isMobile ? '2.5rem' : isDesktop ? '' : '',
             position: isMobile ? "absolute" : "" || isDesktop ? 'absolute' : '',
-            marginTop: isDesktop ? '-5rem' : isMobile ? '4.5rem' : '',
+            marginTop: isMobile ? '10rem' : isDesktop ? '10rem' : "",
             paddingLeft: isMobile ? '0.4rem' : '',
             textAlign: isMobile ? "center" : (isDesktop ? "center" : " "),
           }}
@@ -184,7 +200,7 @@ export default function AddCancha() {
             style={{
               width: isMobile ? "13rem" : (isDesktop ? "50%" : " "),
               height: 'auto',
-              marginTop: "4.5rem",
+              marginTop: isMobile ? "-20rem" : "4.5rem",
               textAlign: "center"
             }}
           />
@@ -205,7 +221,7 @@ export default function AddCancha() {
                   color: 'black', fontWeight: 'bolder',
                   textShadow: '1px 1px 0px white',
                   textAlign: "left",
-                  marginLeft: isMobile ? "8rem" : (isDesktop ? "18rem" : ""),
+                  marginLeft: isMobile ? "5rem" : (isDesktop ? "18rem" : ""),
                   marginBottom: "-1rem"
 
 
@@ -272,17 +288,18 @@ export default function AddCancha() {
                     border: 'solid',
                     borderRadius: '10px',
                     color: 'white',
+                    marginTop: "1.5rem",
                   }}
                   id="filled-search"
                   label="Precio por hora"
                   type="search"
                   variant="filled"
-                  value={Precio_Hora}
-                  onChange={(e) => handleInputChange(e, setPrecio_Hora)}
+                  value={precio_Hora}
+                  onChange={(e) => setPrecio_Hora(e.target.value)}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment>
-                        < LocalAtmIcon sx={{ fontSize: "2rem", color: "purple", mt: "1.2rem" }} />
+                      <InputAdornment position='start'>
+                        < LocalAtmIcon sx={{ fontSize: "2rem", color: "purple", mt: "1rem" }} />
                       </InputAdornment>
                     )
                   }}
@@ -323,7 +340,7 @@ export default function AddCancha() {
                   onChange={(e) => handleInputChange(e, setLargo)}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment>
+                      <InputAdornment position='start'>
                         <AddIcon sx={{ fontSize: "2rem", color: "purple", mt: "1.2rem" }} />
                       </InputAdornment>
                     )
@@ -351,7 +368,7 @@ export default function AddCancha() {
                   onChange={(e) => handleInputChange(e, setAncho)}
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment>
+                      <InputAdornment position='start'>
                         <AddIcon sx={{ fontSize: "2rem", color: "purple", mt: "1.2rem" }} />
                       </InputAdornment>
                     )
@@ -406,7 +423,7 @@ export default function AddCancha() {
                     onChange={(e) => setUbicacion_Detallada(e.target.value)}
                     InputProps={{
                       startAdornment: (
-                        <InputAdornment>
+                        <InputAdornment position='start'>
                           <AddLocationIcon
                             sx={{ fontSize: '2rem', mt: '1rem', color: 'purple' }}
                           />
@@ -460,6 +477,10 @@ export default function AddCancha() {
                       id="upload-photo"
                       name="upload-photo"
                       type="file"
+                      onChange={(e) => {
+                        const selectedFile = e.target.files[0];
+                        setArchivo(selectedFile);
+                      }}
                     />
 
                     <Fab
@@ -469,9 +490,9 @@ export default function AddCancha() {
                       aria-label="add"
                       variant="extended"
                     >
-                      <AddIcon /> Upload photo
+                      <AddIcon /> Cargar fotos
                     </Fab>
-                    
+
                   </label>
                 </Box>
 

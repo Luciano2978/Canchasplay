@@ -13,35 +13,66 @@ const db = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "",
-    database: "prueba"
+    database: "canchasplay"
 })
 
 
 
 app.post("/createCancha", (req, res) => {
-    const tipoCancha = req.body.tipoCancha;
-    const descripcion = req.body.descripcion;
-    const precioHora = req.body.precioHora;
-    const largo = req.body.largo;
-    const ancho = req.body.ancho;
-    const ubicacion = req.body.ubicacion;
-    const lat = req.body.lat;
-    const lng = req.body.lng;
+    const deporte = req.body.deporte;
+    const Caracteristicas = req.body.Caracteristicas;
+    const precio_Hora = req.body.precio_Hora;
+    const info_Dimensiones = req.body.info_Dimensiones;
+/*     const ancho = req.body.ancho;
+ */    const ubicacion_Detallada = req.body.ubicacion_Detallada;
+    const latitud = req.body.latitud;
+    const longitud = req.body.longitud;
+    const archivo = req.body.archivo;
 
-    db.query('INSERT INTO prueba(tipoCancha, descripcion, precioHora, largo, ancho, ubicacion, lat, lng ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-     [tipoCancha, descripcion, precioHora, largo, ancho, ubicacion, lat, lng],
+    db.query('INSERT INTO cancha(deporte, info_Dimensiones, Caracteristicas , Complejo_id_Cancha, precio_Hora  ) VALUES ( ?, ?, ?, ?, ?)',
+        [deporte, info_Dimensiones, Caracteristicas, 1, precio_Hora],
         (err, result) => {
             if (err) {
                 console.log(err)
 
+            } else {
+                res.send("registrado con exito")
+            }
+        }
+    );
+    db.query('INSERT INTO ubicacion(latitud, longitud, ubicacion_Detallada ) VALUES ( ?, ?, ?)',
+        [latitud, longitud, ubicacion_Detallada],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+
+            } else {
+                res.send("registrado con exito")
+            }
+        }
+    );
+    /* db.query('INSERT INTO archivos( archivo ) VALUES ( ?)',
+     [  archivo],
+        (err, result) => {
+            if (err) {
+                console.log(err)
+ 
             }else{
                 res.send("registrado con exito")
             }
         }
-
-    );
-
+    ); */
 });
+
+app.get("/getCancha", (req, res) => {
+
+    db.query('SELECT * FROM cancha', (err, rows) => {
+        if (err) return res.send(err)
+
+        res.json(rows)
+    })
+
+})
 
 
 
