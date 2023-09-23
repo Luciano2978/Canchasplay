@@ -21,7 +21,7 @@ export default function News(){
     }
 
 
-    const urlMp = "https://auth.mercadopago.com/authorization?client_id=3777467651088385&response_type=code&platform_id=mp&state=AUTORIZACIONCLIENTE&redirect_uri=https://39d1-190-5-160-149.ngrok-free.app"
+    const urlMp = "https://auth.mercadopago.com/authorization?client_id=3777467651088385&response_type=code&platform_id=mp&state=AUTORIZACIONCLIENTE&redirect_uri=https://zh7ntj18-8080.brs.devtunnels.ms/"
 
     return(
         <>

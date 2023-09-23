@@ -23,7 +23,7 @@ connection.connect((err) => {
 
 const clientSecret = '1pm10OS5iyjRODJ7JejUyIhun1c0mbn6';
 const clientId = '3777467651088385';
-const redirectUri = 'https://39d1-190-5-160-149.ngrok-free.app';
+const redirectUri = 'https://zh7ntj18-8080.brs.devtunnels.ms/';
 
 
 
@@ -47,8 +47,8 @@ function storeTokens(codigoAutorizacion, propietarioId) {
         const publicKey = response.data.public_key;
   
         // Consulta SQL para insertar los datos en la tabla cuenta_mp
-        const query = 'INSERT INTO cuenta_mp (accesToken, refreshToken, expiresIn, publicKey, Propietario_id,code) VALUES (?, ?, ?, ?, ?,?)';
-        const values = [accessToken, refreshToken, expiresIn, publicKey, propietarioId,codigoAutorizacion];
+        const query = 'INSERT INTO cuenta_mercadopago (accessToken, refreshToken,publicKey, Propietario_id_Propietario,code) VALUES (?, ?, ?, ?, ?)';
+        const values = [accessToken, refreshToken, publicKey, propietarioId,codigoAutorizacion];
   
         connection.query(query, values, (err, results) => {
             if (err) {
@@ -59,7 +59,6 @@ function storeTokens(codigoAutorizacion, propietarioId) {
               resolve({
                 accessToken,
                 refreshToken,
-                expiresIn,
                 publicKey,
                 codigoAutorizacion,
               });
@@ -80,9 +79,9 @@ function storeTokens(codigoAutorizacion, propietarioId) {
 function refreshAccessToken(callback) {
 
         // Recupera el refresh_token de la base de datos para el vendedor específico
-        const consultaRefreshToken = 'SELECT refreshToken,code,publicKey FROM cuenta_mp WHERE Propietario_id = ?';
+        const consultaRefreshToken = 'SELECT refreshToken,code,publicKey FROM cuenta_mercadopago WHERE Propietario_id_Propietario = ?';
 
-        connection.query(consultaRefreshToken, [1], (err, results) => {
+        connection.query(consultaRefreshToken, [2], (err, results) => {
         if (err) {
             console.error('Error al recuperar el refresh_token de la base de datos:', err);
             //callback(err, null);
@@ -121,16 +120,15 @@ function refreshAccessToken(callback) {
 
 
 function getPublickKey(callback){
-  const consultaRefreshToken = 'SELECT publicKey FROM cuenta_mp WHERE Propietario_id = ?';
+  const consultaPublicKey = 'SELECT publicKey FROM cuenta_mercadopago WHERE Propietario_id_Propietario=?';
 
-        connection.query(consultaRefreshToken, [1], (err, results) => {
+        connection.query(consultaPublicKey, [2], (err, results) => {
         if (err) {
             console.error('Error al recuperar el refresh_token de la base de datos:', err);
             //callback(err, null);
         } else {
-          const publicKey = results[0].code;
-
-          callback(null,publicKey);
+          const publicKey = results[0].publicKey;
+          callback(publicKey);
         } 
       })
 }

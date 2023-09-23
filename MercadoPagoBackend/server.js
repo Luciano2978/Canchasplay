@@ -29,13 +29,13 @@ connection.connect((err) => {
 });
 //este lo dejo para ver si funca el sv nomas
 app.get("/", function (req, res) {
-  const url = new URL(req.url, 'https://2330-190-5-160-149.ngrok-free.app'); // Reemplaza con tu dominio real
+  const url = new URL(req.url, 'https://zh7ntj18-8080.brs.devtunnels.ms/'); // Reemplaza con tu dominio real
   // Obtén el valor del parámetro 'code' de la URL
   const codigoAutorizacion = url.searchParams.get('code');
   // Aquí puedes manejar el código de autorización como lo necesites
   res.send("¡Su autorizacion fue todo un Exito! ");
   //res.send("el servidor de mercado pago funciona! :)");
-  const propietarioId = 1;
+  const propietarioId = 2;
   storeTokens(codigoAutorizacion,propietarioId, res);
 });
 
@@ -51,17 +51,17 @@ function verificarCorreoElectronico(email, callback) {
     }
   });
 }
-
-app.post("/get_PublicKey",correo =>{
-  console.log("correo:  " + correo)
-  verificarCorreoElectronico(correo, (error, cuenta) => {
+app.post('/get_PublicKey', (req, res) => {
+  const dataReceived = req.body.correo;
+  console.log(dataReceived);
+  verificarCorreoElectronico(dataReceived, (error, cuenta) => {
     if(error){
       console.log("Error: ", error);
     }else{
       if(cuenta > 0 ){
         getPublickKey((publicKey) => {
           console.log(publicKey)
-          res.send(publicKey)
+          res.json(publicKey)
         })
       }
       else{
@@ -69,7 +69,8 @@ app.post("/get_PublicKey",correo =>{
       }
     }
   })
-})
+});
+
 
 app.post("/create_preference", function (req, res) {
   verificarCorreoElectronico(req.body.Correo, (error, cuenta) => {
@@ -83,6 +84,7 @@ app.post("/create_preference", function (req, res) {
             console.error('Error al obtener el token de acceso actualizado:', error);
           } else {
             // Utilizar el nuevo token de acceso en tus operaciones con Mercado Pago
+            console.log(newAccessToken)
             try {   
               mercadopago.configure({
                 access_token: newAccessToken,

@@ -56,7 +56,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
   };
 
   const [value, setValue] = React.useState('Efectivo');
-
+  const [initPublicKey, setInitPublicKey] = React.useState("");
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -66,26 +66,29 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
   ///MERCADOPAGO///
   const [preferenceId, setPreferenceId] = React.useState(null);
 
+  const dataToSend = {
+    correo: "agustin@gmail.com"
+  };
   React.useEffect(() => {
-    // Realiza una solicitud GET al backend para recibir el public_key
-    console.log("aaa")
-    const correo = "luciano297801@gmail.com";
-    axios.get(`/get_PublicKey`,correo)
-      .then(response => {
-        
-        initMercadoPago(response.data.publicKey);
-        
-      })
-      .catch(error => {
-        // Maneja cualquier error en la solicitud
-        console.error(error);
-      });
-  }, []);
+    axios.post('http://localhost:8080/get_PublicKey', dataToSend)
+    .then((response) => {
+      // Manejar la respuesta del servidor aquí
+      console.log('Respuesta del servidor:', response.data);
+      setInitPublicKey(response.data)
+    })
+    .catch((error) => {
+      // Manejar errores aquí
+      console.error('Error al enviar datos:', error);
+    });
+  },[])
+  
+      
 
+  initMercadoPago(initPublicKey);
   const createPreference = async () => {
       try {
         const response = await axios.post("http://localhost:8080/create_preference", {
-          Correo: "luciano297801@gmail.com",
+          Correo: "marto@gmail.com",
           description: "La Nueva Recova",
           price: 200,
           quantity: 1,
