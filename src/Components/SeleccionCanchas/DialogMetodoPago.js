@@ -42,7 +42,7 @@ const customization = {
 
  }
  
-export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,MesSelec,AñoSelec,nombreDeporte}) {
+export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
 
@@ -113,7 +113,6 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
   };
   
 
-  const fecha = DiaSelec + MesSelec
   return (
     <div>
       <BootstrapDialog
@@ -151,7 +150,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
                 <SportsSoccerRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                {nombreDeporte}
+                fubol
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">
@@ -159,7 +158,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
                 <CalendarMonthRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                {DiaSelec}/{MesSelec}/{AñoSelec}
+                {FechaSelecc}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">

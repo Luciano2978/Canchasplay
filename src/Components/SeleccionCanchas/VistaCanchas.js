@@ -19,6 +19,7 @@ import Contexto from '../../Context/Context';
 import HorariosDisponibles from './HorariosDisponibles';
 import SlideDialogComentarios from '../HomeUsuario/SlideDialogComentarios';
 import DialogInfoCancha from './DialogInfoCancha';
+import AccordionCanchas from './AccordionCanchas';
 
 
 
@@ -79,13 +80,7 @@ export default function VistaCanchas(){
         setShowHorariosDialog(false);
     },[])
 
-    const handleOpenDialogInfoCanchas = React.useCallback(() =>{
-       // setNombreCanchaSeleccionada(nombreCancha);
-        setShowInfoDialog(true);
-    },[])
-    const handleCloseDialogInfoCanchas = React.useCallback(() =>{
-        setShowInfoDialog(false);
-    },[])
+
     
     const filteredCanchas = filtroDeporte
         ? Canchas.filter(cancha => cancha.Deporte === filtroDeporte)
@@ -204,7 +199,7 @@ export default function VistaCanchas(){
                             >
                             <Grid container spacing={2}>
                                 <Grid item style={{paddingLeft: "0px"}} >
-                                    <ButtonBase sx={LogoStyle} onClick={() => handleOpenDialogInfoCanchas()}>
+                                    <ButtonBase sx={LogoStyle}>
                                         <Img alt="complex" src={CanchasData.urlLogo}  />
                                     </ButtonBase>
                                 </Grid>
@@ -231,7 +226,7 @@ export default function VistaCanchas(){
                                     <Typography variant="h6" component="div" mt={2}  style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
                                         {CanchasData.EstadoDisponibilidad
                                         ? 
-                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CanchasData.NombreCancha,CanchasData.Deporte)} color="success">Disponible</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CanchasData.NombreCancha)} color="success">Disponible</Button>
                                         : 
                                             <Button variant="contained" disabled sx={DisponibilidadStyle} color="error" >Disponible</Button>
                                         }
@@ -246,10 +241,9 @@ export default function VistaCanchas(){
             </Box>
 
             <div>
-            <HorariosDisponibles
+            <AccordionCanchas
                 open={showHorariosDialog}
                 nombreCancha={nombreCanchaSeleccionada}
-                nombreDeporte={nombreDeporteSeleccionado}
                 onClose={handleCloseHorariosDialog}
             />
             <SlideDialogComentarios
@@ -257,10 +251,7 @@ export default function VistaCanchas(){
                 nombreCancha={nombreCanchaSeleccionada}
                 onClose={handleCloseComentsDialog}
             />
-            <DialogInfoCancha
-                open={showInfoDialog}
-                onClose={handleCloseDialogInfoCanchas}
-            />
+            
 
             </div>
         </>

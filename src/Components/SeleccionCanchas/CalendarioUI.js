@@ -25,11 +25,13 @@ export default function CalendarioUI(){
     const days = [];
   
     const handleDayClick = (dayDate,index) => {
+        
         console.log('Fecha seleccionada:', dayDate.format('YYYY-MM-DD'));
+        const fechaCompleta = dayDate.format('YYYY-MM-DD');
         const dia = dayDate.format('DD')
         const mes = dayDate.format('MM')
         const año = dayDate.format('YYYY')
-        ObtenerFecha(dia,mes,año);
+        ObtenerFecha(dia,mes,año,fechaCompleta);
         setSelectedButtonIndex(index); // Actualiza el botón seleccionado
 
     };
