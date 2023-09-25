@@ -5,11 +5,12 @@ const mysql = require('mysql2');
 const {storeTokens,refreshAccessToken,getPublickKey}= require("./Controllers/OAuthController");
 const mercadopago = require("mercadopago");
 const { URL } = require('url'); // Importa el módulo URL de Node.js
+const router = require("./Routes/Routes")
 
 
 app.use(express.json());
 app.use(cors());
-
+app.use(router);
 const port = 8080
 
 
@@ -27,6 +28,9 @@ connection.connect((err) => {
     console.log('Conexión exitosa a la base de datos MySQL');
   }
 });
+
+
+
 //este lo dejo para ver si funca el sv nomas
 app.get("/", function (req, res) {
   const url = new URL(req.url, 'https://zh7ntj18-8080.brs.devtunnels.ms/'); // Reemplaza con tu dominio real
@@ -40,6 +44,9 @@ app.get("/", function (req, res) {
 });
 
 
+
+
+
 // Función para verificar el correo electrónico
 function verificarCorreoElectronico(email, callback) {
   const sql = 'SELECT VerificarEmail(?) AS cuenta';
@@ -51,6 +58,8 @@ function verificarCorreoElectronico(email, callback) {
     }
   });
 }
+
+
 app.post('/get_PublicKey', (req, res) => {
   const dataReceived = req.body.correo;
   console.log(dataReceived);

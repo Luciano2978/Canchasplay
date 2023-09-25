@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import { Autocomplete, Stack, TextField } from '@mui/material';
+import { Autocomplete, IconButton, Stack, TextField, Tooltip } from '@mui/material';
         
 //PARA LAS CANCHAS
 import Grid from '@mui/material/Grid';
@@ -13,6 +13,7 @@ import { styled } from '@mui/material/styles';
 import LogoRecova from "../../Assets/Logo_Recova.jpg";
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 ///Utilizamos Contexto para mandar el prop del nombre y llamar al dialogo
 import Contexto from '../../Context/Context';
@@ -20,6 +21,7 @@ import HorariosDisponibles from './HorariosDisponibles';
 import SlideDialogComentarios from '../HomeUsuario/SlideDialogComentarios';
 import DialogInfoCancha from './DialogInfoCancha';
 import AccordionCanchas from './AccordionCanchas';
+import axios from 'axios';
 
 
 
@@ -32,18 +34,19 @@ const Img = styled('img')({
 });
 //Maps
 const Canchas = [
-    {"idCancha" : 1,"Deporte":"futbol5","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm_JmP9Gf6geUfLNX8429rxgL15VqIJf5DupJTRIaUn5FqCKqf2BjTFHgzayPqZR188as&usqp=CAU", "NombreCancha": "La Nueva Recova 2","PuntuacionCancha": 3, "Numero_Comentarios":4, "EstadoDisponibilidad": true},
-    {"idCancha" : 2,"Deporte":"futbol5","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs1IaT3OBcaQWoMmjKSH407F0sH1jmW9ASAFpZLIC_1-ZTusKpnR1BBCQJyh86Q3400JY&usqp=CAU", "NombreCancha": "Centro","PuntuacionCancha": 1, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-    {"idCancha" : 3,"Deporte":"Padel","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAQcF1AgHRAxBGQiah2TBSr2nObKmRw3XwMYJ8PByMdq3YnHx2mDqMA3tNtr7_aNmNVFI&usqp=CAU", "NombreCancha": "Union sovietica","PuntuacionCancha": 5, "Numero_Comentarios":20,"EstadoDisponibilidad": false},
-    {"idCancha" : 4,"Deporte":"Padel","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Juancito Futbol5","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-    {"idCancha" : 5,"Deporte":"futbol5","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Contadores","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-    {"idCancha" : 6,"Deporte":"Voley","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "Poli","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
-    {"idCancha" : 7,"Deporte":"Tenis","urlLogo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqjNKzwu9bI2HYnsgZE9jUCsXdykAn4xmXah-JicZkPopAt0eaCiUg5oL8s-cem0bySh8&usqp=CAU", "NombreCancha": "SportTeam","PuntuacionCancha": 2, "Numero_Comentarios":1,"EstadoDisponibilidad": true},
+    {"idCancha" : 1,"Deporte":"futbol5"},
+    {"idCancha" : 2,"Deporte":"futbol5"},
+    {"idCancha" : 3,"Deporte":"Padel"},
+    {"idCancha" : 4,"Deporte":"Padel"},
+    {"idCancha" : 5,"Deporte":"futbol5"},
+    {"idCancha" : 6,"Deporte":"Voley"},
+    {"idCancha" : 7,"Deporte":"Tenis"},
 ]
 
 const deportesUnicos = [...new Set(Canchas.map(cancha => cancha.Deporte))];
 
 export default function VistaCanchas(){
+
 
     const theme = useTheme();
 
@@ -54,6 +57,26 @@ export default function VistaCanchas(){
     const [nombreCanchaSeleccionada, setNombreCanchaSeleccionada] = React.useState('');
     const [nombreDeporteSeleccionado, setNombreDeporteSeleccionado] = React.useState('');
     const [filtroDeporte, setFiltroDeporte] = React.useState(null); // Nuevo estado para el filtro
+
+    const [datosComplejo,setDatosComplejo] = React.useState([]);
+
+    //Traer Datos Complejo//
+
+    React.useEffect(() => {
+        axios.get("http://localhost:8080/getComplejo")
+        .then((response ) => {
+            setDatosComplejo(response.data);
+        })
+        .catch((error) =>{
+            console.log("Error " + error);
+        })
+    })
+    
+
+
+    ///
+
+
 
     //para abrir los comentarios//
 
@@ -86,11 +109,13 @@ export default function VistaCanchas(){
         ? Canchas.filter(cancha => cancha.Deporte === filtroDeporte)
         : Canchas;
         
+
+
     const PaperStyle = ({
         p: 2,
         margin: 'auto',
         maxWidth: "90% ",
-        maxHeight: "15%",
+        maxHeight: "17%",
         flexGrow: 1,
         backgroundColor: "rgba(0, 0, 0, 0.77)",
         borderRadius: "60px",
@@ -148,12 +173,6 @@ export default function VistaCanchas(){
         }
     })
 
-
-   
-    
-
-
-   
     return (
         <>      
             <Box
@@ -192,45 +211,50 @@ export default function VistaCanchas(){
                     }}>
                        
                         {/* Aca se debe realizar un map de todas las canchas (dependiendo el deporte) esten disponibles*/}
-                        {filteredCanchas.map((CanchasData) => (
+                        {datosComplejo.map((CmData) => (
                         <Paper
-                            key={CanchasData.id}
+                            key={CmData.id_Complejo}
                             sx={PaperStyle}
                             >
                             <Grid container spacing={2}>
                                 <Grid item style={{paddingLeft: "0px"}} >
                                     <ButtonBase sx={LogoStyle}>
-                                        <Img alt="complex" src={CanchasData.urlLogo}  />
+                                        <Img alt="complex" src={ CmData.logo_Complejo ||"https://cdn.icon-icons.com/icons2/2440/PNG/512/gallery_icon_148533.png"}  />
                                     </ButtonBase>
                                 </Grid>
                                 <Grid item xs={8} sm container style={{paddingLeft: "0px"}}>
                                 <Grid item xs container direction="column">
                                     <Grid item xs>
                                     <Typography gutterBottom variant="h6" component="div" sx={NombreCanchaStyle}>
-                                        {CanchasData.NombreCancha}
+                                        {CmData.nombre_Lugar || "LA RECOOVA"}
                                     </Typography>  
                                     </Grid>
                                     <Grid item>
                                     <Stack spacing={1}>
-                                        <Rating name="half-rating-read" defaultValue={CanchasData.PuntuacionCancha} precision={0.5} readOnly style={RatingStyle} />
+                                        <Rating name="half-rating-read" defaultValue={CmData.calificacionPromedio} precision={0.5} readOnly style={RatingStyle} />
                                     </Stack> 
                                     
-                                    <Button onClick={() => handleOpenComentsDialog(CanchasData.NombreCancha)}  variant="text" color="inherit">
+                                    <Button onClick={() => handleOpenComentsDialog(CmData.nombre_Lugar)}  variant="text" color="inherit">
                                         <Typography sx={ComentariosStyle} variant="body2">
-                                            {CanchasData.Numero_Comentarios == 1 ? CanchasData.Numero_Comentarios + ' Comentario' : CanchasData.Numero_Comentarios + " Comentarios"}
+                                            {CmData.totalComentarios == 1 ? CmData.totalComentarios + ' Comentario' : (CmData.totalComentarios || 0) + " Comentarios"}
                                         </Typography>
                                     </Button>
                                     </Grid>
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant="h6" component="div" mt={2}  style={{color: CanchasData.EstadoDisponibilidad ? "#44FF02" : "#FF0202"}}>
-                                        {CanchasData.EstadoDisponibilidad
+                                    <Typography variant="h6" component="div" mt={2}  style={{color: CmData.estado_Complejo ? "#44FF02" : "#FF0202"}}>
+                                        {CmData.estado_Complejo
                                         ? 
-                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CanchasData.NombreCancha)} color="success">Disponible</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CmData.nombre_Lugar)} color="success">Disponible</Button>
                                         : 
                                             <Button variant="contained" disabled sx={DisponibilidadStyle} color="error" >Disponible</Button>
                                         }
                                     </Typography>
+                                    <Tooltip title="Ubicacion" arrow>
+                                        <IconButton sx={{color:"red"}}>
+                                            <LocationOnIcon></LocationOnIcon>
+                                        </IconButton>
+                                    </Tooltip>
                                 </Grid>
                                 </Grid>
                             </Grid> 
