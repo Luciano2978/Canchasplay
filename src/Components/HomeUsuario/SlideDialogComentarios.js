@@ -10,21 +10,35 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import { Rating } from '@mui/material';
+import axios from 'axios';
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
 
-export default function SlideDialogComentarios({open,onClose,nombreCancha}) {
+export default function SlideDialogComentarios({open,onClose,nombreCancha,idComplejo}) {
 
 
     const [localOpen, setLocalOpen] = useState(false);
+    const dataToSend = {
+      idCom: idComplejo
+    };
+
+    const [datosComentarios,setDatosComentarios] = React.useState([]);
 
     useEffect(() => {
-      setLocalOpen(open);
+       setLocalOpen(open);
+        axios.post("http://localhost:8080/getComentarios",dataToSend)
+        .then((response ) => {
+          setDatosComentarios(response.data)
+        })
+        .catch((error) =>{
+            console.log("Error " + error);
+        })
     }, [open]);
   
     const handleClose = () => {
@@ -64,56 +78,37 @@ export default function SlideDialogComentarios({open,onClose,nombreCancha}) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        {datosComentarios.map((dataComen,i) => (  
+          
+          <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={i}>
             <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                    <Avatar alt="Juan" src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                <ListItemText
+              <ListItemAvatar>
+                <Avatar alt="Juan" src="/static/images/avatar/1.jpg" />
+              </ListItemAvatar>
+              <ListItemText
                 primary="Excelente lugar"
                 secondary={
-                    <>
-                        <Typography
-                            sx={{ display: 'inline' }}
-                            component="span"
-                            variant="body2"
-                            color="text.primary"
-                        >
-                            Juancito
-                        </Typography>
-                        {" — La cancha esta bien cuidada, y tiene buena iluminacion de noche"}
-                    </>
+                  <>
+                    <Typography
+                      sx={{ display: 'inline' }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      Juancito
+                    </Typography>
+                    {" - " + dataComen.texto_Comentario}
+                    {" - " + dataComen.fecha_Hora}
+                  </>
                 }
-                />
-            
-          </ListItem>
+              />
+            </ListItem>
+            <Rating name="read-only" value={dataComen.calificacion} readOnly sx={{left: "70px",marginTop:"-10px"}} />
+
           <Divider />
         </List>
-        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-            <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                    <Avatar alt="Luciano" src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                <ListItemText
-                primary="Excelente lugar"
-                secondary={
-                    <>
-                        <Typography
-                            sx={{ display: 'inline' }}
-                            component="span"
-                            variant="body2"
-                            color="text.primary"
-                        >
-                            Luciano
-                        </Typography>
-                        {" — La cancha esta bien cuidada, y tiene buena iluminacion de noche"}
-                    </>
-                }
-                />
-            
-          </ListItem>
-          <Divider />
-        </List>
+      ))}
+
       </Dialog>
     </div>
   );

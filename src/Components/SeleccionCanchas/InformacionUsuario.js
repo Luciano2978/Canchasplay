@@ -9,9 +9,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 export default function InformacionUsuario() {
   const { user} = useAuth0();
-  //const [metadata] = React.useState([user.Nombre.user_metadata])
+  const [metadata] = React.useState([user.Nombre.user_metadata])
 
-  const metadata = []
 return (
     <List
       sx={{
@@ -25,7 +24,9 @@ return (
           <Avatar sx={{
             width: "80px",
             height: "90px",
-          }}/>
+          }}
+          src='https://es.web.img3.acsta.net/pictures/15/07/27/13/17/236302.jpg' alt='ZZZ'
+          />
         </ListItemAvatar>
         { metadata.map((dato,index) => (
           <div key={index}>

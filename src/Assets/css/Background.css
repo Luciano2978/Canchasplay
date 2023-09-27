@@ -1,5 +1,5 @@
 
-.BackgroundHomeUsuario {
+html {
     background-image: url('../background.jpg'); /* Asegúrate de ajustar la ruta */
     background-size: cover;
     background-repeat: no-repeat;
@@ -7,6 +7,6 @@
     min-width: 100vw; */
     display: flex;
     flex-direction: column;
-    margin: -8px;
+    
   }
   

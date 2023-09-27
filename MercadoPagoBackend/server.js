@@ -56,7 +56,7 @@ function verificarCorreoElectronico(email, callback) {
     } else {
       callback(null, results[0].cuenta);
     }
-  });
+  }); 
 }
 
 

@@ -39,13 +39,23 @@ const getComplejo = (req,res) => {
 }
 
 const getComentarios = (req,res) =>{
+    const idComplejo = req.body.idCom;
     const dataComentarios = `SELECT 
     texto_Comentario, 
     calificacion, 
     fecha_Hora,
     complejo_Id 
     FROM comentario cm
-    join complejo co on cm.complejo_Id = co.id_Complejo`;
+    join complejo co on cm.complejo_Id = co.id_Complejo where co.id_Complejo = ${idComplejo}`;
+    connection.query(dataComentarios, (err, results) => {
+        if(err){
+            console.log("Error al obtener datos del complejo " + err);
+        }
+        else{
+            res.json(results);
+
+        }
+    })
     
 }
 

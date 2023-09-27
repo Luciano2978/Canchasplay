@@ -80,8 +80,11 @@ export default function VistaCanchas(){
 
     //para abrir los comentarios//
 
-    const handleOpenComentsDialog = React.useCallback((nombreCancha) =>{
+    const [idComplejo, setIdComplejo] = React.useState(0);
+
+    const handleOpenComentsDialog = React.useCallback((nombreCancha,idComplejo) =>{
         setNombreCanchaSeleccionada(nombreCancha);
+        setIdComplejo(idComplejo)
         setShowComentsDialog(true);
     },[])
 
@@ -130,6 +133,7 @@ export default function VistaCanchas(){
 
     const LogoStyle = ({
         maxWidth: 128,
+        paddingTop: "10px",
         [theme.breakpoints.down('sm')]: {
             /* Estilos específicos para pantallas pequeñas */
             // Por ejemplo:
@@ -218,7 +222,7 @@ export default function VistaCanchas(){
                             >
                             <Grid container spacing={2}>
                                 <Grid item style={{paddingLeft: "0px"}} >
-                                    <ButtonBase sx={LogoStyle}>
+                                    <ButtonBase sx={LogoStyle} disabled>
                                         <Img alt="complex" src={ CmData.logo_Complejo ||"https://cdn.icon-icons.com/icons2/2440/PNG/512/gallery_icon_148533.png"}  />
                                     </ButtonBase>
                                 </Grid>
@@ -234,7 +238,7 @@ export default function VistaCanchas(){
                                         <Rating name="half-rating-read" defaultValue={CmData.calificacionPromedio} precision={0.5} readOnly style={RatingStyle} />
                                     </Stack> 
                                     
-                                    <Button onClick={() => handleOpenComentsDialog(CmData.nombre_Lugar)}  variant="text" color="inherit">
+                                    <Button onClick={() => handleOpenComentsDialog(CmData.nombre_Lugar,CmData.id_Complejo)}  variant="text" color="inherit">
                                         <Typography sx={ComentariosStyle} variant="body2">
                                             {CmData.totalComentarios == 1 ? CmData.totalComentarios + ' Comentario' : (CmData.totalComentarios || 0) + " Comentarios"}
                                         </Typography>
@@ -273,6 +277,7 @@ export default function VistaCanchas(){
             <SlideDialogComentarios
                 open={showComentsDialog}
                 nombreCancha={nombreCanchaSeleccionada}
+                idComplejo={idComplejo}
                 onClose={handleCloseComentsDialog}
             />
             
