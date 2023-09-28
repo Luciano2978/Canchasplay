@@ -13,9 +13,6 @@ export default function NavigationContext(props){
 
     //Tomo ese valor y lo seteo en una const, para enviarlo al home
     const RouteNavigation = (route) =>{
-        if(route === ""){
-            setRouteComponent("Dashboard")
-        }
         setRouteComponent(route)
     }
     

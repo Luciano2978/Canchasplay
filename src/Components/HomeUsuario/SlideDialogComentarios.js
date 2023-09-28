@@ -86,7 +86,7 @@ export default function SlideDialogComentarios({open,onClose,nombreCancha,idComp
                 <Avatar alt="Juan" src="/static/images/avatar/1.jpg" />
               </ListItemAvatar>
               <ListItemText
-                primary="Excelente lugar"
+                primary={dataComen.titulo}
                 secondary={
                   <>
                     <Typography
@@ -98,12 +98,12 @@ export default function SlideDialogComentarios({open,onClose,nombreCancha,idComp
                       Juancito
                     </Typography>
                     {" - " + dataComen.texto_Comentario}
-                    {" - " + dataComen.fecha_Hora}
+                    {" - " + dataComen.fecha_Hora || "/"}
                   </>
                 }
               />
             </ListItem>
-            <Rating name="read-only" value={dataComen.calificacion} readOnly sx={{left: "70px",marginTop:"-10px"}} />
+            <Rating name="read-only" value={dataComen.calificacion} readOnly sx={{left: "70px",marginTop:"-10px",fontSize:"1.2rem"}} />
 
           <Divider />
         </List>

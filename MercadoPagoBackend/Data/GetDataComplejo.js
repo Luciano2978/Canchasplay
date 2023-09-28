@@ -44,6 +44,7 @@ const getComentarios = (req,res) =>{
     texto_Comentario, 
     calificacion, 
     fecha_Hora,
+    titulo,
     complejo_Id 
     FROM comentario cm
     join complejo co on cm.complejo_Id = co.id_Complejo where co.id_Complejo = ${idComplejo}`;

@@ -20,24 +20,7 @@ import DialogInfoCancha from './DialogInfoCancha';
 import DialogMetodoPago from './DialogMetodoPago';
 import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
-
-const canchas = [
-  {
-    id_Cancha: 1,
-    NombreCancha: "Cancha 1",
-    NombreDeport: "Futbol5",
-  },
-  {
-    id_Cancha: 2,
-    NombreCancha: "Cancha 2",
-    NombreDeport: "Padel",
-  },
-  {
-    id_Cancha: 3,
-    NombreCancha: "Cancha 3",
-    NombreDeport: "Futbol5",
-  },
-];
+import axios from 'axios';
 
 
 const reservas = [
@@ -72,7 +55,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AccordionCanchas({open,onClose,NombreCancha}){
+export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo}){
 
 
   const [expanded, setExpanded] = useState(false);
@@ -82,9 +65,23 @@ export default function AccordionCanchas({open,onClose,NombreCancha}){
   };
 
   const [localOpen, setLocalOpen] = React.useState(false);
+  
+  const dataToSend = {
+    idCom: idComplejo
+  };
+  //console.log(dataToSend)
+
+  const [datosCanchas,setDatosCanchas] = React.useState([]);
 
   useEffect(() => {
     setLocalOpen(open);
+    axios.post("http://localhost:8080/getDataCanchas",dataToSend)
+      .then((response ) => {
+        setDatosCanchas(response.data);
+      })
+      .catch((error) =>{
+          console.log("Error " + error);
+      })
   }, [open]);
 
   const handleClose = () => {
@@ -147,7 +144,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha}){
           </Toolbar>
         </AppBar>
         <CalendarioUI></CalendarioUI>
-        {canchas.map((cancha,i) => (
+        {datosCanchas.map((cancha,i) => (
         <Accordion key={i} expanded={expanded === `panel${i}`} onChange={handleChange(`panel${i}`)}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -159,8 +156,8 @@ export default function AccordionCanchas({open,onClose,NombreCancha}){
                 <InfoRoundedIcon />
               </Fab>
             </div>
-            <Typography sx={{fontSize:"1.5rem", flexShrink: 0 }}>{cancha.NombreCancha}</Typography>
-            <Typography sx={{margin:1,color:"green"}}> - {cancha.NombreDeport}</Typography>
+            <Typography sx={{fontSize:"1.5rem", flexShrink: 0 }}>{cancha.nombre_Cancha}</Typography>
+            <Typography sx={{margin:1,color:"green"}}> - {cancha.deporte}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Divider/>

@@ -95,9 +95,10 @@ export default function VistaCanchas(){
 
     ///
    
-    const handleOpenHorariosDialog = React.useCallback((nombreCancha,nombreDeporte) => {
+    const handleOpenHorariosDialog = React.useCallback((nombreCancha,idComplejo) => {
         setNombreCanchaSeleccionada(nombreCancha);
-        setNombreDeporteSeleccionado(nombreDeporte);
+        //setNombreDeporteSeleccionado(nombreDeporte);
+        setIdComplejo(idComplejo)
         setShowHorariosDialog(true);
     },[])
 
@@ -249,7 +250,7 @@ export default function VistaCanchas(){
                                     <Typography variant="h6" component="div" mt={2}  style={{color: CmData.estado_Complejo ? "#44FF02" : "#FF0202"}}>
                                         {CmData.estado_Complejo
                                         ? 
-                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CmData.nombre_Lugar)} color="success">Disponible</Button>
+                                            <Button variant="contained" sx={DisponibilidadStyle} onClick={() => handleOpenHorariosDialog(CmData.nombre_Lugar,CmData.id_Complejo)} color="success">Disponible</Button>
                                         : 
                                             <Button variant="contained" disabled sx={DisponibilidadStyle} color="error" >Disponible</Button>
                                         }
@@ -271,6 +272,7 @@ export default function VistaCanchas(){
             <div>
             <AccordionCanchas
                 open={showHorariosDialog}
+                idComplejo={idComplejo}
                 nombreCancha={nombreCanchaSeleccionada}
                 onClose={handleCloseHorariosDialog}
             />

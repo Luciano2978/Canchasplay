@@ -30,138 +30,43 @@ connection.connect((err) => {
 });
 
 
-
-//este lo dejo para ver si funca el sv nomas
-app.get("/", function (req, res) {
-  const url = new URL(req.url, 'https://zh7ntj18-8080.brs.devtunnels.ms/'); // Reemplaza con tu dominio real
-  // Obtén el valor del parámetro 'code' de la URL
-  const codigoAutorizacion = url.searchParams.get('code');
-  // Aquí puedes manejar el código de autorización como lo necesites
-  res.send("¡Su autorizacion fue todo un Exito! ");
-  //res.send("el servidor de mercado pago funciona! :)");
-  const propietarioId = 2;
-  storeTokens(codigoAutorizacion,propietarioId, res);
-});
+app.post("/getDatos", async (req, res) => {
+  console.log(req.body)
+  const { userId, email, userMetadata } = req.body;
+  const correo = email;
+  const nombre = userMetadata.nombre;
+  const apellido = userMetadata.apellido;
+  const telefono = userMetadata.telefono;
+  const dni = userMetadata.dni;
 
 
 
-
-
-// Función para verificar el correo electrónico
-function verificarCorreoElectronico(email, callback) {
-  const sql = 'SELECT VerificarEmail(?) AS cuenta';
-  connection.query(sql, [email], (error, results) => {
-    if (error) {
-      callback(error, null);
-    } else {
-      callback(null, results[0].cuenta);
-    }
-  }); 
-}
-
-
-app.post('/get_PublicKey', (req, res) => {
-  const dataReceived = req.body.correo;
-  console.log(dataReceived);
-  verificarCorreoElectronico(dataReceived, (error, cuenta) => {
-    if(error){
-      console.log("Error: ", error);
-    }else{
-      if(cuenta > 0 ){
-        getPublickKey((publicKey) => {
-          console.log(publicKey)
-          res.json(publicKey)
-        })
-      }
-      else{
-        console.log("noup")
-      }
-    }
-  })
-});
-
-
-app.post("/create_preference", function (req, res) {
-  verificarCorreoElectronico(req.body.Correo, (error, cuenta) => {
-    if (error) {
-      console.error('Error:', error);
-    } else {
-      if (cuenta > 0) {
-        refreshAccessToken((error, newAccessToken) => {
-          if (error) {
-            // Manejar el error, por ejemplo, reintentar más tarde o notificar al usuario
-            console.error('Error al obtener el token de acceso actualizado:', error);
-          } else {
-            // Utilizar el nuevo token de acceso en tus operaciones con Mercado Pago
-            console.log(newAccessToken)
-            try {   
-              mercadopago.configure({
-                access_token: newAccessToken,
-              });
-              
-              let preference = {
-                  items: [
-                    {
-                      title: req.body.description,
-                      unit_price: Number(req.body.price),
-                      quantity: Number(req.body.quantity),
-                      
-                    },
-                  ],
-                  payer: {
-                    name: "Luciano",
-                    surname: "Rojas",
-                    email: "luciano297801@gmail.com",
-                    phone: {
-                        area_code: "3704",
-                        number: 518541
-                    },
-                    identification: {
-                        type: "DNI",
-                        number: "43452239"
-                    },
-              
-                  },
-                  back_urls: {
-                    success: "http://localhost:3000",
-                    failure: "http://localhost:3000",
-                    pending: "",
-                  },
-                  binary_mode: true,
-                  auto_return: "approved",
-                  payment_methods: {
-                    excluded_payment_types: [
-                      {
-                        id: "ticket"
-                      }
-                    ],
-                    installments: 3
-                  }
-                };
-              
-                mercadopago.preferences
-                  .create(preference)
-                  .then(function (response) {
-                    res.json({
-                      id: response.body.id,
-                    });
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                });
-      
-          }catch(error){
-              console.log(error);
-          }
-          }
-        });
+  // Primero, inserta el registro en la tabla Persona
+  connection.query(
+    "INSERT INTO Persona (dni, nombre, apellido, num_telefono) VALUES (?, ?, ?, ?)",
+    [dni, nombre, apellido, telefono], // Reemplaza 'Nombre1', 'Apellido1', 123456789 con los valores deseados
+    (err, personaResult) => {
+      if (err) {
+        console.log(err);
+        res.send("Error al registrar la persona");
       } else {
-        console.log("creo access")
+        // Luego, inserta el registro en la tabla Cuenta
+        connection.query(
+          "INSERT INTO Cuenta (id_Cuenta, email, Persona_dni) VALUES (?, ?, ?)",
+          [userId, email, dni],
+          (err, cuentaResult) => {
+            if (err) {
+              console.log(err);
+              res.send("Error al registrar la cuenta");
+            } else {
+              res.send("Registrado con éxito");
+            }
+          }
+        );
       }
     }
-  });
+  );
 });
- 
 
 app.listen(port, () => {
   console.log("the server is now running on port 8080");
