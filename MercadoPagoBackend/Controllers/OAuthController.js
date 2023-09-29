@@ -21,8 +21,8 @@ connection.connect((err) => {
 
 //aca tengo que obtener el code//
 
-const clientSecret = '1pm10OS5iyjRODJ7JejUyIhun1c0mbn6';
-const clientId = '3777467651088385';
+const clientSecret = '';
+const clientId = '';
 const redirectUri = 'https://zdwk8946-8080.use2.devtunnels.ms/createAccessToken';
 
 
