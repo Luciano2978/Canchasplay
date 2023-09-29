@@ -70,7 +70,7 @@ export default function VistaCanchas(){
         .catch((error) =>{
             console.log("Error " + error);
         })
-    })
+    },[])
     
 
 

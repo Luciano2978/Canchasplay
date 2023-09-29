@@ -25,7 +25,7 @@ return (
             width: "80px",
             height: "90px",
           }}
-          src='https://es.web.img3.acsta.net/pictures/15/07/27/13/17/236302.jpg' alt='ZZZ'
+          src='' alt='A'
           />
         </ListItemAvatar>
         { metadata.map((dato,index) => (

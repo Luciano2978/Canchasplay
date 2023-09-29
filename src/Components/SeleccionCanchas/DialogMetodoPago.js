@@ -42,35 +42,17 @@ const customization = {
 
  }
  
-export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo}) {
+export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo,NombreComplejo}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    setLocalOpen(open);
-  }, [open]);
-
-  const handleClose = () => {
-    setLocalOpen(false);
-    onClose(); // Llamar a la función onClose proporcionada por el padre
-  };
-
-  const [value, setValue] = React.useState('Efectivo');
   const [initPublicKey, setInitPublicKey] = React.useState("");
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-    
-  };
-
-  ///MERCADOPAGO///
-  const [preferenceId, setPreferenceId] = React.useState(null);
-
-  const dataToSend = {
-    idComplejo: idComplejo,
-  };
-  
+  console.log(NombreComplejo)
   React.useEffect(() => {
+    setLocalOpen(open);
+    const dataToSend = {
+      idComplejo: idComplejo,
+    };
     axios.post('http://localhost:8080/get_PublicKey', dataToSend)
     .then((response) => {
       // Manejar la respuesta del servidor aquí
@@ -81,17 +63,33 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
       // Manejar errores aquí
       console.error('Error al enviar datos:', error);
     });
-  },[])
-  
-      
+  }, [open]);
 
+  const handleClose = () => {
+    setLocalOpen(false);
+    onClose(); // Llamar a la función onClose proporcionada por el padre
+  };
+
+  const [value, setValue] = React.useState('Efectivo');
+  
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+    
+  };
+
+  ///MERCADOPAGO///
+  const [preferenceId, setPreferenceId] = React.useState(null);
+
+      
   initMercadoPago(initPublicKey);
+
   const createPreference = async () => {
       try {
         const response = await axios.post("http://localhost:8080/create_preference", {
           idComplejo: idComplejo,
-          description: "La Nueva Recova",
-          price: 200,
+          description: NombreComplejo,
+          price: PrecioSelecc,
           quantity: 1,
           currency_id:"ARS",  
         });

@@ -6,14 +6,11 @@ const {getCanchas,getHorariosDisponibles} = require("../Data/GetDataCancha");
 const postDataUser = require("../Data/PostDataUserAuht0");
 const createPreference = require("../Controllers/CreatePreference");
 const createAccessToken = require("../Controllers/CreateAccountMp");
+const getPublicKey = require("../Data/GetPublicKey");
 
-// Home page route.
 router.get("/getComplejo", getComplejo);
 
-
 router.post("/getComentarios",getComentarios);
-
-//router.post("/getUserDatosAuth0",postDataUser)
 
 router.post("/getDataCanchas",getCanchas);
 
@@ -23,6 +20,6 @@ router.post("/create_preference",createPreference);
 
 router.get("/createAccessToken",createAccessToken)
 
-router.post("/get_PublicKey",)
+router.post("/get_PublicKey",getPublicKey)
 
 module.exports =  router

@@ -23,7 +23,7 @@ connection.connect((err) => {
 
 const clientSecret = '1pm10OS5iyjRODJ7JejUyIhun1c0mbn6';
 const clientId = '3777467651088385';
-const redirectUri = 'https://zh7ntj18-8080.brs.devtunnels.ms/';
+const redirectUri = 'https://zdwk8946-8080.use2.devtunnels.ms/createAccessToken';
 
 
 
@@ -45,10 +45,10 @@ function storeTokens(codigoAutorizacion, propietarioId) {
         const refreshToken = response.data.refresh_token;
         const expiresIn = response.data.expires_in;
         const publicKey = response.data.public_key;
-  
+        const user_id = response.data.user_id;
         // Consulta SQL para insertar los datos en la tabla cuenta_mp
-        const query = 'INSERT INTO cuenta_mercadopago (accessToken, refreshToken,publicKey, Propietario_id_Propietario,code) VALUES (?, ?, ?, ?, ?)';
-        const values = [accessToken, refreshToken, publicKey, propietarioId,codigoAutorizacion];
+        const query = 'INSERT INTO cuenta_mercadopago (id_Cuenta_Mp, accessToken, refreshToken,publicKey, Propietario_id_Propietario,code) VALUES (?,?, ?, ?, ?, ?)';
+        const values = [user_id,accessToken, refreshToken, publicKey, propietarioId,codigoAutorizacion];
   
         connection.query(query, values, (err, results) => {
             if (err) {
@@ -118,10 +118,10 @@ function storeTokens(codigoAutorizacion, propietarioId) {
 
 
 
-function getPublickKey(callback){
+function getPublickKeyFunction(id_Propietario,callback){
   const consultaPublicKey = 'SELECT publicKey FROM cuenta_mercadopago WHERE Propietario_id_Propietario=?';
 
-        connection.query(consultaPublicKey, [2], (err, results) => {
+        connection.query(consultaPublicKey, [id_Propietario], (err, results) => {
         if (err) {
             console.error('Error al recuperar el refresh_token de la base de datos:', err);
             //callback(err, null);
@@ -133,4 +133,4 @@ function getPublickKey(callback){
 }
 
 
-module.exports = {storeTokens,refreshAccessToken,getPublickKey}
+module.exports = {storeTokens,refreshAccessToken,getPublickKeyFunction}

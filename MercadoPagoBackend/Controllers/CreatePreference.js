@@ -1,5 +1,6 @@
 const {refreshAccessToken}= require("./OAuthController");
 const mysql = require('mysql2');
+const mercadopago = require("mercadopago");
 
 
 
@@ -34,7 +35,6 @@ const createPreference = (req, res) => {
                   console.error('Error al obtener el token de acceso actualizado:', error);
                 } else {
                   // Utilizar el nuevo token de acceso en tus operaciones con Mercado Pago
-                  console.log(newAccessToken)
                   try {   
                     mercadopago.configure({
                       access_token: newAccessToken,

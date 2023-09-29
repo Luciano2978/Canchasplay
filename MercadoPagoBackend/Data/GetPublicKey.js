@@ -1,5 +1,18 @@
-const createPreference = (req, res) => {
+const mysql = require('mysql2');
+const {getPublickKeyFunction} = require("../Controllers/OAuthController");
 
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'canchasplay'
+})
+
+
+
+
+const getPublickKey = (req, res) => {
+    console.log("id xddd -]> " + req.body.idComplejo)
     connection.query('CALL VerificarPropietario(?, @resultado, @idPropietario)', [req.body.idComplejo], function(err, rows) {
         if (err) {
           throw err;
@@ -13,12 +26,15 @@ const createPreference = (req, res) => {
           const id_Propietario = rows[0].idPropietario; 
           
           if (resultado === 1) {
-            
+            getPublickKeyFunction(id_Propietario,(publicKey) => {
+              console.log("antes de : " + publicKey)
+              res.json(publicKey)
+            })
           } 
-      
-          connection.end();
         });
     });
 
 };
 
+
+module.exports = getPublickKey;

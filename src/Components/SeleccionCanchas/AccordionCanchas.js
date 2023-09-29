@@ -27,7 +27,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
 
 
   const [expanded, setExpanded] = useState(false);
-
+  console.log("c " + NombreCancha)
   const [datosHorarios,setDatosHorarios] = useState([]);
 
   const handleChange = (panel,idCan) => (event, isExpanded) => {
@@ -171,7 +171,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           PrecioSelecc={precioHora}
           InfoDimensiones={infoDimensiones}
           Caracteristicas={carateristicas}
-
+          
         />
         <DialogMetodoPago
           open={showMetodoDialog}
@@ -181,6 +181,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           PrecioSelecc={precioHora}
           DeporteSelecc={deporteSeleccionado}
           idComplejo={idComplejoSelecc}
+          NombreComplejo={NombreCancha}
         />
         
       </div>
