@@ -4,12 +4,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Divider, IconButton, ListItem, ListItemText, Toolbar } from '@mui/material';
-import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import NavigationIcon from '@mui/icons-material/Navigation';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import CalendarioUI from './CalendarioUI';
 import CloseIcon from '@mui/icons-material/Close';
@@ -23,33 +18,6 @@ import Slide from '@mui/material/Slide';
 import axios from 'axios';
 
 
-const reservas = [
-  {
-    id_Horario: 1,
-    Fecha: "2023-09-25",
-    Hora: "10:00",
-    fk_Id_Cancha: 1,
-  },
-  {
-    id_Horario: 2,
-    Fecha: "2023-09-25",
-    Hora: "11:00",
-    fk_Id_Cancha: 1,
-  },
-  {
-    id_Horario: 3,
-    Fecha: "2023-09-21",
-    Hora: "09:00",
-    fk_Id_Cancha: 2,
-  },
-  {
-    id_Horario: 4,
-    Fecha: "2023-09-22",
-    Hora: "02:00",
-    fk_Id_Cancha: 3,
-  },
-];
-
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -60,18 +28,29 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
 
   const [expanded, setExpanded] = useState(false);
 
-  const handleChange = (panel) => (event, isExpanded) => {
+  const [datosHorarios,setDatosHorarios] = useState([]);
+
+  const handleChange = (panel,idCan) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+    const dataToSend = {
+      idCancha: idCan
+    };
+    axios.post("http://localhost:8080/getDataHorarios",dataToSend)
+      .then((response ) => {
+        setDatosHorarios(response.data);
+      })
+      .catch((error) =>{
+          console.log("Error " + error);
+    })
   };
 
-  const [localOpen, setLocalOpen] = React.useState(false);
+  const [localOpen, setLocalOpen] = useState(false);
   
   const dataToSend = {
     idCom: idComplejo
   };
-  //console.log(dataToSend)
 
-  const [datosCanchas,setDatosCanchas] = React.useState([]);
+  const [datosCanchas,setDatosCanchas] = useState([]);
 
   useEffect(() => {
     setLocalOpen(open);
@@ -89,13 +68,19 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
     onClose(); // Llamar a la función onClose proporcionada por el padre
   };
 
-  const {dia,mes,año,fecha} = useContext(Contexto)
+  const {fecha} = useContext(Contexto)
+  const [precioHora,setPrecioHora] = useState(0);
 
   //info canchas
   const [showInfoDialog, setShowInfoDialog] = useState(false);
-   
-  const handleOpenDialogInfoCanchas = useCallback(() =>{
+  const [infoDimensiones,setInfoDimensiones] = useState("");
+  const [carateristicas,setCaracteristicas] = useState("");
+  const handleOpenDialogInfoCanchas = useCallback((info_Dimensiones,Caracteristicas,precioHora) =>{
+    setPrecioHora(precioHora)
+    setInfoDimensiones(info_Dimensiones)
+    setCaracteristicas(Caracteristicas)
     setShowInfoDialog(true);
+
   },[])
   const handleCloseDialogInfoCanchas = useCallback(() =>{
     setShowInfoDialog(false);
@@ -106,10 +91,15 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
   const [showMetodoDialog, setShowMetodoDialog] = useState(false);
   const [horarioSeleccionado,setHorarioSeleccionado] = useState();
   const [fechaSeleccionada,setFechaSeleccionado] = useState();
+  const [deporteSeleccionado,setDeporteSeleccionado] = useState("");
+  const [idComplejoSelecc,setIdComplejoSelecc] = useState(0);
 
-  const handleOpenMetodoDialog = (HorarioSelec,Fecha) => {
+  const handleOpenMetodoDialog = (HorarioSelec,Fecha,precioHora,deporte) => {
     setHorarioSeleccionado(HorarioSelec);
     setFechaSeleccionado(Fecha);
+    setPrecioHora(precioHora)
+    setDeporteSeleccionado(deporte)
+    setIdComplejoSelecc(idComplejo)
     setShowMetodoDialog(true);
   };
 
@@ -118,8 +108,6 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
   };
 
   //
-
-
     return (
       <div>
         <Dialog
@@ -145,14 +133,14 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
         </AppBar>
         <CalendarioUI></CalendarioUI>
         {datosCanchas.map((cancha,i) => (
-        <Accordion key={i} expanded={expanded === `panel${i}`} onChange={handleChange(`panel${i}`)}>
+        <Accordion key={i} expanded={expanded === `panel${i}`} onChange={handleChange(`panel${i}`,cancha.id_Cancha)}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${i}bh-content`}
             id={`panel${i}bh-header`}
           >
              <div onClick={(e) => e.stopPropagation()}>
-              <Fab color="primary" onClick={() => handleOpenDialogInfoCanchas()} sx={{ backgroundColor: "black", marginRight: 1 }} aria-label="edit" size='small'>
+              <Fab color="primary" onClick={() => handleOpenDialogInfoCanchas(cancha.info_Dimensiones,cancha.Caracteristicas,cancha.precio_Hora)} sx={{ backgroundColor: "black", marginRight: 1 }} aria-label="edit" size='small'>
                 <InfoRoundedIcon />
               </Fab>
             </div>
@@ -160,37 +148,43 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
             <Typography sx={{margin:1,color:"green"}}> - {cancha.deporte}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Divider/>
-              {reservas
-                .filter((reserva) => reserva.fk_Id_Cancha === cancha.id_Cancha)
-                .map((reserva, i) => (
-                  fecha == reserva.Fecha ?
-                <>
-                <ListItem button key={i} onClick={() => handleOpenMetodoDialog(reserva.Hora,reserva.Fecha)}>
-                    <ListItemText
-                      primary={reserva.Hora}
-                      secondary="Turno Disponible"
-                    />
+            <Divider />
+            {datosHorarios.map((horarios,i) => (
+              horarios.fecha === fecha ?
+              <div key={i}>
+                <ListItem  button onClick={() => handleOpenMetodoDialog(horarios.hora, horarios.fecha,cancha.precio_Hora,cancha.deporte)}>
+                  <ListItemText primary={horarios.hora} secondary="Turno Disponible" />
                 </ListItem>
-                <Divider/>
-                </>
-                : null
-              ))}              
-          </AccordionDetails>
-        </Accordion>
+                <Divider />
+              </div>
+              :
+              null
+
+            ))}
+            </AccordionDetails>
+          </Accordion>
         ))}
         </Dialog>
         <DialogInfoCancha
           open={showInfoDialog}
           onClose={handleCloseDialogInfoCanchas}
+          PrecioSelecc={precioHora}
+          InfoDimensiones={infoDimensiones}
+          Caracteristicas={carateristicas}
+
         />
         <DialogMetodoPago
           open={showMetodoDialog}
           onClose={handleCloseMetodoDialog}
           HorarioSelec={horarioSeleccionado}
           FechaSelecc={fechaSeleccionada}
+          PrecioSelecc={precioHora}
+          DeporteSelecc={deporteSeleccionado}
+          idComplejo={idComplejoSelecc}
         />
         
       </div>
     );
 }
+
+    

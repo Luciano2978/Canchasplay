@@ -42,7 +42,7 @@ const customization = {
 
  }
  
-export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc}) {
+export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
 
@@ -67,7 +67,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
   const [preferenceId, setPreferenceId] = React.useState(null);
 
   const dataToSend = {
-    correo: "agustin@gmail.com"
+    idComplejo: idComplejo,
   };
   
   React.useEffect(() => {
@@ -89,7 +89,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
   const createPreference = async () => {
       try {
         const response = await axios.post("http://localhost:8080/create_preference", {
-          Correo: "marto@gmail.com",
+          idComplejo: idComplejo,
           description: "La Nueva Recova",
           price: 200,
           quantity: 1,
@@ -151,7 +151,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
                 <SportsSoccerRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                fubol
+                {DeporteSelecc}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">
@@ -175,7 +175,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
                 <PaidRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                $ 5000
+                {`$ ${PrecioSelecc}`}
               </Typography>
             </Box>
           </Box>

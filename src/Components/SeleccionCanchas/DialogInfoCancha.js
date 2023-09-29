@@ -55,7 +55,7 @@ const images = [
 ];
 
 
-export default function DialogInfoCancha({open,onClose}) {
+export default function DialogInfoCancha({open,onClose,PrecioSelecc,InfoDimensiones,Caracteristicas}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
 
@@ -191,7 +191,7 @@ export default function DialogInfoCancha({open,onClose}) {
                             <MonetizationOnIcon />
                         </Avatar>
                     </ListItemAvatar>
-                <ListItemText primary="Precio Por Hora" secondary="Dia: $5000  - Noche: $6000" />
+                <ListItemText primary="Precio Por Hora" secondary={`Dia: $ ${PrecioSelecc}  - Noche: $ ${PrecioSelecc}`} />
             </ListItem>
             <Divider/>
             <ListItem>
@@ -200,17 +200,9 @@ export default function DialogInfoCancha({open,onClose}) {
                             <AspectRatioIcon />
                         </Avatar>
                     </ListItemAvatar>
-                <ListItemText primary="Dimensiones" secondary="Longitud: 42m , Ancho: 25m" />
+                <ListItemText primary="Dimensiones" secondary={`Largo y Ancho: ${InfoDimensiones}`} />
             </ListItem>
             <Divider/>
-            <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <PlaceIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                <ListItemText primary="Ubicacion" secondary="(VerUbicacion)" />
-            </ListItem>
             <Divider/>
             <ListItem>
                     <ListItemAvatar>
@@ -218,7 +210,7 @@ export default function DialogInfoCancha({open,onClose}) {
                             <InfoIcon />
                         </Avatar>
                     </ListItemAvatar>
-                <ListItemText primary="Detalles" secondary="Costo Extra de Noche, a partir de las 20hs" />
+                <ListItemText primary="Detalles" secondary={`${Caracteristicas}`} />
             </ListItem>
         </DialogContent>
       </BootstrapDialog>

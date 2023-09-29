@@ -76,16 +76,15 @@ function storeTokens(codigoAutorizacion, propietarioId) {
   
 
 
-function refreshAccessToken(callback) {
-
-        // Recupera el refresh_token de la base de datos para el vendedor específico
-        const consultaRefreshToken = 'SELECT refreshToken,code,publicKey FROM cuenta_mercadopago WHERE Propietario_id_Propietario = ?';
-
-        connection.query(consultaRefreshToken, [2], (err, results) => {
-        if (err) {
-            console.error('Error al recuperar el refresh_token de la base de datos:', err);
-            //callback(err, null);
-        } else {
+  function refreshAccessToken(id_Propietario, callback) {
+    // Recupera el refresh_token de la base de datos para el vendedor específico
+    const consultaRefreshToken = 'SELECT refreshToken, code, publicKey FROM cuenta_mercadopago WHERE Propietario_id_Propietario = ?';
+  
+    connection.query(consultaRefreshToken, [id_Propietario], (err, results) => {
+      if (err) {
+        console.error('Error al recuperar el refresh_token de la base de datos:', err);
+        callback(err, null);
+      } else {
             
             const refreshToken = results[0].refreshToken; // Asumiendo que recuperas el valor correctamente
             const code = results[0].code; // Recupera el código de autorización

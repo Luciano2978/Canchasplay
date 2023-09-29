@@ -24,14 +24,15 @@ export default function SlideDialogComentarios({open,onClose,nombreCancha,idComp
 
 
     const [localOpen, setLocalOpen] = useState(false);
-    const dataToSend = {
-      idCom: idComplejo
-    };
+    
 
     const [datosComentarios,setDatosComentarios] = React.useState([]);
 
     useEffect(() => {
        setLocalOpen(open);
+       const dataToSend = {
+          idCom: idComplejo
+        };
         axios.post("http://localhost:8080/getComentarios",dataToSend)
         .then((response ) => {
           setDatosComentarios(response.data)
@@ -83,7 +84,7 @@ export default function SlideDialogComentarios({open,onClose,nombreCancha,idComp
           <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={i}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="Juan" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Anonimo" src="/static/images/avatar/1.jpg" />
               </ListItemAvatar>
               <ListItemText
                 primary={dataComen.titulo}
@@ -95,7 +96,7 @@ export default function SlideDialogComentarios({open,onClose,nombreCancha,idComp
                       variant="body2"
                       color="text.primary"
                     >
-                      Juancito
+                      Anonimo
                     </Typography>
                     {" - " + dataComen.texto_Comentario}
                     {" - " + dataComen.fecha_Hora || "/"}
