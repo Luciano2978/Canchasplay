@@ -26,14 +26,43 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
+
+  
 }));
 
-export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,MesSelec,AñoSelec,nombreDeporte}) {
+const customization = {
+  texts: {
+    action: 'pay',
+    valueProp: 'security_details',
+  },
+  visual: {
+      buttonBackground: 'black',
+      borderRadius: '6px',
+  },
+
+ }
+ 
+export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo,NombreComplejo}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
+  const [initPublicKey, setInitPublicKey] = React.useState("");
 
+  console.log(NombreComplejo)
   React.useEffect(() => {
     setLocalOpen(open);
+    const dataToSend = {
+      idComplejo: idComplejo,
+    };
+    axios.post('http://localhost:8080/get_PublicKey', dataToSend)
+    .then((response) => {
+      // Manejar la respuesta del servidor aquí
+      console.log('Respuesta del servidor:', response.data);
+      setInitPublicKey(response.data)
+    })
+    .catch((error) => {
+      // Manejar errores aquí
+      console.error('Error al enviar datos:', error);
+    });
   }, [open]);
 
   const handleClose = () => {
@@ -42,7 +71,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
   };
 
   const [value, setValue] = React.useState('Efectivo');
-
+  
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -52,15 +81,17 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
   ///MERCADOPAGO///
   const [preferenceId, setPreferenceId] = React.useState(null);
 
-  initMercadoPago("TEST-535a7b1f-123c-4661-8ccb-f534d3f126b8")
+      
+  initMercadoPago(initPublicKey);
 
   const createPreference = async () => {
       try {
         const response = await axios.post("http://localhost:8080/create_preference", {
-          description: "La Nueva Recova",
-          price: 5000,
+          idComplejo: idComplejo,
+          description: NombreComplejo,
+          price: PrecioSelecc,
           quantity: 1,
-          currency_id:"ARS"
+          currency_id:"ARS",  
         });
   
         const { id } = response.data;
@@ -81,7 +112,6 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
   };
   
 
-  const fecha = DiaSelec + MesSelec
   return (
     <div>
       <BootstrapDialog
@@ -119,7 +149,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
                 <SportsSoccerRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                {nombreDeporte}
+                {DeporteSelecc}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">
@@ -127,7 +157,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
                 <CalendarMonthRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                {DiaSelec}/{MesSelec}/{AñoSelec}
+                {FechaSelecc}
               </Typography>
             </Box>
             <Box display="flex" flexDirection="column" alignItems="center">
@@ -143,7 +173,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
                 <PaidRoundedIcon />
               </Fab>
               <Typography variant="caption" color="textSecondary">
-                $ 5000
+                {`$ ${PrecioSelecc}`}
               </Typography>
             </Box>
           </Box>
@@ -195,7 +225,7 @@ export default function DialogMetodoPago({ open, onClose,HorarioSelec,DiaSelec,M
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-            {preferenceId && value != "Efectivo" ? <Wallet initialization={{ preferenceId , redirectMode: 'modal'}} />
+            {preferenceId && value != "Efectivo" ? <Wallet customization={customization} initialization={{ preferenceId , redirectMode: 'modal'}} />
             :
             <Button autoFocus onClick={metodoPagoReserva}>
               Reservar Horario

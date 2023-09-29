@@ -2,9 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
@@ -13,7 +11,6 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views-react-18-fix";
-
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Divider from '@mui/material/Divider';
@@ -27,6 +24,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -57,7 +55,7 @@ const images = [
 ];
 
 
-export default function DialogInfoCancha({open,onClose}) {
+export default function DialogInfoCancha({open,onClose,PrecioSelecc,InfoDimensiones,Caracteristicas}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
 
@@ -193,7 +191,7 @@ export default function DialogInfoCancha({open,onClose}) {
                             <MonetizationOnIcon />
                         </Avatar>
                     </ListItemAvatar>
-                <ListItemText primary="Precio Por Hora" secondary="Dia: $5000  - Noche: $6000" />
+                <ListItemText primary="Precio Por Hora" secondary={`Dia: $ ${PrecioSelecc}  - Noche: $ ${PrecioSelecc}`} />
             </ListItem>
             <Divider/>
             <ListItem>
@@ -202,17 +200,9 @@ export default function DialogInfoCancha({open,onClose}) {
                             <AspectRatioIcon />
                         </Avatar>
                     </ListItemAvatar>
-                <ListItemText primary="Dimensiones" secondary="Longitud: 42m , Ancho: 25m" />
+                <ListItemText primary="Dimensiones" secondary={`Largo y Ancho: ${InfoDimensiones}`} />
             </ListItem>
             <Divider/>
-            <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <PlaceIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                <ListItemText primary="Ubicacion" secondary="(VerUbicacion)" />
-            </ListItem>
             <Divider/>
             <ListItem>
                     <ListItemAvatar>
@@ -220,7 +210,7 @@ export default function DialogInfoCancha({open,onClose}) {
                             <InfoIcon />
                         </Avatar>
                     </ListItemAvatar>
-                <ListItemText primary="Detalles" secondary="Costo Extra de Noche, a partir de las 20hs" />
+                <ListItemText primary="Detalles" secondary={`${Caracteristicas}`} />
             </ListItem>
         </DialogContent>
       </BootstrapDialog>

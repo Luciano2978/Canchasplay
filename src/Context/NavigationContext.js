@@ -13,9 +13,6 @@ export default function NavigationContext(props){
 
     //Tomo ese valor y lo seteo en una const, para enviarlo al home
     const RouteNavigation = (route) =>{
-        if(route === ""){
-            setRouteComponent("Dashboard")
-        }
         setRouteComponent(route)
     }
     
@@ -23,15 +20,18 @@ export default function NavigationContext(props){
     const diaDefault = dayjs().get('date')
     const mesDefault = (dayjs().get('month')) +1
     const añoDefault = dayjs().get('year')
+    const fechaDefault = dayjs().format('YYYY-MM-DD')
 
     const [dia,setDia ] = useState(diaDefault)
     const [mes,setMes] = useState(mesDefault)
     const [año,setAño] = useState(añoDefault)
+    const [fecha,setFecha] = useState(fechaDefault)
 
-    const ObtenerFecha = (dia,mes,año) =>{
+    const ObtenerFecha = (dia,mes,año,fechaCompleta) =>{
         setDia(dia)
         setMes(mes)
         setAño(año)
+        setFecha(fechaCompleta)
     }
 
 
@@ -45,7 +45,8 @@ export default function NavigationContext(props){
             ObtenerFecha,
             dia,
             mes,
-            año
+            año,
+            fecha
         }}>
 
         {children}

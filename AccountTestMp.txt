@@ -1,0 +1,7 @@
+comprador - TESTUSER582479779 - pGZdroRgO8
+Vendedor - TESTUSER1747464174 - 2EnNkirtr7
+
+https://zdwk8946-8080.use2.devtunnels.ms/
+
+
+https://auth.mercadopago.com/authorization?client_id=3777467651088385&response_type=code&platform_id=mp&state=AUTORIZACIONCLIENTE&redirect_uri=https://zdwk8946-8080.use2.devtunnels.ms/createAccessToken
