@@ -42,7 +42,7 @@ const customization = {
 
  }
  
-export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo,NombreComplejo}) {
+export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo,NombreComplejo,idCanchaSelecc}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
   const [initPublicKey, setInitPublicKey] = React.useState("");
@@ -101,13 +101,21 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
       }
     };
 
-  const metodoPagoReserva = async (req, res) => {
+  const metodoPagoReserva = async () => {
     if(value != "Efectivo"){
       const id = await createPreference();
         if (id) {
           setPreferenceId(id);
       }
     }
+    else{
+      axios.post("http://localhost:8080/create_Reserva", {
+          idCancha: idCanchaSelecc,
+          Hora: HorarioSelec,
+          Fecha: FechaSelecc,
+          PrecioReserva: PrecioSelecc
+        });
+      }
      
   };
   
@@ -227,7 +235,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
         <DialogActions>
             {preferenceId && value != "Efectivo" ? <Wallet customization={customization} initialization={{ preferenceId , redirectMode: 'modal'}} />
             :
-            <Button autoFocus onClick={metodoPagoReserva}>
+            <Button autoFocus onClick={() => metodoPagoReserva()}>
               Reservar Horario
             </Button>}
         </DialogActions>

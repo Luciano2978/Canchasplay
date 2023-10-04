@@ -93,14 +93,17 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
   const [fechaSeleccionada,setFechaSeleccionado] = useState();
   const [deporteSeleccionado,setDeporteSeleccionado] = useState("");
   const [idComplejoSelecc,setIdComplejoSelecc] = useState(0);
+  const [idCanchaSelecc,setIdCanchaSelecc] = useState(0);
 
-  const handleOpenMetodoDialog = (HorarioSelec,Fecha,precioHora,deporte) => {
+
+  const handleOpenMetodoDialog = (HorarioSelec,Fecha,precioHora,deporte,idCancha) => {
     setHorarioSeleccionado(HorarioSelec);
     setFechaSeleccionado(Fecha);
     setPrecioHora(precioHora)
     setDeporteSeleccionado(deporte)
     setIdComplejoSelecc(idComplejo)
     setShowMetodoDialog(true);
+    setIdCanchaSelecc(idCancha);
   };
 
   const handleCloseMetodoDialog = () => {
@@ -152,7 +155,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
             {datosHorarios.map((horarios,i) => (
               horarios.fecha === fecha ?
               <div key={i}>
-                <ListItem  button onClick={() => handleOpenMetodoDialog(horarios.hora, horarios.fecha,cancha.precio_Hora,cancha.deporte)}>
+                <ListItem  button onClick={() => handleOpenMetodoDialog(horarios.hora, horarios.fecha,cancha.precio_Hora,cancha.deporte,cancha.id_Cancha)}>
                   <ListItemText primary={horarios.hora} secondary="Turno Disponible" />
                 </ListItem>
                 <Divider />
@@ -182,6 +185,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           DeporteSelecc={deporteSeleccionado}
           idComplejo={idComplejoSelecc}
           NombreComplejo={NombreCancha}
+          idCanchaSelecc={idCanchaSelecc}
         />
         
       </div>

@@ -2,7 +2,9 @@ const axios = require('axios');
 const mysql = require('mysql2');
 const { usarAccessToken } = require('../config');
 // Importa la función desde otroArchivo.js
-
+// Importa el paquete dotenv y cárgalo
+require('dotenv').config();
+console.log(process.env)
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -20,12 +22,12 @@ connection.connect((err) => {
 });
 
 //aca tengo que obtener el code//
+ 
+const clientSecret = process.env.CLIENT_SECRET;
+const clientId = process.env.CLIENT_ID;
+const redirectUri = 'https://shk5k0ck-8080.brs.devtunnels.ms/createAccessToken';
 
-const clientSecret = '';
-const clientId = '';
-const redirectUri = 'https://zdwk8946-8080.use2.devtunnels.ms/createAccessToken';
-
-
+console.log(process.env.CLIENT_SECRET)
 
 
 function storeTokens(codigoAutorizacion, propietarioId) {
@@ -127,7 +129,7 @@ function getPublickKeyFunction(id_Propietario,callback){
             //callback(err, null);
         } else {
           const publicKey = results[0].publicKey;
-          callback(publicKey);
+          callback(publicKey );
         } 
       })
 }

@@ -6,7 +6,7 @@ const {storeTokens}= require("./OAuthController");
 
 
 const createAccessToken = (req, res) => {
-    const url = new URL(req.url, 'https://zdwk8946-8080.use2.devtunnels.ms/createAccessToken'); // Reemplaza con tu dominio real
+    const url = new URL(req.url, 'https://shk5k0ck-8080.brs.devtunnels.ms/createAccessToken'); // Reemplaza con tu dominio real
     // Obtén el valor del parámetro 'code' de la URL
     const codigoAutorizacion = url.searchParams.get('code');
     // Aquí puedes manejar el código de autorización como lo necesites
