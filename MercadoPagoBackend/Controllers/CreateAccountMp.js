@@ -1,12 +1,12 @@
 const { URL } = require('url'); // Importa el módulo URL de Node.js
-
 const {storeTokens}= require("./OAuthController");
+require('dotenv').config();
 
 
 
 
 const createAccessToken = (req, res) => {
-    const url = new URL(req.url, 'https://shk5k0ck-8080.brs.devtunnels.ms/createAccessToken'); // Reemplaza con tu dominio real
+    const url = new URL(req.url, `${process.env.REDIRECT_URI}/createAccessToken`); // Reemplaza con tu dominio real
     // Obtén el valor del parámetro 'code' de la URL
     const codigoAutorizacion = url.searchParams.get('code');
     // Aquí puedes manejar el código de autorización como lo necesites

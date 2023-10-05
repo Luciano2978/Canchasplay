@@ -17,6 +17,7 @@ import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import LinearProgress from '@mui/material/LinearProgress';
+import { useNavigate } from 'react-router-dom';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -46,7 +47,6 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
 
   const [localOpen, setLocalOpen] = React.useState(false);
   const [initPublicKey, setInitPublicKey] = React.useState("");
-
   console.log(NombreComplejo)
   React.useEffect(() => {
     setLocalOpen(open);
@@ -101,24 +101,25 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
       }
     };
 
+  let navigate = useNavigate();
   const metodoPagoReserva = async () => {
     if(value != "Efectivo"){
       const id = await createPreference();
         if (id) {
           setPreferenceId(id);
       }
-    }
-    else{
+    }else {
       axios.post("http://localhost:8080/create_Reserva", {
-          idCancha: idCanchaSelecc,
-          Hora: HorarioSelec,
-          Fecha: FechaSelecc,
-          PrecioReserva: PrecioSelecc
-        });
-      }
-     
-  };
-  
+        idCancha: idCanchaSelecc,
+        Hora: HorarioSelec,
+        Fecha: FechaSelecc,
+        PrecioReserva: PrecioSelecc
+      }).then(() => {
+        // Redirige a la página deseada después de completar la lógica de reserva
+        navigate("http://localhost:8080/");
+      });
+    }
+  }
 
   return (
     <div>

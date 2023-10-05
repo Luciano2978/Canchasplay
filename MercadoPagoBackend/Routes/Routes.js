@@ -24,6 +24,6 @@ router.get("/createAccessToken",createAccessToken)
 router.post("/get_PublicKey",getPublicKey)
 
 //modulo MiReservas
-router.post("create_Reserva",postReserva)
+router.post("/create_Reserva",postReserva)
 
 module.exports =  router

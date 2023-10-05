@@ -9,7 +9,13 @@ const connection = mysql.createConnection({
   database: 'canchasplay'
 })
 
+const fechaActual = new Date();
+  
+const dia = fechaActual.getDate(); // Obtiene el día del mes (1-31)
+const mes = fechaActual.getMonth() + 1; // Obtiene el mes (0-11), sumamos 1 para obtener el mes correcto (1-12)
+const año = fechaActual.getFullYear(); // Obtiene el año con cuatro dígitos
 
+const fechaAct = `${año}-${mes}-${dia}`;
 const postReserva = (req, res) => {
     const {idCancha,Hora,Fecha,PrecioReserva} = req.body;
 
@@ -20,8 +26,7 @@ const postReserva = (req, res) => {
  
     connection.query(dataComplejoReservado, (err, results) => {
         if (err) {
-            console.log("Error al obtener datos de la cancha " + err);
-            res.status(500).json({ error: "Error al obtener datos de la cancha" });
+            res.status(500).json({ error: "Error al obtener datos del complejo" });
         } else {
 
             const idComplejo = results[0].id_Complejo;
@@ -30,10 +35,20 @@ const postReserva = (req, res) => {
 
             connection.query(postTableReserva, [Fecha,Hora,1,1,idComplejo], (err, results) => {
                 if (err) {
-                    console.log("Error al obtener datos de la cancha " + err);
-                    res.status(500).json({ error: "Error al obtener datos de la cancha" });
+                    res.status(500).json({ error: "Error al insertar datos de la reserva" });
                 } else {
-                    res.send("Registrado con éxito");
+                    console.log("Reserva Registrada")
+
+                    const idReserva = results.insertId; // Obtiene el ID de la reserva recién creada
+                    
+                    const postTableFacturacion = `INSERT INTO facturacion (monto_Total,fecha_Pago,Cliente_id_Cliente,Reserva_id_Reserva,Pago_id_Pago,estado_Pago) VALUES (?,?,?,?,?,?)`
+
+                    connection.query(postTableFacturacion, [PrecioReserva,fechaAct,1,idReserva,12,2], (err, results) => {
+                        if (err) {
+                            res.status(500).json({ error: "Error al insertar datos de la reserva" });
+                        }
+        
+                    });
                 }
             });
        

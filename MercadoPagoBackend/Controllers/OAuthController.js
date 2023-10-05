@@ -4,8 +4,6 @@ const { usarAccessToken } = require('../config');
 // Importa la función desde otroArchivo.js
 // Importa el paquete dotenv y cárgalo
 require('dotenv').config();
-console.log(process.env)
-
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -25,9 +23,7 @@ connection.connect((err) => {
  
 const clientSecret = process.env.CLIENT_SECRET;
 const clientId = process.env.CLIENT_ID;
-const redirectUri = 'https://shk5k0ck-8080.brs.devtunnels.ms/createAccessToken';
-
-console.log(process.env.CLIENT_SECRET)
+const redirectUri = `${process.env.REDIRECT_URI}/createAccessToken`;
 
 
 function storeTokens(codigoAutorizacion, propietarioId) {
