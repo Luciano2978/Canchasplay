@@ -6,7 +6,6 @@ import {
   createTheme, ThemeProvider, AppBar, Toolbar, Grid, BottomNavigationAction, BottomNavigation
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { useJsApiLoader, Autocomplete, } from '@react-google-maps/api';
 /* import FooterNavigation from './FooterNavigation';
  */import axios from 'axios';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
@@ -15,7 +14,6 @@ import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import InputAdornment from '@mui/material/InputAdornment';
 import SportsTennisIcon from '@mui/icons-material/SportsTennis';
-import logo from '../Assets/Logo.png';
 import img from '../Assets/bgmobile.jpg'
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddIcon from '@mui/icons-material/Add';
@@ -47,13 +45,10 @@ export default function AddCancha() {
   const [precio_Hora, setPrecio_Hora] = useState(null);
   const [largo, setLargo] = useState("");
   const [ancho, setAncho] = useState("");
-  const [ubicacion_Detallada, setUbicacion_Detallada] = useState("");
-  const [latitud, setLatitud] = useState("");
-  const [longitud, setLongitud] = useState("");
+  
   const [info_Dimensiones, setInfo_Dimensiones] = useState("");
   const [location, setLocation] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(null);
-  const autocompleteRef = useRef();
   const [archivo, setArchivo] = useState(null);
   const dimensionesConcatenadas = `${largo} x ${ancho}`;
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -76,8 +71,8 @@ export default function AddCancha() {
       Caracteristicas.trim() === '' ||
       precio_Hora.trim() === '' ||
       largo.trim() === '' ||
-      ancho.trim() === '' ||
-      ubicacion_Detallada.trim() === ''
+      ancho.trim() === '' 
+      
     ) {
       setShowErrorAlert(true);
       return; // No enviar la solicitud si falta alguno de los campos requeridos
@@ -92,9 +87,7 @@ export default function AddCancha() {
         /* largo: largo,
         ancho: ancho, */
         info_Dimensiones: dimensionesConcatenadas,
-        ubicacion_Detallada: ubicacion_Detallada,
-        latitud: latitud,
-        longitud: longitud,
+        
         /* archivo : archivo, */
       })
       .then(() => {
@@ -105,7 +98,6 @@ export default function AddCancha() {
         setPrecio_Hora('');
         setLargo('');
         setAncho('');
-        setUbicacion_Detallada('');
         // Restablecer otros estados si es necesario
       })
       .catch((error) => {
@@ -123,33 +115,23 @@ export default function AddCancha() {
   };
 
 
-  const handleAutocompleteSelect = () => {
-    const place = autocompleteRef.current.getPlace();
-    if (place.geometry && place.formatted_address) {
-      const { lat, lng } = place.geometry.location;
-      setLatitud(lat);
-      setLongitud(lng);
-      setUbicacion_Detallada(place.formatted_address);
-      console.log(latitud)
-      console.log(longitud)
-    }
-  };
+ 
 
-  const googleMapsApiKey = 'AIzaSyDfzAChOLCriCs3TcLULEtD7RH75ktqmI4'
+  /* const googleMapsApiKey = 'AIzaSyDfzAChOLCriCs3TcLULEtD7RH75ktqmI4'
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: googleMapsApiKey,
-  });
+  }); */
 
   const isMobile = useMediaQuery(breakpoints.xs && breakpoints.sm);
-  const isTablet = useMediaQuery(breakpoints.sm);
   const isDesktop = useMediaQuery(breakpoints.md && breakpoints.lg);
 
 
   return (
 
     <div >
+
       <Box sx={{textAlign: "center"}}>
         {showSuccessAlert && (
           <Alert severity="success" onClose={() => setShowSuccessAlert(false)}>
@@ -174,36 +156,19 @@ export default function AddCancha() {
           mt: '0', // Elimina el margen superior en dispositivos móviles
           marginRight: isMobile ? 'auto' : isDesktop ? '5%' : '', // Centra en dispositivos móviles
           marginLeft: isDesktop ? '0' : "0",
-          ml: isMobile ? '' : '',
+          ml: isMobile ? '-2rem' : '-2rem',
           backgroundImage: `url(https://img.freepik.com/vector-gratis/papel-pintado-abstracto-blanco_23-2148830027.jpg?w=2000)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover", // Ajusta la imagen al tamaño del contenedor sin distorsionarla
 
-          width: isDesktop ? "100%" : (isMobile ? "25rem" : "")
+          width: isDesktop ? "110%" : (isMobile ? "24rem" : "")
 
         }}
       >
 
 
-        <Box
-          sx={{
-            marginLeft: isMobile ? '2.5rem' : isDesktop ? '' : '',
-            position: isMobile ? "absolute" : "" || isDesktop ? 'absolute' : '',
-            marginTop: isMobile ? '10rem' : isDesktop ? '10rem' : "",
-            paddingLeft: isMobile ? '0.4rem' : '',
-            textAlign: isMobile ? "center" : (isDesktop ? "center" : " "),
-          }}
-        >
-          <img
-            src={logo}
-            alt="Descripción de la imagen"
-            style={{
-              width: isMobile ? "13rem" : (isDesktop ? "50%" : " "),
-              height: 'auto',
-              marginTop: isMobile ? "-20rem" : "4.5rem",
-              textAlign: "center"
-            }}
-          />
+        <Box>
+          
         </Box>
 
         <Box>
@@ -229,15 +194,16 @@ export default function AddCancha() {
                 variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
 
               >
-                Deporte
+                Eliga el deporte
               </Typography>
               <FormControl
                 sx={{
-                  width: isDesktop ? '50%' : '100%',
+                  width: isMobile ? '100%' : "50%",
                   mt: "1rem",
                   border: 'solid',
                   borderRadius: '10px',
                   color: 'white',
+                
                 }}
               >
                 <Select
@@ -375,67 +341,7 @@ export default function AddCancha() {
                   }}
                 />
               </div>
-              <div>
-                <Typography
-                  sx={{
-                    color: 'black',
-                    fontWeight: 'bolder',
-                    textShadow: '1px 1px 0px white',
-                    textAlign: "left",
-                    marginLeft: isMobile ? "" : (isDesktop ? "18rem" : ""),
-                  }}
-                  variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
-                >
-                  Ubicación del complejo
-                </Typography>
-
-
-                <Autocomplete
-                  onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
-                  onPlaceChanged={handleAutocompleteSelect}
-                >
-                  <TextField
-                    sx={{
-
-                      width: isMobile ? "100%" : "50%",
-/*                       marginLeft: "",
- */                     textAlign: "center",
-                      '& .MuiInputLabel-root': {
-                        fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
-                        color: 'black',
-                        fontWeight: 'bolder',
-
-                      },
-                      '& .MuiInputBase-root': {
-                        width: isMobile ? "16rem" : (isDesktop ? "30rem" : ""),
-                        marginRight: "25rem",
-                      },
-                      border: 'solid',
-                      borderRadius: '10px',
-                      color: 'transparent',
-                    }}
-                    id="filled-search"
-                    label="Buscar en Google Maps"
-                    type="search"
-                    variant="filled"
-                    value={ubicacion_Detallada}
-                    placeholder="Ingrese calle y altura"
-                    onChange={(e) => setUbicacion_Detallada(e.target.value)}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <AddLocationIcon
-                            sx={{ fontSize: '2rem', mt: '1rem', color: 'purple' }}
-                          />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Autocomplete>
-
-
-              </div>
-
+              
 
 
               <div >

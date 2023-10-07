@@ -12,6 +12,8 @@ import Profile from '../Components/Profile'; */
 import MaPrueba from '../Components/maPrueba';
 import ListCancha from '../Components/ListCancha';
 import LabTabs from '../Components/Prueba';
+import HomePropietario from '../Components/HomePropietario';
+import AddComplejo from '../Components/AddComplejo';
 
 export default function App() {
     return (
@@ -20,7 +22,8 @@ export default function App() {
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>
                     <Route exact path="/home" element={<Home />}></Route>
-                    <Route exact path="/prueba" element={<ListCancha />}></Route>
+                    <Route exact path="/Complejo" element={<AddComplejo />}></Route>
+                    <Route exact path="/HomePropietario" element={<HomePropietario />}></Route>
                     <Route exact path="/agregar-cancha" element={<AddCancha />}></Route>
                     <Route exact path="/list" element={<LabTabs />}></Route>
 
