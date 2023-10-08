@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
 
 
 const getPublickKey = (req, res) => {
-    console.log("id xddd -]> " + req.body.idComplejo)
+
     connection.query('CALL VerificarPropietario(?, @resultado, @idPropietario)', [req.body.idComplejo], function(err, rows) {
         if (err) {
           throw err;
@@ -27,7 +27,6 @@ const getPublickKey = (req, res) => {
           
           if (resultado === 1) {
             getPublickKeyFunction(id_Propietario,(publicKey) => {
-              console.log("antes de : " + publicKey)
               res.json(publicKey)
             })
           } 

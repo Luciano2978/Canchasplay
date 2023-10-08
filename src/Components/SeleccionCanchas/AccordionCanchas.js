@@ -27,7 +27,6 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
 
 
   const [expanded, setExpanded] = useState(false);
-  console.log("c " + NombreCancha)
   const [datosHorarios,setDatosHorarios] = useState([]);
 
   const handleChange = (panel,idCan) => (event, isExpanded) => {
@@ -94,9 +93,10 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
   const [deporteSeleccionado,setDeporteSeleccionado] = useState("");
   const [idComplejoSelecc,setIdComplejoSelecc] = useState(0);
   const [idCanchaSelecc,setIdCanchaSelecc] = useState(0);
+  const [idHorario,setIdHorario] = useState(0)
 
-
-  const handleOpenMetodoDialog = (HorarioSelec,Fecha,precioHora,deporte,idCancha) => {
+  const handleOpenMetodoDialog = (idHorario,HorarioSelec,Fecha,precioHora,deporte,idCancha) => {
+    setIdHorario(idHorario)
     setHorarioSeleccionado(HorarioSelec);
     setFechaSeleccionado(Fecha);
     setPrecioHora(precioHora)
@@ -153,9 +153,9 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           <AccordionDetails>
             <Divider />
             {datosHorarios.map((horarios,i) => (
-              horarios.fecha === fecha ?
+              horarios.fecha === fecha && horarios.estado_Disponibilidad != 0?
               <div key={i}>
-                <ListItem  button onClick={() => handleOpenMetodoDialog(horarios.hora, horarios.fecha,cancha.precio_Hora,cancha.deporte,cancha.id_Cancha)}>
+                <ListItem  button onClick={() => handleOpenMetodoDialog(horarios.id_Horario,horarios.hora, horarios.fecha,cancha.precio_Hora,cancha.deporte,cancha.id_Cancha)}>
                   <ListItemText primary={horarios.hora} secondary="Turno Disponible" />
                 </ListItem>
                 <Divider />
@@ -186,6 +186,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           idComplejo={idComplejoSelecc}
           NombreComplejo={NombreCancha}
           idCanchaSelecc={idCanchaSelecc}
+          idHorario={idHorario}
         />
         
       </div>

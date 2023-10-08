@@ -17,7 +17,8 @@ const año = fechaActual.getFullYear(); // Obtiene el año con cuatro dígitos
 
 const fechaAct = `${año}-${mes}-${dia}`;
 const postReserva = (req, res) => {
-    const {idCancha,Hora,Fecha,PrecioReserva} = req.body;
+
+    const {idHorario,idCancha,Hora,Fecha,PrecioReserva,email} = req.body;
 
     const dataComplejoReservado = `
     select id_Complejo,deporte,nombre_Cancha,nombre_Lugar from cancha ca
@@ -28,31 +29,48 @@ const postReserva = (req, res) => {
         if (err) {
             res.status(500).json({ error: "Error al obtener datos del complejo" });
         } else {
+                const idComplejo = results[0].id_Complejo;
+            
+                const dataIdCliente = `select id_Cliente from cliente cl join cuenta cu on cl.Cuenta_id_cuenta = cu.id_Cuenta where email = '${email}'`;
 
-            const idComplejo = results[0].id_Complejo;
+                connection.query(dataIdCliente, (err,results) => {
+                    if (err) {
+                        res.status(500).json({ error: "Error al obtener datos del complejo" });
+                    }                
+                const idCliente = results[0].id_Cliente;
 
-            const postTableReserva = `INSERT INTO reserva (fecha_Reservada,hora_Reservada,estado_Reserva,Cliente_id_Cliente,Complejo_id_Complejo) VALUES (?,?, ?, ?, ?)`;
+                const postTableReserva = `INSERT INTO reserva (fecha_Reservada,hora_Reservada,estado_Reserva,Cliente_id_Cliente,Complejo_id_Complejo) VALUES (?,?, ?, ?, ?)`;
 
-            connection.query(postTableReserva, [Fecha,Hora,1,1,idComplejo], (err, results) => {
-                if (err) {
-                    res.status(500).json({ error: "Error al insertar datos de la reserva" });
-                } else {
-                    console.log("Reserva Registrada")
+                connection.query(postTableReserva, [Fecha,Hora,1,idCliente,idComplejo], (err, results) => {
+                    if (err) {
+                        res.status(500).json({ error: "Error al insertar datos de la reserva" });
+                    } else {
+                        console.log("Reserva Registrada")
 
-                    const idReserva = results.insertId; // Obtiene el ID de la reserva recién creada
-                    
-                    const postTableFacturacion = `INSERT INTO facturacion (monto_Total,fecha_Pago,Cliente_id_Cliente,Reserva_id_Reserva,Pago_id_Pago,estado_Pago) VALUES (?,?,?,?,?,?)`
+                        const idReserva = results.insertId; // Obtiene el ID de la reserva recién creada
+                        
+                        const postTableFacturacion = `INSERT INTO facturacion (monto_Total,fecha_Pago,Cliente_id_Cliente,Reserva_id_Reserva,Pago_id_Pago,estado_Pago) VALUES (?,?,?,?,?,?)`
 
-                    connection.query(postTableFacturacion, [PrecioReserva,fechaAct,1,idReserva,12,2], (err, results) => {
-                        if (err) {
-                            res.status(500).json({ error: "Error al insertar datos de la reserva" });
-                        }
-        
-                    });
-                }
-            });
-       
+                        connection.query(postTableFacturacion, [PrecioReserva,fechaAct,idCliente,idReserva,12,2], (err, results) => {
+                            if (err) {
+                                res.status(500).json({ error: "Error al insertar datos de la reserva" });
+                            }
+                                res.send("Se añadio correctamente")
+                                connection.query('CALL ActualizarHorarioDisponible(?, ?)', [idHorario, 0], (err, results) => {
+                                    if (err) {
+                                      console.error('Error al llamar al procedimiento almacenado: ' + err.message);
+                                      res.status(500).json({ error: 'Error al llamar al procedimiento almacenado' });
+                                    } else {
+                                      console.log('Procedimiento almacenado llamado exitosamente');
+                                    }
+                                  });
+            
+                        });
+                    }
+                });
+            }) 
         }
+        
     });
 
     

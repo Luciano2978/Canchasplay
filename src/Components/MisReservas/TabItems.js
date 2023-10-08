@@ -73,21 +73,7 @@ export default function TabItems() {
               <Tab label="Item Three" {...a11yProps(2)} />
             </Tabs>
           </AppBar>
-          <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={value}
-            onChangeIndex={handleChangeIndex}
-          >
-            <TabPanel value={value} index={0} dir={theme.direction}>
-              <ListInfoReserva/>
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
-              Aceptados-Cancelados
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}>
-              Item Three
-            </TabPanel>
-          </SwipeableViews>
+          
         </Box>
       </Grid>
     </Grid>

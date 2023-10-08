@@ -3,9 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from '../Container/Home';
 import Login from '../Components/Login';
 import ProtectedRoute from '../Components/ProtectedRoute';
-import NoticiasDeportes from '../Components/HomeUsuario/NoticiasDeportes';
 import NavigationContext from '../Context/NavigationContext';
-import DialogInfoCancha from '../Components/SeleccionCanchas/DialogInfoCancha';
 import AccordionCanchas from '../Components/SeleccionCanchas/AccordionCanchas';
 
 

@@ -19,11 +19,13 @@ router.post("/getDataHorarios",getHorariosDisponibles);
 
 router.post("/create_preference",createPreference);
 
-router.get("/createAccessToken",createAccessToken)
+router.get("/createAccessToken",createAccessToken);
 
-router.post("/get_PublicKey",getPublicKey)
+router.post("/get_PublicKey",getPublicKey);
+
+router.post("/getDatos",postDataUser);
 
 //modulo MiReservas
-router.post("/create_Reserva",postReserva)
+router.post("/create_Reserva",postReserva);
 
 module.exports =  router

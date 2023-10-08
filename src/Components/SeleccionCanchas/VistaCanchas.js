@@ -10,16 +10,12 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
-import LogoRecova from "../../Assets/Logo_Recova.jpg";
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 ///Utilizamos Contexto para mandar el prop del nombre y llamar al dialogo
-import Contexto from '../../Context/Context';
-import HorariosDisponibles from './HorariosDisponibles';
 import SlideDialogComentarios from '../HomeUsuario/SlideDialogComentarios';
-import DialogInfoCancha from './DialogInfoCancha';
 import AccordionCanchas from './AccordionCanchas';
 import axios from 'axios';
 
@@ -47,22 +43,19 @@ const deportesUnicos = [...new Set(Canchas.map(cancha => cancha.Deporte))];
 
 export default function VistaCanchas(){
 
-
+    console.log("datosComplejo")
     const theme = useTheme();
 
-    const {displayHorarios} = React.useContext(Contexto)
     const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
     const [showComentsDialog, setShowComentsDialog] = React.useState(false);
-    const [showInfoDialog, setShowInfoDialog] = React.useState(false);
     const [nombreCanchaSeleccionada, setNombreCanchaSeleccionada] = React.useState('');
-    const [nombreDeporteSeleccionado, setNombreDeporteSeleccionado] = React.useState('');
     const [filtroDeporte, setFiltroDeporte] = React.useState(null); // Nuevo estado para el filtro
-
     const [datosComplejo,setDatosComplejo] = React.useState([]);
 
     //Traer Datos Complejo//
 
     React.useEffect(() => {
+        console.log("useEffect")
         axios.get("http://localhost:8080/getComplejo")
         .then((response ) => {
             setDatosComplejo(response.data);
@@ -72,7 +65,7 @@ export default function VistaCanchas(){
         })
     },[])
     
-
+    console.log(datosComplejo)
 
     ///
 
@@ -236,7 +229,7 @@ export default function VistaCanchas(){
                                     </Grid>
                                     <Grid item>
                                     <Stack spacing={1}>
-                                        <Rating name="half-rating-read" defaultValue={CmData.calificacionPromedio} precision={0.5} readOnly style={RatingStyle} />
+                                        <Rating name="half-rating-read" defaultValue={parseFloat(CmData.calificacionPromedio)} precision={0.5} readOnly style={RatingStyle} />
                                     </Stack> 
                                     
                                     <Button onClick={() => handleOpenComentsDialog(CmData.nombre_Lugar,CmData.id_Complejo)}  variant="text" color="inherit">

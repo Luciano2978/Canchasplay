@@ -1,8 +1,5 @@
 const axios = require('axios');
 const mysql = require('mysql2');
-const { usarAccessToken } = require('../config');
-// Importa la función desde otroArchivo.js
-// Importa el paquete dotenv y cárgalo
 require('dotenv').config();
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -124,8 +121,13 @@ function getPublickKeyFunction(id_Propietario,callback){
             console.error('Error al recuperar el refresh_token de la base de datos:', err);
             //callback(err, null);
         } else {
-          const publicKey = results[0].publicKey;
-          callback(publicKey );
+          try {
+            const publicKey = results[0].publicKey;  
+            callback(publicKey );
+          } catch (error) {
+            const publicKey = ""
+            callback(publicKey)
+          } 
         } 
       })
 }

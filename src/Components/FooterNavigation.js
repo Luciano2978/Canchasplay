@@ -9,22 +9,25 @@ import { useState,useContext } from 'react';
 import Contexto from '../Context/Context';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DialogLogout from './DialogLogout';
+import { useEffect } from 'react';
 
 export default function FooterNavigation() {
   const [value, setValue] = useState(0);
   const {RouteNavigation} = useContext(Contexto)
 
 
-  //Envio el valor del bottomNavigation a una funcion en el context
-  if(value === 0){
-    RouteNavigation("Dashboard")
-  }
-  if(value === 1){
-    RouteNavigation("News")
-  }
-  if(value === 2){
-    RouteNavigation("MisReservas")
-  }  
+  useEffect(() => {
+    // La lógica de actualización de ruta se realiza cuando el valor de `value` cambia
+    if (value === 0) {
+      RouteNavigation("Dashboard");
+    }
+    if (value === 1) {
+      RouteNavigation("News");
+    }
+    if (value === 2) {
+      RouteNavigation("MisReservas");
+    }
+  }, [value, RouteNavigation]);
 
 
   const [showDialogLogout, setshowDialogLogout] = useState(false);

@@ -50,16 +50,16 @@ const createPreference = (req, res) => {
                           },
                         ],
                         payer: {
-                          name: "Luciano",
-                          surname: "Rojas",
-                          email: "luciano297801@gmail.com",
+                          name: req.body.nombre,
+                          surname: req.body.apellido,
+                          email: req.body.email,
                           phone: {
                               area_code: "3704",
-                              number: 518541
+                              number: req.body.telefono
                           },
                           identification: {
                               type: "DNI",
-                              number: "43452239"
+                              number: req.body.dni
                           },
                     
                         },
