@@ -27,7 +27,7 @@ const postReserva = (req, res) => {
  
     connection.query(dataComplejoReservado, (err, results) => {
         if (err) {
-            res.status(500).json({ error: "Error al obtener datos del complejo" });
+            console.error('Error al añadir datos a la tabla complejo: ' + err.message);
         } else {
                 const idComplejo = results[0].id_Complejo;
             
@@ -35,7 +35,7 @@ const postReserva = (req, res) => {
 
                 connection.query(dataIdCliente, (err,results) => {
                     if (err) {
-                        res.status(500).json({ error: "Error al obtener datos del complejo" });
+                        console.error('Error al traer el id de Cliente: ' + err.message);
                     }                
                 const idCliente = results[0].id_Cliente;
 
@@ -43,29 +43,37 @@ const postReserva = (req, res) => {
 
                 connection.query(postTableReserva, [Fecha,Hora,1,idCliente,idComplejo], (err, results) => {
                     if (err) {
-                        res.status(500).json({ error: "Error al insertar datos de la reserva" });
+                        console.error('Error al añadir datos a la tabla Reserva: ' + err.message);
                     } else {
                         console.log("Reserva Registrada")
 
                         const idReserva = results.insertId; // Obtiene el ID de la reserva recién creada
                         
-                        const postTableFacturacion = `INSERT INTO facturacion (monto_Total,fecha_Pago,Cliente_id_Cliente,Reserva_id_Reserva,Pago_id_Pago,estado_Pago) VALUES (?,?,?,?,?,?)`
+                        const getNameCancha = `Select nombre_Cancha from cancha where id_Cancha = ${idCancha}`
+                        connection.query(getNameCancha, (err,results) => {
+                            if(err){
+                                console.error(err.message)
+                            }
+                            const nombreCancha = results[0].nombre_Cancha
+                        
+                        const postTableFacturacion = `INSERT INTO facturacion (monto_Total,fecha_Pago,Cliente_id_Cliente,Reserva_id_Reserva,Pago_id_Pago,estado_Pago,cancha_Reservada) VALUES (?,?,?,?,?,?,?)`
 
-                        connection.query(postTableFacturacion, [PrecioReserva,fechaAct,idCliente,idReserva,12,2], (err, results) => {
+                        connection.query(postTableFacturacion, [PrecioReserva,fechaAct,idCliente,idReserva,12,2,nombreCancha], (err, results) => {
                             if (err) {
-                                res.status(500).json({ error: "Error al insertar datos de la reserva" });
+                                console.error('Error al añadir datos a la tabla facturacion: ' + err.message);
                             }
                                 res.send("Se añadio correctamente")
                                 connection.query('CALL ActualizarHorarioDisponible(?, ?)', [idHorario, 0], (err, results) => {
                                     if (err) {
                                       console.error('Error al llamar al procedimiento almacenado: ' + err.message);
-                                      res.status(500).json({ error: 'Error al llamar al procedimiento almacenado' });
+                                      
                                     } else {
                                       console.log('Procedimiento almacenado llamado exitosamente');
                                     }
                                   });
             
                         });
+                    })
                     }
                 });
             }) 

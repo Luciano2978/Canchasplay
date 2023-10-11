@@ -8,6 +8,7 @@ const createPreference = require("../Controllers/CreatePreference");
 const createAccessToken = require("../Controllers/CreateAccountMp");
 const getPublicKey = require("../Data/GetPublicKey");
 const postReserva = require("../Data/PostDataReserva");
+const getReserva = require("../Data/GetReserva");
 
 router.get("/getComplejo", getComplejo);
 
@@ -27,5 +28,8 @@ router.post("/getDatos",postDataUser);
 
 //modulo MiReservas
 router.post("/create_Reserva",postReserva);
+
+router.post("/getReservas",getReserva);
+
 
 module.exports =  router

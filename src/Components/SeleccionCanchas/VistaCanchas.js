@@ -59,13 +59,13 @@ export default function VistaCanchas(){
         axios.get("http://localhost:8080/getComplejo")
         .then((response ) => {
             setDatosComplejo(response.data);
+            console.log(response.data)
         })
         .catch((error) =>{
             console.log("Error " + error);
         })
     },[])
     
-    console.log(datosComplejo)
 
     ///
 
