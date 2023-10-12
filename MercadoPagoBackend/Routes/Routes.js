@@ -9,6 +9,7 @@ const createAccessToken = require("../Controllers/CreateAccountMp");
 const getPublicKey = require("../Data/GetPublicKey");
 const postReserva = require("../Data/PostDataReserva");
 const getReserva = require("../Data/GetReserva");
+const PayCreate = require("../Controllers/NotificacionWebhook");
 
 router.get("/getComplejo", getComplejo);
 
@@ -31,5 +32,8 @@ router.post("/create_Reserva",postReserva);
 
 router.post("/getReservas",getReserva);
 
+//Mp Webhook
+
+router.post("/Notificacion",PayCreate)
 
 module.exports =  router

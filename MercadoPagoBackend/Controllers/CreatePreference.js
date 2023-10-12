@@ -39,6 +39,16 @@ const createPreference = (req, res) => {
                     mercadopago.configure({
                       access_token: newAccessToken,
                     });
+                    const {idHorario,idCancha,Hora,Fecha,PrecioReserva,email} = req.body
+
+                    const datosReserva = {
+                      idHorario: idHorario,
+                      idCancha: idCancha,
+                      Hora: Hora,
+                      Fecha: Fecha,
+                      PrecioReserva: PrecioReserva,
+                      email: email,
+                    };
                     
                     let preference = {
                         items: [
@@ -55,7 +65,7 @@ const createPreference = (req, res) => {
                           email: req.body.email,
                           phone: {
                               area_code: "3704",
-                              number: req.body.telefono
+                              number: 518541
                           },
                           identification: {
                               type: "DNI",
@@ -70,6 +80,7 @@ const createPreference = (req, res) => {
                         },
                         binary_mode: true,
                         auto_return: "approved",
+                        notification_url: `https://shk5k0ck-8080.brs.devtunnels.ms/Notificacion?dataReserva=${datosReserva}`,
                         payment_methods: {
                           excluded_payment_types: [
                             {
@@ -79,7 +90,7 @@ const createPreference = (req, res) => {
                           installments: 3
                         }
                       };
-                    
+                      
                       mercadopago.preferences
                         .create(preference)
                         .then(function (response) {
@@ -99,8 +110,6 @@ const createPreference = (req, res) => {
           } else {
             console.log('El id_Complejo no está vinculado a un id_Propietario.');
           }
-      
-          connection.end();
         });
     });
 

@@ -113,7 +113,10 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
   const createPreference = async () => {
       try {
         const response = await axios.post("http://localhost:8080/create_preference", {
-          
+          idHorario:idHorario,
+          idCancha: idCanchaSelecc,
+          Hora: HorarioSelec,
+          Fecha: FechaSelecc,
           idComplejo: idComplejo,
           description: NombreComplejo,
           price: PrecioSelecc,
@@ -124,8 +127,6 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
           dni:user.Nombre.user_metadata.dni,
           telefono:user.Nombre.user_metadata.telefono,
           email:user.email
-          
-          
         });
   
         const { id } = response.data;
@@ -143,10 +144,9 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
       const id = await createPreference();
         if (id) {
           setPreferenceId(id);
+
       }
     } else {
-      
-      
       axios.post("http://localhost:8080/create_Reserva", {
         idHorario:idHorario,
         idCancha: idCanchaSelecc,
