@@ -18,13 +18,19 @@ const año = fechaActual.getFullYear(); // Obtiene el año con cuatro dígitos
 const fechaAct = `${año}-${mes}-${dia}`;
 const postReserva = (req, res) => {
 
-    const {idHorario,idCancha,Hora,Fecha,PrecioReserva,email} = req.body;
+    const {idHorario,idCancha,Hora,Fecha,PrecioReserva,email,status} = req.body;
 
     const dataComplejoReservado = `
     select id_Complejo,deporte,nombre_Cancha,nombre_Lugar from cancha ca
     join complejo cm on ca.Complejo_id_Complejo = cm.id_Complejo  
     where ca.id_Cancha = ${idCancha}`;
- 
+    var OpcionPago = 12;
+    var StatusPay = 2;
+    if(status){
+         OpcionPago = 2;
+         StatusPay = 1;
+    }
+
     connection.query(dataComplejoReservado, (err, results) => {
         if (err) {
             console.error('Error al añadir datos a la tabla complejo: ' + err.message);
@@ -58,7 +64,7 @@ const postReserva = (req, res) => {
                         
                         const postTableFacturacion = `INSERT INTO facturacion (monto_Total,fecha_Pago,Cliente_id_Cliente,Reserva_id_Reserva,Pago_id_Pago,estado_Pago,cancha_Reservada) VALUES (?,?,?,?,?,?,?)`
 
-                        connection.query(postTableFacturacion, [PrecioReserva,fechaAct,idCliente,idReserva,12,2,nombreCancha], (err, results) => {
+                        connection.query(postTableFacturacion, [PrecioReserva,fechaAct,idCliente,idReserva,OpcionPago,StatusPay,nombreCancha], (err, results) => {
                             if (err) {
                                 console.error('Error al añadir datos a la tabla facturacion: ' + err.message);
                             }

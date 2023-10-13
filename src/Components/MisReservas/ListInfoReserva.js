@@ -54,7 +54,7 @@ export default function ListInfoReserva() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Typography variant="subtitle2" fontWeight="bold" >Forma de Pago:</Typography>
-                <Typography variant="body2">{dataReservas.metodo_Pago}(Se abonara en el Complejo)</Typography>
+                <Typography variant="body2">{dataReservas.metodo_Pago === "Efectivo" ? `${dataReservas.metodo_Pago} (Se abonara en el Complejo)` : `${dataReservas.metodo_Pago} (Ya Abonado)`} </Typography>
             </div>
         </ListItemText>
         <Divider></Divider>

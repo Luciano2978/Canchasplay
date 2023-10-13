@@ -39,16 +39,7 @@ const createPreference = (req, res) => {
                     mercadopago.configure({
                       access_token: newAccessToken,
                     });
-                    const {idHorario,idCancha,Hora,Fecha,PrecioReserva,email} = req.body
-
-                    const datosReserva = {
-                      idHorario: idHorario,
-                      idCancha: idCancha,
-                      Hora: Hora,
-                      Fecha: Fecha,
-                      PrecioReserva: PrecioReserva,
-                      email: email,
-                    };
+                    const {idHorario,idCancha,Hora,Fecha,price,email} = req.body
                     
                     let preference = {
                         items: [
@@ -80,7 +71,15 @@ const createPreference = (req, res) => {
                         },
                         binary_mode: true,
                         auto_return: "approved",
-                        notification_url: `https://shk5k0ck-8080.brs.devtunnels.ms/Notificacion?dataReserva=${datosReserva}`,
+                        notification_url: `https://shk5k0ck-8080.brs.devtunnels.ms/Notificacion`,
+                        metadata: {
+                          idHorario: idHorario,
+                          idCancha: idCancha,
+                          Hora: Hora,
+                          Fecha: Fecha,
+                          PrecioReserva: req.body.price,
+                          email: email,
+                        },
                         payment_methods: {
                           excluded_payment_types: [
                             {
