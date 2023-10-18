@@ -40,7 +40,6 @@ const createPreference = (req, res) => {
                       access_token: newAccessToken,
                     });
                     const {idHorario,idCancha,Hora,Fecha,price,email} = req.body
-                    
                     let preference = {
                         items: [
                           {
@@ -77,7 +76,7 @@ const createPreference = (req, res) => {
                           idCancha: idCancha,
                           Hora: Hora,
                           Fecha: Fecha,
-                          PrecioReserva: req.body.price,
+                          MontoTotal: price,
                           email: email,
                         },
                         payment_methods: {

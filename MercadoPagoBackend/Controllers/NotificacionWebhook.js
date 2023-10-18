@@ -7,8 +7,11 @@ const headers = {
 };
 
 const PayCreate = (req,res) => {
+    //console.log(req.body.data.id)
     res.status(200).send("Ok")
-    axios.get(`https://api.mercadopago.com/v1/payments/65236654796`,{headers}) 
+    
+    const idPayment = req.body.data.id
+    axios.get(`https://api.mercadopago.com/v1/payments/${idPayment}`,{headers}) 
     .then((response) => {
         console.log(response.data.metadata) 
         const status = response.data.status
@@ -20,6 +23,7 @@ const PayCreate = (req,res) => {
                 Hora: response.data.metadata.hora,
                 email: response.data.metadata.email,
                 idHorario: response.data.metadata.id_horario,
+                PrecioReserva: parseFloat(response.data.metadata.monto_total),
                 status: status
             })
                 .then((res) => {
@@ -35,8 +39,6 @@ const PayCreate = (req,res) => {
     .catch((err) => {
         console.log(err)
     })
-    
-
 }
 
 

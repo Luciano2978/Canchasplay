@@ -4,10 +4,13 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import NotificationImportantRoundedIcon from '@mui/icons-material/NotificationImportantRounded';
-import { Divider, Typography } from '@mui/material';
+import { Divider, Tooltip, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
+import IconButton from '@mui/material/IconButton';
+import CancelIcon from '@mui/icons-material/Cancel';
+
 
 export default function ListInfoReserva() {
 
@@ -56,8 +59,13 @@ export default function ListInfoReserva() {
                 <Typography variant="subtitle2" fontWeight="bold" >Forma de Pago:</Typography>
                 <Typography variant="body2">{dataReservas.metodo_Pago === "Efectivo" ? `${dataReservas.metodo_Pago} (Se abonara en el Complejo)` : `${dataReservas.metodo_Pago} (Ya Abonado)`} </Typography>
             </div>
+            <Tooltip title="Cancelar Reserva" arrow >
+              <IconButton sx={{position:"absolute",top:0,right:0}} aria-label="fingerprint" color="error">
+                <CancelIcon />
+              </IconButton>
+            </Tooltip>
+          <Divider></Divider>
         </ListItemText>
-        <Divider></Divider>
       </ListItem>
       : null
       
