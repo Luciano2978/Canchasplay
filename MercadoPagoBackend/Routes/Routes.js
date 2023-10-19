@@ -10,6 +10,7 @@ const getPublicKey = require("../Data/GetPublicKey");
 const postReserva = require("../Data/PostDataReserva");
 const getReserva = require("../Data/GetReserva");
 const PayCreate = require("../Controllers/NotificacionWebhook");
+const postComentario = require("../Data/PostDataComentarios");
 
 router.get("/getComplejo", getComplejo);
 
@@ -32,8 +33,12 @@ router.post("/create_Reserva",postReserva);
 
 router.post("/getReservas",getReserva);
 
+router.post("/postComentario",postComentario);
+
 //Mp Webhook
 
 router.post("/Notificacion",PayCreate)
+
+
 
 module.exports =  router

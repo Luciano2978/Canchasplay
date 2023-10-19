@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ListInfoReserva from './ListInfoReserva';
+import HistorialReservas from './HistorialReservas';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -82,7 +83,7 @@ export default function TabItems() {
               <ListInfoReserva/>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              Aceptados-Cancelados
+              <HistorialReservas/>
             </TabPanel>
             <TabPanel value={value} index={2} dir={theme.direction}>
               Item Three

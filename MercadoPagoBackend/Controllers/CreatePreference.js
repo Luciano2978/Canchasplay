@@ -1,6 +1,7 @@
 const {refreshAccessToken}= require("./OAuthController");
 const mysql = require('mysql2');
 const mercadopago = require("mercadopago");
+require('dotenv').config();
 
 
 
@@ -70,7 +71,7 @@ const createPreference = (req, res) => {
                         },
                         binary_mode: true,
                         auto_return: "approved",
-                        notification_url: `https://shk5k0ck-8080.brs.devtunnels.ms/Notificacion`,
+                        notification_url: `${process.env.REDIRECT_URI}/Notificacion`,
                         metadata: {
                           idHorario: idHorario,
                           idCancha: idCancha,
