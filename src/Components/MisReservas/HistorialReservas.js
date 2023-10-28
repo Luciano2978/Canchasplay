@@ -18,7 +18,7 @@ import DialogCalificacion from './DialogCalificacion';
 export default function HistorialReservas(){
 
     const { user } = useAuth0();
-
+    
     const [DataReservas,setDataMiReservas] = useState([]);
 
     useEffect(() => {
@@ -34,12 +34,16 @@ export default function HistorialReservas(){
     //Coments
 
     const [idComplejo, setIdComplejo] = useState(0);
+    const [showAddComent, setShowAddComent] = React.useState(false);
 
     const CrearComentario = (idComp) => {
         setIdComplejo(idComp)
+        setShowAddComent(true);
     }
 
-
+    const handleCloseDialogAddComent = () => {
+      setShowAddComent(false)
+    }
 
 
 return(
@@ -87,8 +91,8 @@ return(
     ))}
     </List>
     <DialogCalificacion
-        open={showInfoDialog}
-        onClose={handleCloseDialogInfoCanchas}
+        open={showAddComent}
+        onClose={handleCloseDialogAddComent}
         idComplej={idComplejo}
     />
 

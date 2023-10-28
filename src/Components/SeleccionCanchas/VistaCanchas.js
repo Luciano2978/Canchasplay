@@ -18,6 +18,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SlideDialogComentarios from '../HomeUsuario/SlideDialogComentarios';
 import AccordionCanchas from './AccordionCanchas';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
+import Loader from '../Loader';
+import BusquedaUi from '../BusquedaUi';
 
 
 
@@ -28,22 +31,11 @@ const Img = styled('img')({
     maxWidth: '55%',
     borderRadius: "60%"
 });
-//Maps
-const Canchas = [
-    {"idCancha" : 1,"Deporte":"futbol5"},
-    {"idCancha" : 2,"Deporte":"futbol5"},
-    {"idCancha" : 3,"Deporte":"Padel"},
-    {"idCancha" : 4,"Deporte":"Padel"},
-    {"idCancha" : 5,"Deporte":"futbol5"},
-    {"idCancha" : 6,"Deporte":"Voley"},
-    {"idCancha" : 7,"Deporte":"Tenis"},
-]
-
-const deportesUnicos = [...new Set(Canchas.map(cancha => cancha.Deporte))];
 
 export default function VistaCanchas(){
-
-    console.log("datosComplejo")
+    
+    const { user } = useAuth0();
+    const CiudadConexion = user.Nombre.user_ubicacion.cityName;
     const theme = useTheme();
 
     const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
@@ -55,7 +47,6 @@ export default function VistaCanchas(){
     //Traer Datos Complejo//
 
     React.useEffect(() => {
-        console.log("useEffect")
         axios.get("http://localhost:8080/getComplejo")
         .then((response ) => {
             setDatosComplejo(response.data);
@@ -101,10 +92,10 @@ export default function VistaCanchas(){
     },[])
 
 
-    
+    /*
     const filteredCanchas = filtroDeporte
         ? Canchas.filter(cancha => cancha.Deporte === filtroDeporte)
-        : Canchas;
+        : Canchas;*/
         
 
 
@@ -171,6 +162,8 @@ export default function VistaCanchas(){
         }
     })
 
+
+
     return (
         <>      
             <Box
@@ -182,9 +175,8 @@ export default function VistaCanchas(){
                 marginTop: "-70px",
                 
             }}>
-
                 <Container fixed>
-                    <Autocomplete
+                    {/* <Autocomplete
                             options={deportesUnicos}
                             getOptionLabel={option => option}
                             onChange={(event, value) => setFiltroDeporte(value)}
@@ -194,7 +186,7 @@ export default function VistaCanchas(){
                             
                             )}
                             style={{ width: '50%', display:"flex",justifyContent:"flex-end",marginLeft: '50%'}}
-                        />
+                        /> */}
                     <Box sx={{ bgcolor: 'rgba(52, 52, 52, 0.29)', height: '80vh',padding:"1%", overflow: "auto",
                         "&::-webkit-scrollbar": {
                             width: "0.4em", // Ancho de la barra
@@ -210,6 +202,7 @@ export default function VistaCanchas(){
                        
                         {/* Aca se debe realizar un map de todas las canchas (dependiendo el deporte) esten disponibles*/}
                         {datosComplejo.map((CmData) => (
+                          CiudadConexion === "Formosa" && ( 
                         <Paper
                             key={CmData.id_Complejo}
                             sx={PaperStyle}
@@ -224,7 +217,7 @@ export default function VistaCanchas(){
                                 <Grid item xs container direction="column">
                                     <Grid item xs>
                                     <Typography gutterBottom variant="h6" component="div" sx={NombreCanchaStyle}>
-                                        {CmData.nombre_Lugar || "LA RECOOVA"}
+                                        {CmData.nombre_Lugar}
                                     </Typography>  
                                     </Grid>
                                     <Grid item>
@@ -257,7 +250,12 @@ export default function VistaCanchas(){
                                 </Grid>
                             </Grid> 
                         </Paper>
-                        ))}
+                        )))}
+                        {
+                            CiudadConexion != "Formosa" && (
+                               <BusquedaUi/>
+                            )
+                        }
                     </Box>                    
                 </Container>
             </Box>

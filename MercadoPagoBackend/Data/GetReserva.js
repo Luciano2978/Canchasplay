@@ -1,12 +1,5 @@
-const mysql = require('mysql2');
+const connection = require("../config");
 
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'canchasplay'
-})
 
 
 
@@ -23,7 +16,7 @@ const getReserva = (req,res) => {
       const idCliente = results[0].id_Cliente;
 
       const dataReserva = `
-      select nombre_Lugar,cancha_Reservada,fecha_Reservada,hora_Reservada,metodo_Pago,informacion_Pago,id_Reserva,estado_Reserva
+      select nombre_Lugar,cancha_Reservada,fecha_Reservada,hora_Reservada,metodo_Pago,informacion_Pago,id_Reserva,estado_Reserva,Complejo_id_Complejo
       from reserva re
       left join facturacion fa on re.id_Reserva = fa.Reserva_id_Reserva
       left join pago pa on  pa.id_Pago = fa.Pago_id_Pago

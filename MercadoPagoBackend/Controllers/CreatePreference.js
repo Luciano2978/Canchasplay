@@ -1,18 +1,7 @@
+const connection = require("../config");
 const {refreshAccessToken}= require("./OAuthController");
-const mysql = require('mysql2');
 const mercadopago = require("mercadopago");
 require('dotenv').config();
-
-
-
-
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'canchasplay'
-  })
-  
 
 
 const createPreference = (req, res) => {

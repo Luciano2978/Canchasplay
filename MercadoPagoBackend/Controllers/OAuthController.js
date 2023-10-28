@@ -1,12 +1,9 @@
 const axios = require('axios');
-const mysql = require('mysql2');
+const connection = require('../config');
 require('dotenv').config();
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'canchasplay',
-});
+
+
+
 
 connection.connect((err) => {
   if (err) {

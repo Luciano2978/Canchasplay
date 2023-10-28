@@ -71,7 +71,6 @@ export default function TabItems() {
             >
               <Tab label="Activos" {...a11yProps(0)} />
               <Tab label="Historicos" {...a11yProps(1)} />
-              <Tab label="Item Three" {...a11yProps(2)} />
             </Tabs>
           </AppBar>
           <SwipeableViews
@@ -84,9 +83,6 @@ export default function TabItems() {
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               <HistorialReservas/>
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}>
-              Item Three
             </TabPanel>
           </SwipeableViews>
         </Box>

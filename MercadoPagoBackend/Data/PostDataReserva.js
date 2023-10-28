@@ -1,13 +1,5 @@
-const axios = require('axios');
-const mysql = require('mysql2');
+const connection = require("../config");
 
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'canchasplay'
-})
 
 const fechaActual = new Date();
   

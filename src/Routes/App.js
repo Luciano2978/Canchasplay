@@ -6,6 +6,7 @@ import ProtectedRoute from '../Components/ProtectedRoute';
 import NavigationContext from '../Context/NavigationContext';
 import AccordionCanchas from '../Components/SeleccionCanchas/AccordionCanchas';
 import DialogCalificacion from '../Components/MisReservas/DialogCalificacion';
+import Loader from '../Components/Loader';
 
 
 
@@ -16,7 +17,7 @@ export default function App(){
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>
                     <Route exact path="/" element={<NavigationContext><ProtectedRoute><Home/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><DialogCalificacion/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><Loader/></ProtectedRoute></NavigationContext>}></Route>
                 </Routes>
             </BrowserRouter>
         </>
