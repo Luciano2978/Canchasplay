@@ -1,15 +1,9 @@
 const axios = require('axios');
-const mysql = require('mysql2');
-const { usarAccessToken } = require('../config');
-// Importa la función desde otroArchivo.js
+const connection = require('../config');
+require('dotenv').config();
 
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'canchasplay',
-});
+
 
 connection.connect((err) => {
   if (err) {
@@ -20,12 +14,10 @@ connection.connect((err) => {
 });
 
 //aca tengo que obtener el code//
-
-const clientSecret = '';
-const clientId = '';
-const redirectUri = 'https://zdwk8946-8080.use2.devtunnels.ms/createAccessToken';
-
-
+ 
+const clientSecret = process.env.CLIENT_SECRET;
+const clientId = process.env.CLIENT_ID;
+const redirectUri = `${process.env.REDIRECT_URI}/createAccessToken`;
 
 
 function storeTokens(codigoAutorizacion, propietarioId) {
@@ -126,8 +118,13 @@ function getPublickKeyFunction(id_Propietario,callback){
             console.error('Error al recuperar el refresh_token de la base de datos:', err);
             //callback(err, null);
         } else {
-          const publicKey = results[0].publicKey;
-          callback(publicKey);
+          try {
+            const publicKey = results[0].publicKey;  
+            callback(publicKey );
+          } catch (error) {
+            const publicKey = ""
+            callback(publicKey)
+          } 
         } 
       })
 }

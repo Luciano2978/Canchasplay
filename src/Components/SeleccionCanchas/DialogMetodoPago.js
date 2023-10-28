@@ -17,7 +17,11 @@ import LocalAtmRoundedIcon from '@mui/icons-material/LocalAtmRounded';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import LinearProgress from '@mui/material/LinearProgress';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -42,12 +46,35 @@ const customization = {
 
  }
  
-export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo,NombreComplejo}) {
+export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc,PrecioSelecc,DeporteSelecc,idComplejo,NombreComplejo,idCanchaSelecc,idHorario}) {
+  const { user,} = useAuth0();
+  
 
   const [localOpen, setLocalOpen] = React.useState(false);
   const [initPublicKey, setInitPublicKey] = React.useState("");
+  const [backdrop, setBackdrop] = React.useState(false);
 
-  console.log(NombreComplejo)
+  const notifySuccess = () => toast.success('Su Reserva fue un Exito😎', {
+    position: "bottom-left",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+  const notifyError = () => toast.error('Hubo un problema con su Reserva😥', {
+    position: "bottom-left",
+    autoClose: 5000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
   React.useEffect(() => {
     setLocalOpen(open);
     const dataToSend = {
@@ -81,36 +108,67 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
   ///MERCADOPAGO///
   const [preferenceId, setPreferenceId] = React.useState(null);
 
-      
   initMercadoPago(initPublicKey);
 
   const createPreference = async () => {
       try {
         const response = await axios.post("http://localhost:8080/create_preference", {
+          idHorario:idHorario,
+          idCancha: idCanchaSelecc,
+          Hora: HorarioSelec,
+          Fecha: FechaSelecc,
           idComplejo: idComplejo,
           description: NombreComplejo,
           price: PrecioSelecc,
           quantity: 1,
-          currency_id:"ARS",  
+          currency_id:"ARS",
+          nombre:user.Nombre.user_metadata.nombre,
+          apellido:user.Nombre.user_metadata.apellido,
+          dni:user.Nombre.user_metadata.dni,
+          telefono:user.Nombre.user_metadata.telefono,
+          email:user.email
         });
   
         const { id } = response.data;
+        console.log(response.data)
         return id;
       } catch (error) {
         console.log(error);
       }
-    };
+  };
 
-  const metodoPagoReserva = async (req, res) => {
+  
+
+  const metodoPagoReserva = async () => {
     if(value != "Efectivo"){
       const id = await createPreference();
         if (id) {
           setPreferenceId(id);
+
       }
+    } else {
+      axios.post("http://localhost:8080/create_Reserva", {
+        idHorario:idHorario,
+        idCancha: idCanchaSelecc,
+        Hora: HorarioSelec,
+        Fecha: FechaSelecc,
+        PrecioReserva: PrecioSelecc,
+        email: user.email
+      }).then((response) => {
+        setBackdrop(true);
+        notifySuccess();
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 3000);
+      }).catch(() =>{
+        setBackdrop(true);
+        notifySuccess();
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 3000);
+      })
     }
-     
-  };
-  
+  }
 
   return (
     <div>
@@ -119,6 +177,12 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
         aria-labelledby="customized-dialog-title"
         open={open}
       >
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={backdrop}
+          >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Detalles de Reserva
         </DialogTitle>
@@ -227,11 +291,25 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
         <DialogActions>
             {preferenceId && value != "Efectivo" ? <Wallet customization={customization} initialization={{ preferenceId , redirectMode: 'modal'}} />
             :
-            <Button autoFocus onClick={metodoPagoReserva}>
+            <Button autoFocus onClick={() => metodoPagoReserva()}>
               Reservar Horario
             </Button>}
         </DialogActions>
       </BootstrapDialog>
+      
+      <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        
     </div>
   );
 }

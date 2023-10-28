@@ -1,8 +1,5 @@
-//import { useAuth0 } from "@auth0/auth0-react";
 import FooterNavigation from "../Components/FooterNavigation";
 import "../Assets/css/Background.css";
-import HeaderUsuario from "../Components/HeaderUsuario";
-import BotonDeportes from "../Components/HomeUsuario/BotonDeportes";
 import { useContext } from "react";
 import Contexto from "../Context/Context";
 import SeleccionCanchas from "./SeleccionCanchas.js";
@@ -10,10 +7,9 @@ import MisReservas from "./MisReservas";
 import News from "./News";
 export default function Home(){
 
-    //const { user} = useAuth0();
+    
     //Recibo el valor para hacer una comparacion y mostrar el componente que necesito
     const {RouteComponent} = useContext(Contexto);
-
     return(
         <>
             <div className="BackgroundHomeUsuario">

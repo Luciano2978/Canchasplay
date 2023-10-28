@@ -1,17 +1,7 @@
+const connection = require("../config");
 const {refreshAccessToken}= require("./OAuthController");
-const mysql = require('mysql2');
 const mercadopago = require("mercadopago");
-
-
-
-
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'canchasplay'
-  })
-  
+require('dotenv').config();
 
 
 const createPreference = (req, res) => {
@@ -39,7 +29,7 @@ const createPreference = (req, res) => {
                     mercadopago.configure({
                       access_token: newAccessToken,
                     });
-                    
+                    const {idHorario,idCancha,Hora,Fecha,price,email} = req.body
                     let preference = {
                         items: [
                           {
@@ -50,16 +40,16 @@ const createPreference = (req, res) => {
                           },
                         ],
                         payer: {
-                          name: "Luciano",
-                          surname: "Rojas",
-                          email: "luciano297801@gmail.com",
+                          name: req.body.nombre,
+                          surname: req.body.apellido,
+                          email: req.body.email,
                           phone: {
                               area_code: "3704",
                               number: 518541
                           },
                           identification: {
                               type: "DNI",
-                              number: "43452239"
+                              number: req.body.dni
                           },
                     
                         },
@@ -70,6 +60,15 @@ const createPreference = (req, res) => {
                         },
                         binary_mode: true,
                         auto_return: "approved",
+                        notification_url: `${process.env.REDIRECT_URI}/Notificacion`,
+                        metadata: {
+                          idHorario: idHorario,
+                          idCancha: idCancha,
+                          Hora: Hora,
+                          Fecha: Fecha,
+                          MontoTotal: price,
+                          email: email,
+                        },
                         payment_methods: {
                           excluded_payment_types: [
                             {
@@ -79,7 +78,7 @@ const createPreference = (req, res) => {
                           installments: 3
                         }
                       };
-                    
+                      
                       mercadopago.preferences
                         .create(preference)
                         .then(function (response) {
@@ -99,8 +98,6 @@ const createPreference = (req, res) => {
           } else {
             console.log('El id_Complejo no está vinculado a un id_Propietario.');
           }
-      
-          connection.end();
         });
     });
 

@@ -1,44 +1,64 @@
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import NotificationImportantRoundedIcon from '@mui/icons-material/NotificationImportantRounded';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Divider, Tooltip, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useAuth0 } from "@auth0/auth0-react";
+import CommentIcon from '@mui/icons-material/Comment';
 import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
+import React, { useEffect, useState } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from 'axios';
+import DialogCalificacion from './DialogCalificacion';
 
 
-export default function ListInfoReserva() {
+export default function HistorialReservas(){
 
-  const { user} = useAuth0();
+    const { user } = useAuth0();
+    
+    const [DataReservas,setDataMiReservas] = useState([]);
 
-  const [dataMiReservas, setDataMiReservas] = useState([]);
+    useEffect(() => {
+        axios.post("http://localhost:8080/getReservas",{email:user.email})
+        .then((response) =>{
+        setDataMiReservas(response.data)
+        })
+        .catch((error) => {
+        console.log(error)
+        })
+    },[])
 
-  useEffect(() => {
-    axios.post("http://localhost:8080/getReservas",{email:user.email})
-    .then((response) =>{
-      setDataMiReservas(response.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  },[])
+    //Coments
+
+    const [idComplejo, setIdComplejo] = useState(0);
+    const [showAddComent, setShowAddComent] = React.useState(false);
+
+    const CrearComentario = (idComp) => {
+        setIdComplejo(idComp)
+        setShowAddComent(true);
+    }
+
+    const handleCloseDialogAddComent = () => {
+      setShowAddComent(false)
+    }
 
 
-  return (
+return(
+    <>
+
+    
     <List sx={{ width: '100%'}}>
 
       <Divider></Divider>
-      {dataMiReservas.map((dataReservas) => (
-        dataReservas.estado_Reserva === 1?      
+      {DataReservas.map((dataReservas) => (
+        dataReservas.estado_Reserva === 0?    
       <ListItem key={dataReservas.id_Reserva}>
-        <ListItemAvatar>
-          <Avatar sx={dataReservas.metodo_Pago === "Efectivo"? {backgroundColor:"orange"} : {backgroundColor:"green"}} >
-            <NotificationImportantRoundedIcon />
+        <ListItemAvatar color='success'>
+          <Avatar  >
+            <CheckCircleIcon />
           </Avatar>
         </ListItemAvatar>
         
@@ -59,18 +79,27 @@ export default function ListInfoReserva() {
                 <Typography variant="subtitle2" fontWeight="bold" >Forma de Pago:</Typography>
                 <Typography variant="body2">{dataReservas.metodo_Pago === "Efectivo" ? `${dataReservas.metodo_Pago} (Se abonara en el Complejo)` : `${dataReservas.metodo_Pago} (Ya Abonado)`} </Typography>
             </div>
-            <Tooltip title="Cancelar Reserva" arrow >
-              <IconButton sx={{position:"absolute",top:0,right:0}} aria-label="fingerprint" color="error">
-                <CancelIcon />
+            <Tooltip title="Deja tu Comentario :)" arrow >
+              <IconButton sx={{position:"absolute",top:0,right:0}} onClick={() => CrearComentario(dataReservas.Complejo_id_Complejo)} aria-label="fingerprint" color="success">
+                <CommentIcon />
               </IconButton>
             </Tooltip>
           <Divider></Divider>
         </ListItemText>
       </ListItem>
-      : null
-      
-      ))}
-      
+        : null    
+    ))}
     </List>
-  );
+    <DialogCalificacion
+        open={showAddComent}
+        onClose={handleCloseDialogAddComent}
+        idComplej={idComplejo}
+    />
+
+
+
+
+    </>
+)
+
 }

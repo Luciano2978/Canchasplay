@@ -10,18 +10,17 @@ import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
-import LogoRecova from "../../Assets/Logo_Recova.jpg";
 import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 ///Utilizamos Contexto para mandar el prop del nombre y llamar al dialogo
-import Contexto from '../../Context/Context';
-import HorariosDisponibles from './HorariosDisponibles';
 import SlideDialogComentarios from '../HomeUsuario/SlideDialogComentarios';
-import DialogInfoCancha from './DialogInfoCancha';
 import AccordionCanchas from './AccordionCanchas';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
+import Loader from '../Loader';
+import BusquedaUi from '../BusquedaUi';
 
 
 
@@ -32,32 +31,17 @@ const Img = styled('img')({
     maxWidth: '55%',
     borderRadius: "60%"
 });
-//Maps
-const Canchas = [
-    {"idCancha" : 1,"Deporte":"futbol5"},
-    {"idCancha" : 2,"Deporte":"futbol5"},
-    {"idCancha" : 3,"Deporte":"Padel"},
-    {"idCancha" : 4,"Deporte":"Padel"},
-    {"idCancha" : 5,"Deporte":"futbol5"},
-    {"idCancha" : 6,"Deporte":"Voley"},
-    {"idCancha" : 7,"Deporte":"Tenis"},
-]
-
-const deportesUnicos = [...new Set(Canchas.map(cancha => cancha.Deporte))];
 
 export default function VistaCanchas(){
-
-
+    
+    const { user } = useAuth0();
+    const CiudadConexion = user.Nombre.user_ubicacion.cityName;
     const theme = useTheme();
 
-    const {displayHorarios} = React.useContext(Contexto)
     const [showHorariosDialog, setShowHorariosDialog] = React.useState(false);
     const [showComentsDialog, setShowComentsDialog] = React.useState(false);
-    const [showInfoDialog, setShowInfoDialog] = React.useState(false);
     const [nombreCanchaSeleccionada, setNombreCanchaSeleccionada] = React.useState('');
-    const [nombreDeporteSeleccionado, setNombreDeporteSeleccionado] = React.useState('');
     const [filtroDeporte, setFiltroDeporte] = React.useState(null); // Nuevo estado para el filtro
-
     const [datosComplejo,setDatosComplejo] = React.useState([]);
 
     //Traer Datos Complejo//
@@ -66,13 +50,13 @@ export default function VistaCanchas(){
         axios.get("http://localhost:8080/getComplejo")
         .then((response ) => {
             setDatosComplejo(response.data);
+            console.log(response.data)
         })
         .catch((error) =>{
             console.log("Error " + error);
         })
     },[])
     
-
 
     ///
 
@@ -108,10 +92,10 @@ export default function VistaCanchas(){
     },[])
 
 
-    
+    /*
     const filteredCanchas = filtroDeporte
         ? Canchas.filter(cancha => cancha.Deporte === filtroDeporte)
-        : Canchas;
+        : Canchas;*/
         
 
 
@@ -178,6 +162,8 @@ export default function VistaCanchas(){
         }
     })
 
+
+
     return (
         <>      
             <Box
@@ -189,9 +175,8 @@ export default function VistaCanchas(){
                 marginTop: "-70px",
                 
             }}>
-
                 <Container fixed>
-                    <Autocomplete
+                    {/* <Autocomplete
                             options={deportesUnicos}
                             getOptionLabel={option => option}
                             onChange={(event, value) => setFiltroDeporte(value)}
@@ -201,7 +186,7 @@ export default function VistaCanchas(){
                             
                             )}
                             style={{ width: '50%', display:"flex",justifyContent:"flex-end",marginLeft: '50%'}}
-                        />
+                        /> */}
                     <Box sx={{ bgcolor: 'rgba(52, 52, 52, 0.29)', height: '80vh',padding:"1%", overflow: "auto",
                         "&::-webkit-scrollbar": {
                             width: "0.4em", // Ancho de la barra
@@ -217,6 +202,7 @@ export default function VistaCanchas(){
                        
                         {/* Aca se debe realizar un map de todas las canchas (dependiendo el deporte) esten disponibles*/}
                         {datosComplejo.map((CmData) => (
+                          CiudadConexion === "Formosa" && ( 
                         <Paper
                             key={CmData.id_Complejo}
                             sx={PaperStyle}
@@ -231,12 +217,12 @@ export default function VistaCanchas(){
                                 <Grid item xs container direction="column">
                                     <Grid item xs>
                                     <Typography gutterBottom variant="h6" component="div" sx={NombreCanchaStyle}>
-                                        {CmData.nombre_Lugar || "LA RECOOVA"}
+                                        {CmData.nombre_Lugar}
                                     </Typography>  
                                     </Grid>
                                     <Grid item>
                                     <Stack spacing={1}>
-                                        <Rating name="half-rating-read" defaultValue={CmData.calificacionPromedio} precision={0.5} readOnly style={RatingStyle} />
+                                        <Rating name="half-rating-read" defaultValue={parseFloat(CmData.calificacionPromedio)} precision={0.5} readOnly style={RatingStyle} />
                                     </Stack> 
                                     
                                     <Button onClick={() => handleOpenComentsDialog(CmData.nombre_Lugar,CmData.id_Complejo)}  variant="text" color="inherit">
@@ -264,7 +250,12 @@ export default function VistaCanchas(){
                                 </Grid>
                             </Grid> 
                         </Paper>
-                        ))}
+                        )))}
+                        {
+                            CiudadConexion != "Formosa" && (
+                               <BusquedaUi/>
+                            )
+                        }
                     </Box>                    
                 </Container>
             </Box>

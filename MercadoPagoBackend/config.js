@@ -1,10 +1,12 @@
-// config.js
+const mysql = require('mysql2');
 
-function usarAccessToken(newAccessToken) {
-    console.log(newAccessToken)
-    return newAccessToken
-}
 
-module.exports = {
-  usarAccessToken,
-};
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'canchasplay'
+})
+
+
+module.exports = connection;

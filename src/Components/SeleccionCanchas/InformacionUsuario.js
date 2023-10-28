@@ -10,6 +10,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function InformacionUsuario() {
   const { user} = useAuth0();
   const [metadata] = React.useState([user.Nombre.user_metadata])
+  const CiudadConexion = user.Nombre.user_ubicacion.cityName;
+  const PaisConexion = user.Nombre.user_ubicacion.countryName
 
 return (
     <List
@@ -25,12 +27,12 @@ return (
             width: "80px",
             height: "90px",
           }}
-          src='' alt='A'
+          src={user.picture} alt='A'
           />
         </ListItemAvatar>
         { metadata.map((dato,index) => (
           <div key={index}>
-           <ListItemText primary={ dato.nombre + " " + dato.apellido} secondary={"Formosa,Argentina"} />
+           <ListItemText primary={ dato.nombre + " " + dato.apellido} secondary={CiudadConexion + "," + PaisConexion} />
           </div>
         ))}
         
