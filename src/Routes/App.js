@@ -4,16 +4,14 @@ import Home from '../Container/Home';
 import Login from '../Components/Login';
 /* import ProtectedRoute from '../Components/ProtectedRoute'; */
 /* import FooterNavigation from '../Components/FooterNavigation'; */
-import AddCancha from '../Components/AddCancha';
+import AddCancha from '../Components/VistaPropietario/AddCancha';
 /* import Productos from '../Components/Productos';
 import Reservas from '../Components/Reservas';
 import Profile from '../Components/Profile'; */
 /* import NavigationContext from '../Context/NavigationContext'; */
-import MaPrueba from '../Components/maPrueba';
-import ListCancha from '../Components/ListCancha';
-import LabTabs from '../Components/Prueba';
-import HomePropietario from '../Components/HomePropietario';
-import AddComplejo from '../Components/AddComplejo';
+import AddComplejo from '../Components/VistaPropietario/AddComplejo';
+import VistaPropietario from '../Components/VistaPropietario/LlamadosComponentes';
+import HomePropietario from '../Components/HomePropietario/HomePropietario';
 
 export default function App() {
     return (
@@ -25,7 +23,7 @@ export default function App() {
                     <Route exact path="/Complejo" element={<AddComplejo />}></Route>
                     <Route exact path="/HomePropietario" element={<HomePropietario />}></Route>
                     <Route exact path="/agregar-cancha" element={<AddCancha />}></Route>
-                    <Route exact path="/list" element={<LabTabs />}></Route>
+                    <Route exact path="/list" element={<VistaPropietario />}></Route>
 
 
 

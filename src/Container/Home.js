@@ -7,7 +7,7 @@ import Contexto from "../Context/Context";
 /* import BotonPropietario from "../Components/Botons";
  */import FooterNavigation from "../Components/FooterNavigation";
 import AddCancha
- from "../Components/AddCancha";
+ from "../Components/VistaPropietario/AddCancha";
 
 
 export default function Home() {
