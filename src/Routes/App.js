@@ -7,6 +7,8 @@ import NavigationContext from '../Context/NavigationContext';
 import AccordionCanchas from '../Components/SeleccionCanchas/AccordionCanchas';
 import DialogCalificacion from '../Components/MisReservas/DialogCalificacion';
 import Loader from '../Components/Loader';
+import AddComplejo from '../Components/VistaPropietario/AddComplejo';
+import VistaPropietario from '../Components/VistaPropietario/LlamadosComponentes';
 
 
 
@@ -22,6 +24,9 @@ export default function App(){
                     <Route exact path="/Loader" element={<Loader/>}></Route>
                     <Route exact path="/" element={<ProtectedRoute><NavigationContext><HomeUsuario/></NavigationContext></ProtectedRoute>}></Route>
                     <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><Loader/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/HomeProp" element={<ProtectedRoute><NavigationContext><VistaPropietario/></NavigationContext></ProtectedRoute>}></Route>
+                    <Route exact path="/Complejo" element={<ProtectedRoute><NavigationContext><AddComplejo/></NavigationContext></ProtectedRoute>}></Route>
+
                 </Routes>
             </BrowserRouter>
         </>
