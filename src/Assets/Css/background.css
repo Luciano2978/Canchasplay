@@ -1,9 +1,0 @@
-
-html {
-    background-image: url('../def.png'); /* Asegúrate de ajustar la ruta */
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    
-  }

@@ -13,7 +13,6 @@ import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import AddIcon from '@mui/icons-material/Add';
-import img from '../../Assets/bg-Complejo.jpg'
 
 
 
@@ -82,9 +81,7 @@ const AddComplejo = () => {
     return (
 
         <Container maxWidth="xl2" sx={{
-            backgroundImage: `url(${img})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
+          
         }}>
             <Box sx={{ textAlign: "center" }}>
                 {showSuccessAlert && (

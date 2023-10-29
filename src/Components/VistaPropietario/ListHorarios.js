@@ -19,7 +19,6 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import background from '../../Assets/def.png'
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -122,9 +121,7 @@ export default function ListHorario() {
 
   return (
     <div style={{
-      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundImage: `url(${background})`,
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
+      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', 
     }}>
       <FormControl sx={{ m: 1, width: 300, }}>
         <InputLabel id="demo-multiple-name-label" >Canchas</InputLabel>
@@ -193,9 +190,8 @@ export default function ListHorario() {
             sx={{
               // Aquí puedes agregar estilos personalizados para el label
               color: 'green', // Cambia el color del texto
-              fontSize: '16px', // Cambia el tamaño de fuente
               fontWeight: 'bold', // Cambia el grosor de la fuente
-              // Agrega más estilos según tus preferencias
+              
             }}
           />
           {turno === 'manana'
@@ -210,11 +206,16 @@ export default function ListHorario() {
                   borderRadius: '4px',
                   padding: '8px',
                   marginBottom: '8px',
+                  fontWeight: 'bold',
+
+                  // Cambia el tamaño de fuente
+
+
                 }}
               >
-                <label sx={{ flex: 1, textAlign: 'right', marginRight: '8px' }}>
+                <Typography sx={{ flex: 1, textAlign: 'left', marginRight: '8px', fontWeight:"bolder" }}>
                   {`${(index + 8) % 24}:00`}
-                </label>
+                </Typography>
                 <Checkbox
                   checked={selectedHours.includes(`${(index + 8) % 24}:00:00`)}
                   onChange={() => handleHourChange(dayjs().hour((index + 8) % 24).minute(0).second(0))}
@@ -226,7 +227,7 @@ export default function ListHorario() {
                 />
               </Box>
             ))
-            : [...Array(12)].map((_, index) => 
+            : [...Array(10)].map((_, index) => (
               <Box
                 key={index}
                 sx={{
@@ -237,24 +238,31 @@ export default function ListHorario() {
                   borderRadius: '4px',
                   padding: '8px',
                   marginBottom: '8px',
+                  fontWeight: 'bold',
+
                 }}
               >
-                <label sx={{ flex: 1, textAlign: 'right', marginRight: '8px' }}>
-                  {`${index + 16}:00`}
-                </label>
+                <Typography sx={{
+                  flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: 'bolder',
+                  // Cambia el tamaño de fuente
+                }}>
+                  {`${String((index + 16) % 24).padStart(2, '0')}:00`}
+                </Typography>
                 <Checkbox
-                  checked={selectedHours.includes(`${index + 16}:00:00`)}
-                  onChange={() => handleHourChange(dayjs().hour(index + 16).minute(0).second(0))}
+                  checked={selectedHours.includes(`${String((index + 16) % 24).padStart(2, '0')}:00:00`)}
+                  onChange={() => handleHourChange(dayjs().hour((index + 16) % 24).minute(0).second(0))}
                   sx={{
                     '&.Mui-checked': {
                       color: 'blue',
                     },
+
                   }}
                 />
               </Box>
-            )}
+            ))}
         </Box>
       </LocalizationProvider>
+
       <Button
         sx={{
           background: '#75FA8D',

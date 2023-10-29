@@ -13,8 +13,9 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useMediaQuery } from '@mui/material'
-import bg from '../../Assets/def.png'
+import { useMediaQuery } from '@mui/material';
+
+
 const breakpoints = {
   xs: '(max-width:600px)',
   sm: '(max-width:960px)',
@@ -141,9 +142,7 @@ export default function ListReservas() {
     <TableContainer
       component={Paper}
       sx={{
-        backgroundImage: `url(${bg})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+        
         mt: '0',
         marginRight: isMobile ? 'auto' : 'auto',
         marginLeft: isMobile ? 'auto' : 'auto',

@@ -11,7 +11,6 @@ import Profile from '../Components/Profile'; */
 /* import NavigationContext from '../Context/NavigationContext'; */
 import AddComplejo from '../Components/VistaPropietario/AddComplejo';
 import VistaPropietario from '../Components/VistaPropietario/LlamadosComponentes';
-import HomePropietario from '../Components/HomePropietario/HomePropietario';
 
 export default function App() {
     return (
@@ -21,7 +20,6 @@ export default function App() {
                     <Route exact path="/login" element={<Login />}></Route>
                     <Route exact path="/home" element={<Home />}></Route>
                     <Route exact path="/Complejo" element={<AddComplejo />}></Route>
-                    <Route exact path="/HomePropietario" element={<HomePropietario />}></Route>
                     <Route exact path="/agregar-cancha" element={<AddCancha />}></Route>
                     <Route exact path="/list" element={<VistaPropietario />}></Route>
 

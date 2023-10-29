@@ -17,7 +17,6 @@ import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@mui/material/styles';
-import bg from '../../Assets/def.png'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -130,9 +129,7 @@ function ListCancha() {
             {isMobile ? (
                 <List
                     sx={{
-                        backgroundImage: `url(${bg})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
+                        
                         mt: "2rem",
                         mb: "4rem",
                         width: "100%",
@@ -189,9 +186,7 @@ function ListCancha() {
             ) : (
                 <TableContainer
                     sx={{
-                        backgroundImage: `url(${bg})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
+                        
                         mt: "2rem",
                         mb: "4rem",
                         width: "100%",

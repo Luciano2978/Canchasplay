@@ -16,6 +16,8 @@ import AutoStoriesTwoToneIcon from '@mui/icons-material/AutoStoriesTwoTone';
 import ListReservas from './ListReservas';
 import ListHorarios from './ListHorarios';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import HomePropietario from '../HomePropietario/HomePropietario';
+import HomeIcon from '@mui/icons-material/Home';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -100,6 +102,9 @@ export default function VistaPropietario() {
               <MenuItem value={3}>
                 <PendingActionsIcon /> Lista Horarios
               </MenuItem>
+              <MenuItem value={4}>
+                <HomePropietario /> HOME
+              </MenuItem>
             </Select>
           </Hidden>
         ) : (
@@ -118,6 +123,8 @@ export default function VistaPropietario() {
                 <Tab sx={{ color: "white" }} icon={<InventoryTwoToneIcon />} label="Mis Canchas" {...a11yProps(1)} />
                 <Tab sx={{ color: "white" }} icon={<AutoStoriesTwoToneIcon />} label="Ver Reservas" {...a11yProps(2)} />
                 <Tab sx={{ color: "white" }} icon={<PendingActionsIcon />} label="Lista Horarios" {...a11yProps(2)} />
+                <Tab sx={{ color: "white" }} icon={<HomeIcon />} label="HOME" {...a11yProps(2)} />
+
 
               </Tabs>
             </AppBar>
@@ -146,6 +153,9 @@ export default function VistaPropietario() {
           </TabPanel>
           <TabPanel value={value} index={3} dir={theme.direction}>
             <ListHorarios />
+          </TabPanel>
+          <TabPanel value={value} index={4} dir={theme.direction}>
+            <HomePropietario />
           </TabPanel>
         </SwipeableViews>
       </Grid>

@@ -6,6 +6,8 @@ const { getCancha } = require('../Data/GetCanchas');
 const { PutChancha } = require('../Data/PutCanchas');
 const DeleteCancha = require('../Data/DeleteCanchas');
 const { postHorario } = require('../Data/PostDataHorario');
+const { getComplejo } = require('../Data/GetComplejo');
+const PutEstadoComplejo = require('../Data/PutEstadoComplejo');
 
 const router = express.Router();
 
@@ -17,6 +19,9 @@ router.get('/getCancha', getCancha);
 router.put('/editCancha/:id', PutChancha);
 router.delete('/deleteCancha/:id', DeleteCancha);
 router.post('/createHorario', postHorario);
+router.get("/getComplejo", getComplejo);
+router.put("/putEstado", PutEstadoComplejo)
+
 /* router.get('/getCancha', (req, res) => {
     req.getConnection((err, conn) => {
         if (err) return res.send(err)

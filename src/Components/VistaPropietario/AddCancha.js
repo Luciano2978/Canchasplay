@@ -15,14 +15,8 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import InputAdornment from '@mui/material/InputAdornment';
 import SportsTennisIcon from '@mui/icons-material/SportsTennis';
 import AddIcon from '@mui/icons-material/Add';
-import InputBase from '@mui/material/InputBase';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import background from '../../Assets/def.png'
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
 
 
 const breakpoints = {
@@ -144,15 +138,7 @@ export default function AddCancha() {
         elevation={4}
         sx={{
           padding: '10px',
-          mt: '0', // Elimina el margen superior en dispositivos móviles
-          marginRight: isMobile ? 'auto' : isDesktop ? '5%' : '', // Centra en dispositivos móviles
-          marginLeft: isDesktop ? '0' : "0",
-          ml: isMobile ? '-2rem' : '-2rem',
-          backgroundImage: `url(${background})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover", // Ajusta la imagen al tamaño del contenedor sin distorsionarla
-
-          width: isDesktop ? "110%" : (isMobile ? "24rem" : "")
+          maxHeight: '100%'
 
         }}
       >
@@ -446,286 +432,278 @@ export default function AddCancha() {
           </Container>
         ) : (
           <div>
-              <Grid container spacing={3} sx={{mt:"10rem", ml:"10rem"}}>
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    sx={{
-                      color: 'black', fontWeight: 'bolder',
-                      textShadow: '1px 1px 0px white',
-                      textAlign: "left",
-                      marginLeft: isMobile ? "5rem" : (isDesktop ? "" : ""),
-                      marginBottom: "-1rem"
+            <Grid container spacing={3} sx={{ mt: "10rem", }}>
+              <Grid item xs={12} sm={6} container>
+                <Typography
+                  sx={{
+                    color: 'black',
+                    fontWeight: 'bolder',
+                    textShadow: '1px 1px 0px white',
+                    textAlign: isMobile ? 'center' : isDesktop ? 'left' : 'left',
+                    marginBottom: isMobile ? '-1rem' : isDesktop ? '-1rem' : '-1rem',
+                    marginLeft: isMobile ? '0' : isDesktop ? '5rem' : '5rem',
+                  }}
+                  variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
+                >
+                  Eliga el deporte
+                </Typography>
+                <FormControl
+                  sx={{
+                    width: "50%",
+                    mt: "1rem",
+                    border: 'solid',
+                    borderRadius: '10px',
+                    color: 'white',
 
+                  }}
+                >
+                  <Select
+                    sx={{
+                      bgcolor: "#75FA8D",
+
+                      textAlign: 'left',
+                      fontSize: '1.5rem',
+                      border: 'solid',
+                      borderRadius: '50px',
+                      borderColor: 'white',
+                      /*                   color: 'black',
+                       */
+                      /*                   background: '#ffff',
+                       */
 
                     }}
-                    variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
-
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={deporte}
+                    onChange={handleChange}
                   >
-                    Eliga el deporte
-                  </Typography>
-                  <FormControl
+                    <MenuItem value={"futbol"} sx={{ mt: "1rem" }}>
+                      <span className="icon" ><SportsSoccerIcon sx={{ color: "#75FA8D", width: "2rem", }} /></span>Futbol </MenuItem>
+                    <MenuItem value={"voley"}>
+                      <span className="icon"><SportsVolleyballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Voley</MenuItem>
+                    <MenuItem value={"basket"}>
+                      <span className="icon"><SportsBasketballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Basket</MenuItem>
+                    <MenuItem value={"padel"}>
+                      <span className="icon"><SportsTennisIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Padel</MenuItem>
+
+                  </Select>
+
+                  <TextField
                     sx={{
-                      width: isMobile ? '100%' : "50%",
+                      bgcolor: "#75FA8D",
+
+                      width: '100%',
+                      '& .MuiInputLabel-root': {
+                        fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
+                        color: 'black', fontWeight: 'bolder',
+
+                      },
+                      border: 'solid',
+                      borderRadius: '10px',
+                      color: 'white',
+                      marginTop: "1.5rem",
+                    }}
+                    id="filled-search"
+                    label="Nombre de la cancha"
+                    type="search"
+                    variant="filled"
+                    value={nombre_Cancha}
+                    onChange={(e) => setNombre_Cancha(e.target.value)}
+
+                  />
+
+                  <TextField
+                    sx={{
+                      bgcolor: "#75FA8D",
+
+                      width: '100%',
+
+                      '& .MuiInputLabel-root': {
+                        fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
+                        color: 'black', fontWeight: 'bolder',
+
+                      },
+                      border: 'solid',
+                      borderRadius: '10px',
+                      color: 'white',
+                      marginTop: "1.5rem",
+                    }}
+                    id="filled-search"
+                    label="Precio por hora"
+                    type="search"
+                    variant="filled"
+                    value={precio_Hora}
+                    onChange={(e) => setPrecio_Hora(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          < LocalAtmIcon sx={{ fontSize: "2rem", color: "black", mt: "1rem" }} />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </FormControl>
+
+                
+              </Grid>
+
+
+              <Grid item xs={12} sm={6} sx={{ maxWidth: '100%', }}>
+                <Typography
+                  sx={{
+                    color: 'black',
+                    fontWeight: 'bolder',
+                    textShadow: '1px 1px 0px white',
+                    textAlign: isMobile ? 'center' : isDesktop ? 'left' : 'left',
+                  }}
+                  variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
+                >
+                  Dimensiones
+                </Typography>
+
+                <TextField
+                  sx={{
+                    bgcolor: "#75FA8D",
+
+                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
+
+                    '& .MuiInputLabel-root': {
+                      fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
+                      color: 'black', fontWeight: 'bolder',
+                      marginTop: "-10px",
+                    },
+                    border: 'solid',
+                    borderRadius: '10px',
+                    color: 'white',
+                  }}
+                  id="filled-search"
+                  label="Largo"
+                  type="search"
+                  variant="filled"
+                  value={largo}
+                  onChange={(e) => handleInputChange(e, setLargo)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>
+                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                      </InputAdornment>
+                    )
+                  }}
+
+                />
+                <TextField
+                  sx={{
+                    bgcolor: "#75FA8D",
+
+                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
+
+
+                    '& .MuiInputLabel-root': {
+                      fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
+                      color: 'black', fontWeight: 'bolder',
+                    },
+                    border: 'solid',
+                    borderRadius: '10px',
+                    color: 'white',
+                  }}
+                  id="filled-search"
+                  label="Ancho"
+                  type="search"
+                  variant="filled"
+                  value={ancho}
+                  onChange={(e) => handleInputChange(e, setAncho)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>
+                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+
+
+                <TextField
+                  sx={{
+
+                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
+                    borderRadius: '10px',
+                    color: 'white',
+                    '& .MuiInputLabel-root': {
+
+                      fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
+                      color: 'black', fontWeight: 'bolder',
+
+                    },
+                    '& .MuiInputBase-root': {
+                      bgcolor: "#75FA8D",
+
                       mt: "1rem",
-                      border: 'solid',
-                      borderRadius: '10px',
-                      color: 'white',
+                      mb: "1rem",
 
-                    }}
-                  >
-                    <Select
-                      sx={{
-                        bgcolor: "#75FA8D",
 
-                        textAlign: 'left',
-                        fontSize: '1.5rem',
-                        border: 'solid',
-                        borderRadius: '50px',
-                        borderColor: 'white',
-                        /*                   color: 'black',
-                         */
-                        /*                   background: '#ffff',
-                         */
+                    }
 
-                      }}
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={deporte}
-                      onChange={handleChange}
+
+                  }}
+                  id="outlined-multiline-static"
+                  label="Descripción"
+                  multiline
+                  rows={4}
+                  variant="filled"
+                  value={Caracteristicas}
+                  onChange={(e) => {
+                    setCaracteristicas(e.target.value);
+                  }}
+                />
+                <Box>
+                  <label htmlFor="upload-photo">
+                    <input
+                      style={{ display: 'none', color: "#75FA8D" }}
+                      id="upload-photo"
+                      name="upload-photo"
+                      accept="image/*"
+                      type="file"
+                      onChange={selectedHandler}
+                    />
+
+                    <Fab
+                      color="secondary"
+                      size="small"
+                      component="span"
+                      aria-label="add"
+                      variant="extended"
                     >
-                      <MenuItem value={"futbol"} sx={{ mt: "1rem" }}>
-                        <span className="icon" ><SportsSoccerIcon sx={{ color: "#75FA8D", width: "2rem", }} /></span>Futbol </MenuItem>
-                      <MenuItem value={"voley"}>
-                        <span className="icon"><SportsVolleyballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Voley</MenuItem>
-                      <MenuItem value={"basket"}>
-                        <span className="icon"><SportsBasketballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Basket</MenuItem>
-                      <MenuItem value={"padel"}>
-                        <span className="icon"><SportsTennisIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Padel</MenuItem>
+                      <AddIcon /> Cargar fotos
+                    </Fab>
 
-                    </Select>
-                  </FormControl>
-
-                  <Box>
-
-                    <TextField
-                      sx={{
-                        bgcolor: "#75FA8D",
-
-                        width: isMobile ? '100%' : isDesktop ? '50%' : '',
-                        '& .MuiInputLabel-root': {
-                          fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
-                          color: 'black', fontWeight: 'bolder',
-
-                        },
-                        border: 'solid',
-                        borderRadius: '10px',
-                        color: 'white',
-                        marginTop: "1.5rem",
-                      }}
-                      id="filled-search"
-                      label="Nombre de la cancha"
-                      type="search"
-                      variant="filled"
-                      value={nombre_Cancha}
-                      onChange={(e) => setNombre_Cancha(e.target.value)}
-
-                    />
-
-                    <TextField
-                      sx={{
-                        bgcolor: "#75FA8D",
-
-                        width: isMobile ? '100%' : isDesktop ? '50%' : '',
-
-                        '& .MuiInputLabel-root': {
-                          fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
-                          color: 'black', fontWeight: 'bolder',
-
-                        },
-                        border: 'solid',
-                        borderRadius: '10px',
-                        color: 'white',
-                        marginTop: "1.5rem",
-                      }}
-                      id="filled-search"
-                      label="Precio por hora"
-                      type="search"
-                      variant="filled"
-                      value={precio_Hora}
-                      onChange={(e) => setPrecio_Hora(e.target.value)}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position='start'>
-                            < LocalAtmIcon sx={{ fontSize: "2rem", color: "black", mt: "1rem" }} />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              </Grid>
-            
-              <Grid container spacing={3} sx={{ml: "60rem", mt: "-20rem",}}>
-                <Grid item xs={12} sm={6}>
-                  <Typography
-                    sx={{
-
-                      color: 'black', fontWeight: 'bolder',
-                      textShadow: '1px 1px 0px white',
-                      textAlign: "left",
-                      marginLeft: isMobile ? "" : (isDesktop ? "" : ""),
-
-                    }}
-                    variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
-                  >
-                    Dimensiones
-                  </Typography>
-
-                  <TextField
-                    sx={{
-                      bgcolor: "#75FA8D",
-
-                      width: isMobile ? '100%' : isDesktop ? '50%' : '',
-
-                      '& .MuiInputLabel-root': {
-                        fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
-                        color: 'black', fontWeight: 'bolder',
-                        marginTop: "-10px",
-                      },
-                      border: 'solid',
-                      borderRadius: '10px',
-                      color: 'white',
-                    }}
-                    id="filled-search"
-                    label="Largo"
-                    type="search"
-                    variant="filled"
-                    value={largo}
-                    onChange={(e) => handleInputChange(e, setLargo)}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
-                        </InputAdornment>
-                      )
-                    }}
-
-                  />
-                  <TextField
-                    sx={{
-                      bgcolor: "#75FA8D",
-
-                      width: isMobile ? '100%' : isDesktop ? '50%' : '',
-
-
-                      '& .MuiInputLabel-root': {
-                        fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
-                        color: 'black', fontWeight: 'bolder',
-                      },
-                      border: 'solid',
-                      borderRadius: '10px',
-                      color: 'white',
-                    }}
-                    id="filled-search"
-                    label="Ancho"
-                    type="search"
-                    variant="filled"
-                    value={ancho}
-                    onChange={(e) => handleInputChange(e, setAncho)}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start'>
-                          <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
-
-
-                  <TextField
-                    sx={{
-
-                      width: isMobile ? '100%' : isDesktop ? '50%' : '',
-                      borderRadius: '10px',
-                      color: 'white',
-                      '& .MuiInputLabel-root': {
-
-                        fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
-                        color: 'black', fontWeight: 'bolder',
-
-                      },
-                      '& .MuiInputBase-root': {
-                        bgcolor: "#75FA8D",
-
-                        mt: "1rem",
-                        mb: "1rem",
-
-
-                      }
-
-
-                    }}
-                    id="outlined-multiline-static"
-                    label="Descripción"
-                    multiline
-                    rows={4}
-                    variant="filled"
-                    value={Caracteristicas}
-                    onChange={(e) => {
-                      setCaracteristicas(e.target.value);
-                    }}
-                  />
-                  <Box>
-                    <label htmlFor="upload-photo">
-                      <input
-                        style={{ display: 'none', color: "#75FA8D" }}
-                        id="upload-photo"
-                        name="upload-photo"
-                        accept="image/*"
-                        type="file"
-                        onChange={selectedHandler}
-                      />
-
-                      <Fab
-                        color="secondary"
-                        size="small"
-                        component="span"
-                        aria-label="add"
-                        variant="extended"
-                      >
-                        <AddIcon /> Cargar fotos
-                      </Fab>
-
-                    </label>
-                  </Box>
-                  <Button
-                    sx={{
-                      background: '#75FA8D',
-                      color: 'white',
-                      display: isMobile ? 'block' : 'inline-block',
-                      width: isMobile ? '100%' : 'auto',
-                      margin: isMobile ? '1rem 0' : '0',
-                      textAlign: isMobile ? 'center' : 'left',
-                      mb: isMobile ? '3rem' : isDesktop ? '3rem' : '',
-                      mt: isDesktop ? '1rem' : '',
-                      border: 'none',
-                    }}
-                    onClick={handleSubmit}
-                  >
-                    Agregar Cancha
-                  </Button>
-                </Grid>
-
+                  </label>
+                </Box>
+                <Button
+                  sx={{
+                    background: '#75FA8D',
+                    color: 'white',
+                    display: isMobile ? 'block' : 'inline-block',
+                    width: isMobile ? '100%' : 'auto',
+                    margin: isMobile ? '1rem 0' : '0',
+                    textAlign: isMobile ? 'center' : 'left',
+                    mb: isMobile ? '3rem' : isDesktop ? '3rem' : '',
+                    mt: isDesktop ? '1rem' : '',
+                    border: 'none',
+                  }}
+                  onClick={handleSubmit}
+                >
+                  Agregar Cancha
+                </Button>
               </Grid>
 
-            </div>
+            </Grid>
+
+          </div>
 
 
         )}
 
       </Box>
-
-      {/*    <FooterNavigation></FooterNavigation> */}
     </div >
 
 
