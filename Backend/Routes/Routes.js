@@ -12,6 +12,16 @@ const getReserva = require("../Data/GetReserva");
 const PayCreate = require("../Controllers/NotificacionWebhook");
 const postComentario = require("../Data/PostDataComentarios");
 
+//Propietario
+const { postComplejo, fileUpload_Logo } = require('../Data/PostDataComplejo');
+const { PostCancha, fileUpload_imgCancha } = require('../Data/PostDataCancha');
+const { getCancha } = require('../Data/GetCanchas');
+const { PutChancha } = require('../Data/PutCanchas');
+const DeleteCancha = require('../Data/DeleteCanchas');
+const { postHorario } = require('../Data/PostDataHorario');
+const { getComplejo } = require('../Data/GetComplejo');
+const PutEstadoComplejo = require('../Data/PutEstadoComplejo');
+
 router.get("/getComplejo", getComplejo);
 
 router.post("/getComentarios",getComentarios);
@@ -39,6 +49,14 @@ router.post("/postComentario",postComentario);
 
 router.post("/Notificacion",PayCreate)
 
-
+//propietario
+router.post('/images/post', fileUpload_Logo, postComplejo);
+router.post('/createCancha', fileUpload_imgCancha, PostCancha);
+router.get('/getCancha', getCancha);
+router.put('/editCancha/:id', PutChancha);
+router.delete('/deleteCancha/:id', DeleteCancha);
+router.post('/createHorario', postHorario);
+router.get("/getComplejo", getComplejo);
+router.put("/putEstado", PutEstadoComplejo)
 
 module.exports =  router
