@@ -4,6 +4,7 @@ import App from './Routes/App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -11,7 +12,7 @@ root.render(
     domain="dev-gonf6ysh.us.auth0.com"
     clientId="vLYBJVhpRwmL86MbveaArcYfBbSqyM3N"
     authorizationParams={{
-      redirect_uri: "http://localhost:3000/"
+      redirect_uri: `http://localhost:3000/`  
     }}
   >
     <App />
