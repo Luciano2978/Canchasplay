@@ -11,6 +11,8 @@ import Loader from "./Loader";
 export default function ProtectedRoute({children}){
 
     const { user, isLoading } = useAuth0();
+    
+    console.log(user)
 
     if (isLoading) {
         
@@ -20,6 +22,7 @@ export default function ProtectedRoute({children}){
         
     }
     if (!user) return <Navigate to="/login" />
+
 
     return children;
 
