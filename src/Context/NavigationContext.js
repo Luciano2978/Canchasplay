@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ContextoNav from "./Context";
 import dayjs from 'dayjs';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
@@ -10,7 +11,7 @@ export default function NavigationContext(props){
     const {children} = props;
     const [RouteComponent,setRouteComponent] = useState("");
 
-
+    
     //Tomo ese valor y lo seteo en una const, para enviarlo al home
     const RouteNavigation = (route) =>{
         setRouteComponent(route)
