@@ -1,6 +1,6 @@
 const connection = require("../config");
 
-const getComplejo = (req, res) => {
+const getDataComplejo = (req, res) => {
     const dataComplejo = `
         SELECT 
             id_Complejo,
@@ -56,4 +56,4 @@ const getComentarios = (req,res) =>{
 }
 
 
-module.exports = {getComplejo,getComentarios}
+module.exports = {getDataComplejo,getComentarios}
