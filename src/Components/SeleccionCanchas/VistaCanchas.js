@@ -47,7 +47,7 @@ export default function VistaCanchas(){
     //Traer Datos Complejo//
 
     React.useEffect(() => {
-        axios.get("http://localhost:8080/getComplejo")
+        axios.get("http://localhost:8080/getDataComplejo")
         .then((response ) => {
             setDatosComplejo(response.data);
             console.log(response.data)

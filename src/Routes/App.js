@@ -24,7 +24,7 @@ export default function App(){
                     <Route exact path="/Loader" element={<Loader/>}></Route>
                     <Route exact path="/" element={<ProtectedRoute><NavigationContext><HomeUsuario/></NavigationContext></ProtectedRoute>}></Route>
                     <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><Loader/></ProtectedRoute></NavigationContext>}></Route>
-                    <Route exact path="/HomeProp" element={<ProtectedRoute><NavigationContext><VistaPropietario/></NavigationContext></ProtectedRoute>}></Route>
+                    <Route exact path="/HomePropietario" element={<ProtectedRoute><NavigationContext><VistaPropietario/></NavigationContext></ProtectedRoute>}></Route>
                     <Route exact path="/Complejo" element={<ProtectedRoute><NavigationContext><AddComplejo/></NavigationContext></ProtectedRoute>}></Route>
 
                 </Routes>

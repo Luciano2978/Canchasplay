@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getComplejo, getComentarios } = require("../Data/GetDataComplejo");
+const { getDataComplejo, getComentarios } = require("../Data/GetDataComplejo");
 const {getCanchas,getHorariosDisponibles} = require("../Data/GetDataCancha");
 const postDataUser = require("../Data/PostDataUserAuht0");
 const createPreference = require("../Controllers/CreatePreference");
@@ -22,7 +22,7 @@ const { postHorario } = require('../Data/PostDataHorario');
 const { getComplejo } = require('../Data/GetComplejo');
 const PutEstadoComplejo = require('../Data/PutEstadoComplejo');
 
-router.get("/getComplejo", getComplejo);
+router.get("/getDataComplejo", getDataComplejo);
 
 router.post("/getComentarios",getComentarios);
 
