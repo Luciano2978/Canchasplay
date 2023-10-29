@@ -12,7 +12,7 @@ root.render(
     domain="dev-gonf6ysh.us.auth0.com"
     clientId="vLYBJVhpRwmL86MbveaArcYfBbSqyM3N"
     authorizationParams={{
-      redirect_uri: "https://shk5k0ck-3000.brs.devtunnels.ms/"
+      redirect_uri: "http://localhost:3000/"
     }}
   >
     <App />
