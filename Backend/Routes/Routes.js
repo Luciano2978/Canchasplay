@@ -13,7 +13,7 @@ const PayCreate = require("../Controllers/NotificacionWebhook");
 const postComentario = require("../Data/PostDataComentarios");
 
 //Propietario
-const { postComplejo, fileUpload_Logo } = require('../Data/PostDataComplejo');
+const { postComplejo, fileUpload_Logo, postUbicacion } = require('../Data/PostDataComplejo');
 const { PostCancha, fileUpload_imgCancha } = require('../Data/PostDataCancha');
 const { getCancha } = require('../Data/GetCanchas');
 const { PutChancha } = require('../Data/PutCanchas');

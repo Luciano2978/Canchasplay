@@ -2,10 +2,7 @@ const connection = require("../config");
 
 
 const postHorario = (req, res) =>{
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Error en el servidor');
-        }
+        
 
         const { fecha, hora, Cancha_id_Cancha } = req.body;
         console.log(req.body)

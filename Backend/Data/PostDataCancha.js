@@ -17,10 +17,7 @@ const fileUpload_imgCancha = multer({
 }).single('img_Cancha');
 
 const PostCancha = (req,res) =>{
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Error en el servidor');
-        }
+        
 
         const { deporte, info_Dimensiones, Caracteristicas, precio_Hora, nombre_Cancha } = req.body;
 

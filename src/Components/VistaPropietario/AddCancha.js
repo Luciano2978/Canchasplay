@@ -135,10 +135,11 @@ export default function AddCancha() {
 
       <Box
         component={Paper}
-        elevation={4}
+        elevation={0}
         sx={{
           padding: '10px',
-          maxHeight: '100%'
+          maxHeight: '100%',
+          backgroundColor: 'transparent', // Fondo transparente
 
         }}
       >
@@ -266,7 +267,7 @@ export default function AddCancha() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
-                        < LocalAtmIcon sx={{ fontSize: "2rem", color: "#75FA8D", mt: "1rem" }} />
+                        < LocalAtmIcon sx={{ fontSize: "2rem", color: "black", mt: "1rem" }} />
                       </InputAdornment>
                     )
                   }}
@@ -311,7 +312,7 @@ export default function AddCancha() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
-                        <AddIcon sx={{ fontSize: "2rem", color: "#75FA8D", mt: "1.2rem" }} />
+                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
                       </InputAdornment>
                     )
                   }}
@@ -341,7 +342,7 @@ export default function AddCancha() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
-                        <AddIcon sx={{ fontSize: "2rem", color: "#75FA8D", mt: "1.2rem" }} />
+                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
                       </InputAdornment>
                     )
                   }}
@@ -451,9 +452,7 @@ export default function AddCancha() {
                   sx={{
                     width: "50%",
                     mt: "1rem",
-                    border: 'solid',
-                    borderRadius: '10px',
-                    color: 'white',
+                    
 
                   }}
                 >

@@ -103,7 +103,7 @@ export default function VistaPropietario() {
                 <PendingActionsIcon /> Lista Horarios
               </MenuItem>
               <MenuItem value={4}>
-                <HomePropietario /> HOME
+                <HomeIcon /> Home
               </MenuItem>
             </Select>
           </Hidden>
@@ -122,8 +122,8 @@ export default function VistaPropietario() {
                 <Tab sx={{ color: "white" }} icon={<AddCircleTwoToneIcon />} label="Añadir Cancha" {...a11yProps(0)} />
                 <Tab sx={{ color: "white" }} icon={<InventoryTwoToneIcon />} label="Mis Canchas" {...a11yProps(1)} />
                 <Tab sx={{ color: "white" }} icon={<AutoStoriesTwoToneIcon />} label="Ver Reservas" {...a11yProps(2)} />
-                <Tab sx={{ color: "white" }} icon={<PendingActionsIcon />} label="Lista Horarios" {...a11yProps(2)} />
-                <Tab sx={{ color: "white" }} icon={<HomeIcon />} label="HOME" {...a11yProps(2)} />
+                <Tab sx={{ color: "white" }} icon={<PendingActionsIcon />} label="Lista Horarios" {...a11yProps(3)} /> 
+                <Tab sx={{ color: "white" }} icon={<HomeIcon />} label="Home" {...a11yProps(4)} /> 
 
 
               </Tabs>

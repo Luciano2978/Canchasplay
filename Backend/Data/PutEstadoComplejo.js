@@ -7,10 +7,7 @@ const connection = require("../config");
 
 
 const PutEstadoComplejo = (req, res) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send('Error en el servidor');
-        }
+        
 
         const {estado_Complejo} = req.body
         const logo_Complejo =  '../image-logoComplejo/1697067185847-logo-Logo'
