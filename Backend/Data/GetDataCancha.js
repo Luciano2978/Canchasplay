@@ -20,7 +20,7 @@ const getCanchas = (req, res) => {
 
 const getHorariosDisponibles = (req, res) => {
     const idCancha = req.body.idCancha;
-    const dataHorarios = `select * from horarios_disponibles hd where hd.Cancha_id_Cancha = ${idCancha}`;
+    const dataHorarios = `SELECT * from horarios_disponibles hd where hd.Cancha_id_Cancha = ${idCancha}`;
     
     connection.query(dataHorarios, (err, results) => {
         if (err) {

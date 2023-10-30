@@ -53,11 +53,16 @@ const AddComplejo = () => {
           alert('you must upload file')
           return
         }
-    
+        
         const formdata = new FormData()
         
         formdata.append('nombre_Lugar', nombre_Lugar)
         formdata.append('logo_Complejo', file)
+        formdata.append('latitud', latitud)
+        formdata.append('longitud', longitud)
+        formdata.append('ubicacion_Detallada', ubicacion_Detallada)
+
+
     
         axios.post('http://localhost:8080/images/post', formdata)
         .then(response => {
@@ -66,9 +71,11 @@ const AddComplejo = () => {
         .catch(error => {
           console.error(error);
         });
+        
     
-        document.getElementById('fileinput').value = null
     
+/*         document.getElementById('fileinput').value = null
+ */    
         setFile(null)
       }
       

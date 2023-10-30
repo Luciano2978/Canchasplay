@@ -11,20 +11,13 @@ import {
   RadioGroup,
   AppBar,
   FormControlLabel,
-
-
 } from '@mui/material';
 import BarsDataset from './PropiChart';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
-
-
-
-
-
-
+import logo from '../../Assets/Logo.png';
 
 const breakpoints = {
   xs: '(max-width:600px)',
@@ -33,80 +26,59 @@ const breakpoints = {
   lg: '(max-width:1920px)',
 };
 
-
 function HomePropietario() {
   const isMobile = useMediaQuery(breakpoints.xs);
   const isTablet = useMediaQuery(breakpoints.sm);
   const isDesktop = useMediaQuery(breakpoints.md);
-  const [complejoActivo, setComplejoActivo] = useState(0); // Estado para controlar la opción activa/inactiva
-
+  const [complejoActivo, setComplejoActivo] = useState(0);
 
   const handleComplejoActivoChange = (event) => {
-    const nuevoEstado = event.target.value === 'activo' ? 1 : 0; // Convierte 'activo' a 1 y 'inactivo' a 0
-
-    // Realiza una solicitud al servidor para actualizar el estado en la base de datos
-    axios.put('http://localhost:8080/putEstado', {
-      estado_Complejo: nuevoEstado,
-      // Aquí puedes incluir otros datos que necesites enviar al servidor
-    })
+    const nuevoEstado = event.target.value === 'activo' ? 1 : 0;
+    axios
+      .put('http://localhost:8080/putEstado', {
+        estado_Complejo: nuevoEstado,
+      })
       .then((response) => {
-        // La solicitud fue exitosa, puedes manejar la respuesta del servidor aquí si es necesario
         console.log('Estado del complejo actualizado con éxito');
       })
       .catch((error) => {
-        // Manejar errores en caso de que la solicitud falle
         console.error('Error al actualizar el estado del complejo:', error);
       });
-
     setComplejoActivo(nuevoEstado);
   };
+
   useEffect(() => {
-    // Aquí puedes agregar una solicitud al servidor para obtener el estado actual del complejo
     axios
       .get('http://localhost:8080/getComplejo')
       .then((response) => {
-        // Actualiza el estado del complejo con el valor obtenido del servidor
         const estadoComplejo = response.data.estado_Complejo === 1 ? 'activo' : 'inactivo';
         setComplejoActivo(estadoComplejo);
       })
       .catch((error) => {
-        // Manejar errores en caso de que la solicitud falle
         console.error('Error al obtener el estado del complejo:', error);
       });
   }, []);
+
   return (
     <div>
       <Paper
-        elevation={4}
+        elevation={0}
         sx={{
+          backgroundColor: 'transparent',
           padding: '10px',
           mt: '0',
-          width: '100%', // Ajusta el ancho al 100%
-          height: '100vh', // 100% de la altura de la ventana
+          width: '100%',
+          height: '100vh',
+          textAlign: isMobile ? 'center' : "left"
         }}
       >
-        <Box sx={{ mt: '5rem', display: 'flex', alignItems: 'center', position: "absolute", ml: "35%" }}>
-          <MonetizationOnIcon sx={{ fontSize: '2rem', marginRight: '1rem', color: 'green' }} />
-          <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-            Ganancia Total
-          </Typography>
-
-        </Box>
-        <Typography variant="h4" sx={{ mt: "10rem", ml: '40%', fontWeight: 'bold', position: "absolute" }}>
-          $22.900
-        </Typography>
-        <Box sx={{ mt: 'rem', display: 'flex', flexDirection: 'column', alignItems: 'center', position: "absolute", ml: "95%" }}>
-          {/* Icono de usuario */}
-          <AccountCircleIcon sx={{ fontSize: '2rem', color: 'blue', marginBottom: '1rem' }} />
-          {/* Icono de notificaciones */}
-          <NotificationsIcon sx={{ fontSize: '2rem', color: 'orange' }} />
-        </Box>
         <Box sx={{ ml: "70%", position: "absolute", mt: "2rem" }}>
           <Typography variant="body1" sx={{
             ml: 2,
             fontSize: '1.5rem',
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', // Agrega sombreado
             fontWeight: 'bold',
+            
 
           }} >        El complejo se encuentra {complejoActivo === 1 ? 'activo' : 'inactivo'}
 
@@ -168,57 +140,57 @@ function HomePropietario() {
           </RadioGroup>
 
         </Box>
-
+        <img
+          src={logo}
+          alt="Descripción de la imagen"
+          style={{
+            width: isMobile ? '50%' : '20%',
+            height: 'auto',
+            marginTop: isMobile ? '1rem' : '-40px',
+            marginBottom: isMobile ? "0" : "10%"
+          }}
+        />
         <Box
           sx={{
-            mt: "-10rem",
-            position: 'absolute',
-            paddingLeft: isMobile ? '0.4rem' : '1rem',
-            textAlign: isMobile ? 'center' : isDesktop ? 'center' : '',
-            transform: isMobile ? 'translateY(-50%)' : isDesktop ? 'translateY(-50%)' : '',
-            width: isMobile ? '100%' : isDesktop ? '100%' : '',
-            ml: "5px"
+            mt: isMobile ? '1rem' : '-20%',
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'column',
+            alignItems: 'center',
+            justifyContent: isMobile ? 'center' : 'flex-start',
+            textAlign: isMobile ? 'center' : 'left',
           }}
         >
-          <img
-            
-            alt="Descripción de la imagen"
-            style={{
-              width: isMobile ? '13rem' : isDesktop ? '100%' : '',
-              height: 'auto',
-              marginTop: isMobile ? '1rem' : isDesktop ? '10rem' : '4.5rem',
-              textAlign: 'left',
-            }}
-          />
-        </Box>
-        <Grid container spacing={isMobile ? 2 : 4}>
-          <Grid item xs={12} md={6} lg={8}>
-            <Box sx={{ mt: isMobile ? '2rem' : '25rem' }}>
-              <Typography sx={{ textAlign: 'left', ml: isMobile ? '1rem' : '5rem' }} variant={isMobile ? 'h6' : 'h4'}>
+          <MonetizationOnIcon sx={{ fontSize: isMobile ? '3rem' : '2rem', marginRight: isMobile ? '0' : '1rem', color: 'green' }} />
+          <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold' }}>
+            Ganancia Total
+          </Typography>
+          <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold' }}>
+            $22.900
+          </Typography>
+          <Grid container spacing={isMobile ? 2 : 4}>
+            <Grid item xs={12} md={6} lg={8}>
+              <Typography sx={{ textAlign: isMobile ? 'center' : 'left', ml: isMobile ? '0' : '5rem' }} variant={isMobile ? 'h5' : 'h4'}>
                 Ganancias
               </Typography>
               <BarsDataset />
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Box
-              sx={{
-                marginLeft: isMobile ? '0' : '-15rem',
-                mt: isDesktop ? '2rem' : '25rem',
-                padding: '1rem',
-                borderRadius: '8px',
-              }}
-            >
-              <Typography sx={{ mb: '1rem', textAlign: 'left' }} variant={isMobile ? 'h6' : 'h4'}>
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+
+              <Typography sx={{ mb: '1rem', textAlign: 'left' }} variant={isMobile ? 'h5' : 'h4'}>
                 Tráfico por dispositivo
               </Typography>
               <PieChartWithCustomizedLabel />
-            </Box>
+
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
+
+
+
+
       </Paper>
     </div >
-  );
-}
+  )
+};
 
 export default HomePropietario;
