@@ -1,6 +1,6 @@
 
 html {
-    background-image: url('../background.jpg'); /* Asegúrate de ajustar la ruta */
+    background-image: url('../img/background.jpg'); /* Asegúrate de ajustar la ruta */
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;

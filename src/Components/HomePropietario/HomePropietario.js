@@ -17,7 +17,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
-import logo from '../../Assets/Logo.png';
+import logo from '../../Assets/img/Logo.png';
 
 const breakpoints = {
   xs: '(max-width:600px)',
