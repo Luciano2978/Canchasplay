@@ -5,15 +5,11 @@ import Contexto from "../Context/Context";
 import SeleccionCanchas from "./SeleccionCanchas.js";
 import MisReservas from "./MisReservas";
 import News from "./News";
-import { useAuth0 } from "@auth0/auth0-react";
 
 
 
 export default function Home(){
 
-    
-    //Recibo el valor para hacer una comparacion y mostrar el componente que necesito
-    
     const {RouteComponent} = useContext(Contexto);
     return(
         <>

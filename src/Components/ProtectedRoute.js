@@ -11,9 +11,7 @@ import Loader from "./Loader";
 export default function ProtectedRoute({children}){
 
     const { user, isLoading } = useAuth0();
-    
-    console.log(user)
-
+ 
     if (isLoading) {
         
         return (
