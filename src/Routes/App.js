@@ -12,6 +12,7 @@ import NotFound from '../Components/NotFound';
 import HomePage from '../Container/HomePage';
 import { useAuth0 } from '@auth0/auth0-react';
 import Verificacion from '../Components/Verificacion';
+import SinPermisoUi from '../Components/SinPermisoUi';
 
 
 
@@ -25,10 +26,10 @@ export default function App(){
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/login" element={<Login />}></Route>
-                    {/*Mishi*/}
                     <Route exact path="/Verificacion" element={<ProtectedRoute><Verificacion /></ProtectedRoute>} />
+                    {/*Mishi*/}
                     <Route exact path="/HomeUsuario" element={<ProtectedRoute><NavigationContext><HomeUsuario/></NavigationContext></ProtectedRoute>}></Route>
-                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><Loader/></ProtectedRoute></NavigationContext>}></Route>
+                    <Route exact path="/SeccionPrueba" element={<NavigationContext><ProtectedRoute><SinPermisoUi/></ProtectedRoute></NavigationContext>}></Route>
                      {/* Juan*/}
                     <Route exact path="/HomePropietario" element={<ProtectedRoute><NavigationContext><VistaPropietario/></NavigationContext></ProtectedRoute>}></Route>
                     <Route exact path="/Complejo" element={<ProtectedRoute><NavigationContext><AddComplejo/></NavigationContext></ProtectedRoute>}></Route>
