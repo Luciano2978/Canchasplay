@@ -36,6 +36,7 @@ export default function FormProp() {
     const nombre = data.Nombre;
     const apellido = data.Apellido;
     const dni = data.Dni;
+    const teléfono = data.Telefono
 
     webAuth.signup(
       {
@@ -47,6 +48,7 @@ export default function FormProp() {
           apellido,
           dni,
           rol: "Propietario",
+          teléfono
         },
       },
       (err) => {
@@ -109,6 +111,25 @@ export default function FormProp() {
                 })}
               />
               {errors.Apellido && <h2>{errors.Apellido.message}</h2>}
+              <input
+                type="text"
+                placeholder="Telefono"
+                {...register("Telefono", {
+                  required: { value: true, message: "El Telefono es Requerido" },
+                  minLength: {
+                    value: 10,
+                    message: "El Telefono debe contener 10 caracteres",
+                  },
+                  maxLength: { value: 11, message: "Telefono no valido" },
+                  validate: (value) => {
+                    if (/^[a-zA-Z]+$/.test(value)) {
+                        return("No debe tener letras");
+                      }
+                  }
+                  
+                })}
+              />{" "}
+              {errors.Telefono && <h2>{errors.Telefono.message}</h2>}
               <input
                 type="text"
                 placeholder="Dni"
