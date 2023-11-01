@@ -31,6 +31,21 @@ const MenuProps = {
   },
 };
 
+const styles = {
+  scrollbar: {
+    '&::-webkit-scrollbar': {
+      width: '12px', // Ancho de la barra de desplazamiento
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: '#75FA8D', // Color del pulgar de la barra de desplazamiento
+      borderRadius: '10px', // Borde redondeado del pulgar
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: 'green', // Cambio de color al pasar el mouse sobre el pulgar
+    },
+  },
+};
+
 export default function ListHorario() {
   const [datos, setDatos] = useState([]);
   const [selectedCancha, setSelectedCancha] = useState('');
@@ -65,8 +80,20 @@ export default function ListHorario() {
   };
   const toggleSelectAll = () => {
     if (!selectAll) {
-      // Seleccionar todos los horarios disponibles
-      const allHours = Array.from({ length: 12 }, (_, i) => `${(i + 16) % 24}:00:00`);
+      let allHours = [];
+
+      if (turno === 'manana') {
+        // Seleccionar todos los horarios disponibles para el turno de la mañana
+        allHours = [...Array(6)].map((_, index) => {
+          return `${String((index + 8) % 24).padStart(2, '0')}:00:00`;
+        });
+      } else {
+        // Seleccionar todos los horarios disponibles para el turno de la tarde
+        allHours = [...Array(10)].map((_, index) => {
+          return `${String((index + 16) % 24).padStart(2, '0')}:00:00`;
+        });
+      }
+
       setSelectedHours(allHours);
     } else {
       // Deseleccionar todos los horarios
@@ -112,6 +139,7 @@ export default function ListHorario() {
 
   const handleHourChange = (hour) => {
     const selectedHour = hour.format('HH:mm:ss');
+
     if (selectedHours.includes(selectedHour)) {
       setSelectedHours(selectedHours.filter((h) => h !== selectedHour));
     } else {
@@ -121,10 +149,10 @@ export default function ListHorario() {
 
   return (
     <div style={{
-      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', 
+      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
     }}>
-      <FormControl sx={{ m: 1, width: 300, }}>
-        <InputLabel id="demo-multiple-name-label" >Canchas</InputLabel>
+      <FormControl sx={{ m: 1, width: 300, background: "white" , boxShadow: "10px 5px 5px #75FA8D"}}>
+        <InputLabel sx={{fontSize:"30px"}} id="demo-multiple-name-label" >Canchas</InputLabel>
         <Select sx={{ fontWeight: "bold", fontSize: "20px" }}
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
@@ -142,9 +170,7 @@ export default function ListHorario() {
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-turno-label">Turno</InputLabel>
+        <Typography sx={{ color: "green", fontWeight: "bold", fontSize: "20px" }} id="demo-multiple-turno-label">Turno</Typography>
         <Select
           labelId="demo-multiple-turno-label"
           id="demo-multiple-turno"
@@ -152,127 +178,122 @@ export default function ListHorario() {
           onChange={handleTurnoChange}
           input={<OutlinedInput label="Turno" />}
         >
-          <MenuItem value="manana">Turno Mañana</MenuItem>
-          <MenuItem value="tarde">Turno Tarde</MenuItem>
+          <MenuItem value="manana"> Mañana</MenuItem>
+          <MenuItem value="tarde"> Tarde</MenuItem>
         </Select>
-      </FormControl>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
-          label="Fecha"
-          value={selectedDate}
-          onChange={handleDateChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
-        <Box sx={{
-          maxHeight: '400px', // Altura máxima del contenedor, ajusta según tus necesidades
-          overflowY: 'auto', // Habilita el desplazamiento vertical si es necesario
-          marginBottom: '16px', // Agrega espacio inferior para separar de otros elementos
-        }}>
-          <Typography
-            sx={{
-              color: 'black', fontWeight: 'bolder',
-              textShadow: '1px 1px 0px white',
-              textAlign: "left",
-
-
-
-            }}
-          > Eliga los horarios a añadir
-          </Typography>
-          <FormControlLabel
-            label="Seleccionar Todos"
-            control={
-              <Checkbox
-                checked={selectAll}
-                onChange={toggleSelectAll}
-              />
-            }
-            sx={{
-              // Aquí puedes agregar estilos personalizados para el label
-              color: 'green', // Cambia el color del texto
-              fontWeight: 'bold', // Cambia el grosor de la fuente
-              
-            }}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Typography sx={{ color: "green", fontWeight: "bold", fontSize: "20px" }} id="demo-multiple-turno-label">Fecha</Typography>
+          <DatePicker
+            labelId="demo-multiple-fecha-label"
+            id="demo-multiple-fecha"
+            value={selectedDate}
+            onChange={handleDateChange}
           />
-          {turno === 'manana'
-            ? [...Array(6)].map((_, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  border: '1px solid #ccc',
-                  borderRadius: '4px',
-                  padding: '8px',
-                  marginBottom: '8px',
-                  fontWeight: 'bold',
+          <Box sx={{
+            maxHeight: '400px', // Altura máxima del contenedor, ajusta según tus necesidades
+            overflowY: 'auto', // Habilita el desplazamiento vertical si es necesario
+            marginBottom: '16px', // Agrega espacio inferior para separar de otros elementos
+            ...styles.scrollbar, // Aplica los estilos personalizados a la barra de desplazamiento
 
-                  // Cambia el tamaño de fuente
-
-
-                }}
-              >
-                <Typography sx={{ flex: 1, textAlign: 'left', marginRight: '8px', fontWeight:"bolder" }}>
-                  {`${(index + 8) % 24}:00`}
-                </Typography>
+          }}>
+            <Typography
+              sx={{
+                color: 'green', fontWeight: 'bolder',
+                textAlign: "left",
+              }}
+            > Eliga los horarios a añadir
+            </Typography>
+            <FormControlLabel
+              label="Seleccionar Todos"
+              control={
                 <Checkbox
-                  checked={selectedHours.includes(`${(index + 8) % 24}:00:00`)}
-                  onChange={() => handleHourChange(dayjs().hour((index + 8) % 24).minute(0).second(0))}
-                  sx={{
-                    '&.Mui-checked': {
-                      color: 'blue',
-                    },
-                  }}
+                  checked={selectAll}
+                  onChange={toggleSelectAll}
                 />
-              </Box>
-            ))
-            : [...Array(10)].map((_, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  border: '1px solid #ccc',
-                  borderRadius: '4px',
-                  padding: '8px',
-                  marginBottom: '8px',
-                  fontWeight: 'bold',
+              }
+              sx={{
+                // Aquí puedes agregar estilos personalizados para el label
+                color: 'green', // Cambia el color del texto
+                fontWeight: 'bold', // Cambia el grosor de la fuente
 
-                }}
-              >
-                <Typography sx={{
-                  flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: 'bolder',
-                  // Cambia el tamaño de fuente
-                }}>
-                  {`${String((index + 16) % 24).padStart(2, '0')}:00`}
-                </Typography>
-                <Checkbox
-                  checked={selectedHours.includes(`${String((index + 16) % 24).padStart(2, '0')}:00:00`)}
-                  onChange={() => handleHourChange(dayjs().hour((index + 16) % 24).minute(0).second(0))}
+              }}
+            />
+            {turno === 'manana'
+              ? [...Array(6)].map((_, index) => (
+                <Box
+                  key={index}
                   sx={{
-                    '&.Mui-checked': {
-                      color: 'blue',
-                    },
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    marginBottom: '8px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  <Typography sx={{ flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: "bolder" }}>
+                    {`${String((index + 8) % 24).padStart(2, '0')}:00`} {/* Usa el mismo formato que selectedHours */}
+                  </Typography>
+                  <Checkbox
+                    checked={selectedHours.includes(`${String((index + 8) % 24).padStart(2, '0')}:00:00`)}
+                    onChange={() => handleHourChange(dayjs().hour((index + 8) % 24).minute(0).second(0))}
+                    sx={{
+                      '&.Mui-checked': {
+                        color: 'blue',
+                      },
+                    }}
+                  />
+                </Box>
+              ))
+              : [...Array(10)].map((_, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    marginBottom: '8px',
+                    fontWeight: 'bold',
 
                   }}
-                />
-              </Box>
-            ))}
-        </Box>
-      </LocalizationProvider>
+                >
+                  <Typography sx={{
+                    flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: 'bolder',
+                    // Cambia el tamaño de fuente
+                  }}>
+                    {`${String((index + 16) % 24).padStart(2, '0')}:00`}
+                  </Typography>
+                  <Checkbox
+                    checked={selectedHours.includes(`${String((index + 16) % 24).padStart(2, '0')}:00:00`)}
+                    onChange={() => handleHourChange(dayjs().hour((index + 16) % 24).minute(0).second(0))}
+                    sx={{
+                      '&.Mui-checked': {
+                        color: 'blue',
+                      },
 
-      <Button
-        sx={{
-          background: '#75FA8D',
-          color: 'white',
-          border: 'none',
-        }}
-        onClick={handleSubmit}
-      >
-        Agregar Horarios
-      </Button>
+                    }}
+                  />
+                </Box>
+              ))}
+          </Box>
+        </LocalizationProvider>
+
+        <Button
+          sx={{
+            background: '#75FA8D',
+            color: 'green',
+            border: 'none',
+          }}
+          onClick={handleSubmit}
+        >
+          Agregar Horarios
+        </Button>
+      </FormControl>
     </div>
   );
 }
