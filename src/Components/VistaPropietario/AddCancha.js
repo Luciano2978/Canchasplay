@@ -434,28 +434,27 @@ export default function AddCancha() {
         ) : (
           <div>
             <Grid container spacing={3} sx={{ mt: "10rem", }}>
-              <Grid item xs={12} sm={6} container>
-                <Typography
-                  sx={{
-                    color: 'black',
-                    fontWeight: 'bolder',
-                    textShadow: '1px 1px 0px white',
-                    textAlign: isMobile ? 'center' : isDesktop ? 'left' : 'left',
-                    marginBottom: isMobile ? '-1rem' : isDesktop ? '-1rem' : '-1rem',
-                    marginLeft: isMobile ? '0' : isDesktop ? '5rem' : '5rem',
-                  }}
-                  variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
-                >
-                  Eliga el deporte
-                </Typography>
+              <Grid item xs={12} sm={6} container sx={{ alignItems: "center", justifyContent: "center", }}>
+
                 <FormControl
                   sx={{
                     width: "50%",
-                    mt: "1rem",
-                    
-
+                    background: "",
+                    boxShadow: "10px 5px 5px black",
                   }}
                 >
+                  <Typography
+                    sx={{
+                      color: 'black',
+                      fontWeight: 'bolder',
+                      textShadow: '1px 1px 0px green',
+                      mt: "-1rem",
+                      textAlign: "left",
+                    }}
+                    variant={'h6'}
+                  >
+                    Eliga el deporte
+                  </Typography>
                   <Select
                     sx={{
                       bgcolor: "#75FA8D",
@@ -491,9 +490,8 @@ export default function AddCancha() {
                     sx={{
                       bgcolor: "#75FA8D",
 
-                      width: '100%',
                       '& .MuiInputLabel-root': {
-                        fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
+                        fontSize: '20px',
                         color: 'black', fontWeight: 'bolder',
 
                       },
@@ -515,10 +513,10 @@ export default function AddCancha() {
                     sx={{
                       bgcolor: "#75FA8D",
 
-                      width: '100%',
+
 
                       '& .MuiInputLabel-root': {
-                        fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
+                        fontSize: '20px',
                         color: 'black', fontWeight: 'bolder',
 
                       },
@@ -543,118 +541,118 @@ export default function AddCancha() {
                   />
                 </FormControl>
 
-                
+
               </Grid>
 
 
-              <Grid item xs={12} sm={6} sx={{ maxWidth: '100%', }}>
-                <Typography
-                  sx={{
-                    color: 'black',
-                    fontWeight: 'bolder',
-                    textShadow: '1px 1px 0px white',
-                    textAlign: isMobile ? 'center' : isDesktop ? 'left' : 'left',
-                  }}
-                  variant={isMobile ? 'h6' : isDesktop ? 'h6' : ''}
-                >
-                  Dimensiones
-                </Typography>
+              <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", }} >
+                <FormControl sx={{
+                  width: "50%",
+                  boxShadow: "10px 5px 5px black",
 
-                <TextField
-                  sx={{
-                    bgcolor: "#75FA8D",
+                }}>
+                  <Typography
+                    sx={{
+                      color: 'black',
+                      fontWeight: 'bolder',
+                      textShadow: '1px 1px 0px green',
+                      textAlign: "left",
 
-                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
+                    }}
+                    variant={"h6"}
+                  >
+                    Dimensiones
+                  </Typography>
 
-                    '& .MuiInputLabel-root': {
-                      fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
-                      color: 'black', fontWeight: 'bolder',
-                      marginTop: "-10px",
-                    },
-                    border: 'solid',
-                    borderRadius: '10px',
-                    color: 'white',
-                  }}
-                  id="filled-search"
-                  label="Largo"
-                  type="search"
-                  variant="filled"
-                  value={largo}
-                  onChange={(e) => handleInputChange(e, setLargo)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position='start'>
-                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
-                      </InputAdornment>
-                    )
-                  }}
-
-                />
-                <TextField
-                  sx={{
-                    bgcolor: "#75FA8D",
-
-                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
-
-
-                    '& .MuiInputLabel-root': {
-                      fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
-                      color: 'black', fontWeight: 'bolder',
-                    },
-                    border: 'solid',
-                    borderRadius: '10px',
-                    color: 'white',
-                  }}
-                  id="filled-search"
-                  label="Ancho"
-                  type="search"
-                  variant="filled"
-                  value={ancho}
-                  onChange={(e) => handleInputChange(e, setAncho)}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position='start'>
-                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
-                      </InputAdornment>
-                    )
-                  }}
-                />
-
-
-                <TextField
-                  sx={{
-
-                    width: isMobile ? '100%' : isDesktop ? '50%' : '',
-                    borderRadius: '10px',
-                    color: 'white',
-                    '& .MuiInputLabel-root': {
-
-                      fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
-                      color: 'black', fontWeight: 'bolder',
-
-                    },
-                    '& .MuiInputBase-root': {
+                  <TextField
+                    sx={{
                       bgcolor: "#75FA8D",
+                      '& .MuiInputLabel-root': {
+                        fontSize: "1.5rem",
+                        color: 'black', fontWeight: 'bolder',
+                        marginTop: "-10px",
+                      },
+                      width: "90%",
+                      border: 'solid',
+                      borderRadius: '10px',
+                      color: 'white',
+                    }}
+                    id="filled-search"
+                    label="Largo"
+                    type="search"
+                    variant="filled"
+                    value={largo}
+                    onChange={(e) => handleInputChange(e, setLargo)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                        </InputAdornment>
+                      )
+                    }}
 
-                      mt: "1rem",
-                      mb: "1rem",
+                  />
+                  <TextField
+                    sx={{
+                      bgcolor: "#75FA8D",
+                      '& .MuiInputLabel-root': {
+                        fontSize: '1.5rem',
+                        color: 'black', fontWeight: 'bolder',
+                      },
+                      border: 'solid',
+                      borderRadius: '10px',
+                      color: 'white',
+                      width: "90%",
+
+                    }}
+                    id="filled-search"
+                    label="Ancho"
+                    type="search"
+                    variant="filled"
+                    value={ancho}
+                    onChange={(e) => handleInputChange(e, setAncho)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
 
 
-                    }
+                  <TextField
+                    sx={{
+
+                      borderRadius: '10px',
+                      color: 'white',
+                      width: "90%",
+                      '& .MuiInputLabel-root': {
+                        fontSize: '1.5rem',
+                        color: 'black', fontWeight: 'bolder',
+                      },
+                      '& .MuiInputBase-root': {
+                        bgcolor: "#75FA8D",
+
+                        mt: "1rem",
+                        mb: "1rem",
 
 
-                  }}
-                  id="outlined-multiline-static"
-                  label="Descripción"
-                  multiline
-                  rows={4}
-                  variant="filled"
-                  value={Caracteristicas}
-                  onChange={(e) => {
-                    setCaracteristicas(e.target.value);
-                  }}
-                />
-                <Box>
+                      }
+
+
+
+                    }}
+                    id="outlined-multiline-static"
+                    label="Descripción"
+                    multiline
+                    rows={4}
+                    variant="filled"
+                    value={Caracteristicas}
+                    onChange={(e) => {
+                      setCaracteristicas(e.target.value);
+                    }}
+                  />
                   <label htmlFor="upload-photo">
                     <input
                       style={{ display: 'none', color: "#75FA8D" }}
@@ -676,25 +674,26 @@ export default function AddCancha() {
                     </Fab>
 
                   </label>
-                </Box>
-                <Button
-                  sx={{
-                    background: '#75FA8D',
-                    color: 'white',
-                    display: isMobile ? 'block' : 'inline-block',
-                    width: isMobile ? '100%' : 'auto',
-                    margin: isMobile ? '1rem 0' : '0',
-                    textAlign: isMobile ? 'center' : 'left',
-                    mb: isMobile ? '3rem' : isDesktop ? '3rem' : '',
-                    mt: isDesktop ? '1rem' : '',
-                    border: 'none',
-                  }}
-                  onClick={handleSubmit}
-                >
-                  Agregar Cancha
-                </Button>
-              </Grid>
 
+
+                </FormControl>
+
+              </Grid>
+              <Button
+                sx={{
+                  background: '#75FA8D',
+                  color: 'white',
+                  textAlign: 'center',
+                  mb: '3rem',
+                  border: 'none',
+                  ml: "40%",
+                  boxShadow: "10px 5px 5px black",
+
+                }}
+                onClick={handleSubmit}
+              >
+                Agregar Cancha
+              </Button>
             </Grid>
 
           </div>
