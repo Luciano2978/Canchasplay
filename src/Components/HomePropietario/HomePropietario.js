@@ -18,6 +18,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import logo from '../../Assets/img/Logo.png';
+import { useAuth0 } from '@auth0/auth0-react';
+import SinPermisoUi from '../SinPermisoUi';
 
 const breakpoints = {
   xs: '(max-width:600px)',
@@ -27,6 +29,8 @@ const breakpoints = {
 };
 
 function HomePropietario() {
+  
+
   const isMobile = useMediaQuery(breakpoints.xs);
   const isTablet = useMediaQuery(breakpoints.sm);
   const isDesktop = useMediaQuery(breakpoints.md);
@@ -58,7 +62,7 @@ function HomePropietario() {
         console.error('Error al obtener el estado del complejo:', error);
       });
   }, []);
-
+ 
   return (
     <div>
       <Paper

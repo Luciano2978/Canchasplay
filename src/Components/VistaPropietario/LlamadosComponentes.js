@@ -18,6 +18,8 @@ import ListHorarios from './ListHorarios';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import HomePropietario from '../HomePropietario/HomePropietario';
 import HomeIcon from '@mui/icons-material/Home';
+import { useAuth0 } from '@auth0/auth0-react';
+import SinPermisoUi from '../SinPermisoUi';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -78,6 +80,12 @@ export default function VistaPropietario() {
       window.removeEventListener('resize', handleResize);
     };
   }, [theme.breakpoints.values.sm]);
+
+  const {user} = useAuth0();
+  const rol = user.Nombre.user_metadata.rol
+  if (rol === "Usuario"){
+    return <SinPermisoUi></SinPermisoUi>
+  }
 
   return (
     <Grid container >
