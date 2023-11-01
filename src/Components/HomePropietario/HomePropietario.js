@@ -62,7 +62,7 @@ function HomePropietario() {
         console.error('Error al obtener el estado del complejo:', error);
       });
   }, []);
-
+ 
   return (
     <div>
       <Paper

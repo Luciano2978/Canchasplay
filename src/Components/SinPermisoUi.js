@@ -1,8 +1,9 @@
-import { Box } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import "../Assets/css/SinPermisoUi.css";
 import Warning from "../Assets/img/Warning.png"
-
-
+import PelotaBasket from "../Assets/img/PelotaBasket.png";
+import AroBasquet from "../Assets/img/AroBasquet.png";
+import 'animate.css';
 
 
 
@@ -24,18 +25,30 @@ export default function SinPermisoUi(){
         height: "150px"
     }
 
+    const aroBasquetStyle = {
+        position: "absolute",
+        top: 0,
+        width: "15%",
+    }
+    
+
     return (
-        <div className="Permisos-container">
+        <div className="Permisos-container" >
+            {/* <img src={AroBasquet} alt="Aro" style={aroBasquetStyle}></img> */}
             <Box sx={boxStyle} className="boxWithAnimation">
                 <div className="Tittle-404">
                     <h1>Lo Sentimos</h1>
                 </div>
-                <img src={Warning} alt="Warning" style={imgWarningStyle}></img>
+                <img src={Warning} alt="Warning" style={imgWarningStyle} className="animate__animated animate__tada"/>
                 <div className="Text-404">
                     <p>No esta autorizado para Ingresar a esta seccion.</p>
-                    <u>CLICK AQUI: “PARA VOLVER”</u>
+                    <Link href="/homePage" color="inherit">
+                        CLICK AQUI: “PARA VOLVER”
+                    </Link>
                 </div>
+                
             </Box>
+            {/* <img src={PelotaBasket} alt="pelota" className="EfectosPelota"></img> */}
         </div>
     )
 }
