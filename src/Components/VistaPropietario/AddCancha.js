@@ -19,6 +19,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 
+
 const breakpoints = {
   xs: '(max-width:600px)',
   sm: '(max-width:960px)',
@@ -143,16 +144,14 @@ export default function AddCancha() {
 
         }}
       >
-
-
-
-
         {isMobile ? (
           <Container
             sx={{
               textAlign: isMobile ? 'center' : isDesktop ? 'center' : '',
               paddingTop: isMobile ? '40%' : isDesktop ? '3rem' : '0rem',
               marginLeft: isMobile ? '2px' : isDesktop ? 'center' : '',
+              background: "#b9f6ca",
+              mt:"-5rem"
             }}
           >
             <div>
@@ -178,12 +177,13 @@ export default function AddCancha() {
                   border: 'solid',
                   borderRadius: '10px',
                   color: 'white',
+                  background: ""
 
                 }}
               >
                 <Select
                   sx={{
-                    bgcolor: "#75FA8D",
+                    bgcolor: "white",
 
                     textAlign: 'left',
                     fontSize: '1.5rem',
@@ -202,13 +202,13 @@ export default function AddCancha() {
                   onChange={handleChange}
                 >
                   <MenuItem value={"futbol"} sx={{ mt: "1rem" }}>
-                    <span className="icon" ><SportsSoccerIcon sx={{ color: "#75FA8D", width: "2rem", }} /></span>Futbol </MenuItem>
+                    <span className="icon" ><SportsSoccerIcon sx={{ color: "black", width: "2rem", }} /></span>Futbol </MenuItem>
                   <MenuItem value={"voley"}>
-                    <span className="icon"><SportsVolleyballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Voley</MenuItem>
+                    <span className="icon"><SportsVolleyballIcon sx={{ color: "black", width: "2rem" }} /></span>Voley</MenuItem>
                   <MenuItem value={"basket"}>
-                    <span className="icon"><SportsBasketballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Basket</MenuItem>
+                    <span className="icon"><SportsBasketballIcon sx={{ color: "black", width: "2rem" }} /></span>Basket</MenuItem>
                   <MenuItem value={"padel"}>
-                    <span className="icon"><SportsTennisIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Padel</MenuItem>
+                    <span className="icon"><SportsTennisIcon sx={{ color: "black", width: "2rem" }} /></span>Padel</MenuItem>
 
                 </Select>
               </FormControl>
@@ -218,7 +218,7 @@ export default function AddCancha() {
               <div>
                 <TextField
                   sx={{
-                    bgcolor: "#75FA8D",
+                    bgcolor: "white",
 
                     width: isMobile ? '100%' : isDesktop ? '50%' : '',
                     '& .MuiInputLabel-root': {
@@ -244,13 +244,19 @@ export default function AddCancha() {
               <div>
                 <TextField
                   sx={{
-                    bgcolor: "#75FA8D",
+                    bgcolor: "white",
 
                     width: isMobile ? '100%' : isDesktop ? '50%' : '',
 
                     '& .MuiInputLabel-root': {
                       fontSize: isDesktop ? '20px' : isMobile ? '20px' : '',
                       color: 'black', fontWeight: 'bolder',
+
+                    },
+                    '& .MuiInputBase-root': {
+                      fontSize: '20px',
+                      color: 'black', fontWeight: 'bolder',
+                      mt: "0.5rem"
 
                     },
                     border: 'solid',
@@ -267,7 +273,8 @@ export default function AddCancha() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
-                        < LocalAtmIcon sx={{ fontSize: "2rem", color: "black", mt: "1rem" }} />
+                        < LocalAtmIcon sx={{ fontSize: "1.5rem", color: "black", mt: "0.5rem" }} />
+
                       </InputAdornment>
                     )
                   }}
@@ -290,7 +297,7 @@ export default function AddCancha() {
 
                 <TextField
                   sx={{
-                    bgcolor: "#75FA8D",
+                    bgcolor: "white",
 
                     width: isMobile ? '100%' : isDesktop ? '50%' : '',
 
@@ -312,7 +319,7 @@ export default function AddCancha() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
-                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                        <AddIcon sx={{ fontSize: "1.5rem", color: "black", mb: "1.2rem", mt: "1rem" }} />
                       </InputAdornment>
                     )
                   }}
@@ -320,14 +327,12 @@ export default function AddCancha() {
                 />
                 <TextField
                   sx={{
-                    bgcolor: "#75FA8D",
-
+                    bgcolor: "white",
                     width: isMobile ? '100%' : isDesktop ? '50%' : '',
-
-
                     '& .MuiInputLabel-root': {
                       fontSize: isDesktop ? '1.5rem' : isMobile ? '1.5rem' : '',
                       color: 'black', fontWeight: 'bolder',
+                      marginTop: "-10px",
                     },
                     border: 'solid',
                     borderRadius: '10px',
@@ -342,7 +347,7 @@ export default function AddCancha() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position='start'>
-                        <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                        <AddIcon sx={{ fontSize: "1.5rem", color: "black", mb: "1.2rem", mt: "1rem" }} />
                       </InputAdornment>
                     )
                   }}
@@ -366,15 +371,11 @@ export default function AddCancha() {
 
                     },
                     '& .MuiInputBase-root': {
-                      bgcolor: "#75FA8D",
+                      bgcolor: "white",
 
                       mt: "1rem",
                       mb: "1rem",
-
-
                     }
-
-
                   }}
                   id="outlined-multiline-static"
                   label="Descripción"
@@ -389,7 +390,7 @@ export default function AddCancha() {
                 <Box>
                   <label htmlFor="upload-photo">
                     <input
-                      style={{ display: 'none', color: "#75FA8D" }}
+                      style={{ display: 'none', color: "white" }}
                       id="upload-photo"
                       name="upload-photo"
                       accept="image/*"
@@ -408,67 +409,61 @@ export default function AddCancha() {
                     </Fab>
 
                   </label>
+                  <Button variant='contained'
+                    sx={{
+                      background: 'white',
+                      color: 'black',
+                      textAlign: 'center',
+                      mb: '3rem',
+                      border: 'none',
+                      boxShadow: "5px 5px 5px grey",
+                      mt: "3.5rem",
+                    }}
+                    onClick={handleSubmit}
+                  >
+                    Agregar Cancha
+                  </Button>
+
                 </Box>
 
               </div>
-              <Button
-                sx={{
-                  background: '#75FA8D',
-                  color: 'white',
-                  display: isMobile ? 'block' : 'inline-block',
-                  width: isMobile ? '100%' : 'auto',
-                  margin: isMobile ? '1rem 0' : '0',
-                  textAlign: isMobile ? 'center' : 'left',
-                  mb: isMobile ? '3rem' : isDesktop ? '3rem' : '',
-                  mt: isDesktop ? '1rem' : '',
-                  border: 'none',
-                }}
-                onClick={handleSubmit}
-              >
-                Agregar Cancha
-              </Button>
 
             </Box>
 
           </Container>
         ) : (
           <div>
-            <Grid container spacing={3} sx={{ mt: "10rem", }}>
-              <Grid item xs={12} sm={6} container sx={{ alignItems: "center", justifyContent: "center", }}>
+            <Grid container spacing={3} sx={{
+              backgroundColor: "#b9f6ca", width: "50%", margin: "0 auto", mt: "10rem", borderRadius: '10px',
 
+            }}>
+              <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", mt: "0 auto" }}>
                 <FormControl
                   sx={{
-                    width: "50%",
-                    background: "",
-                    boxShadow: "10px 5px 5px black",
+                    width: "100%",
                   }}
                 >
                   <Typography
                     sx={{
                       color: 'black',
                       fontWeight: 'bolder',
-                      textShadow: '1px 1px 0px green',
-                      mt: "-1rem",
+                      textShadow: '1px 1px 0px white',
                       textAlign: "left",
+                      mb: "1rem"
                     }}
                     variant={'h6'}
                   >
-                    Eliga el deporte
+                    Seleccione el deporte
                   </Typography>
                   <Select
                     sx={{
-                      bgcolor: "#75FA8D",
-
+                      bgcolor: "white",
                       textAlign: 'left',
                       fontSize: '1.5rem',
                       border: 'solid',
                       borderRadius: '50px',
-                      borderColor: 'white',
-                      /*                   color: 'black',
-                       */
-                      /*                   background: '#ffff',
-                       */
-
+                      borderColor: 'black',
+                      mb: "1rem"
                     }}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -476,29 +471,29 @@ export default function AddCancha() {
                     onChange={handleChange}
                   >
                     <MenuItem value={"futbol"} sx={{ mt: "1rem" }}>
-                      <span className="icon" ><SportsSoccerIcon sx={{ color: "#75FA8D", width: "2rem", }} /></span>Futbol </MenuItem>
+                      <span className="icon" ><SportsSoccerIcon sx={{ color: "black", width: "2rem", }} /></span>Futbol </MenuItem>
                     <MenuItem value={"voley"}>
-                      <span className="icon"><SportsVolleyballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Voley</MenuItem>
+                      <span className="icon"><SportsVolleyballIcon sx={{ color: "black", width: "2rem" }} /></span>Voley</MenuItem>
                     <MenuItem value={"basket"}>
-                      <span className="icon"><SportsBasketballIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Basket</MenuItem>
+                      <span className="icon"><SportsBasketballIcon sx={{ color: "black", width: "2rem" }} /></span>Basket</MenuItem>
                     <MenuItem value={"padel"}>
-                      <span className="icon"><SportsTennisIcon sx={{ color: "#75FA8D", width: "2rem" }} /></span>Padel</MenuItem>
+                      <span className="icon"><SportsTennisIcon sx={{ color: "black", width: "2rem" }} /></span>Padel</MenuItem>
 
                   </Select>
 
                   <TextField
                     sx={{
-                      bgcolor: "#75FA8D",
 
-                      '& .MuiInputLabel-root': {
+                      /* '& .MuiInputLabel-root': {
                         fontSize: '20px',
                         color: 'black', fontWeight: 'bolder',
 
-                      },
+                      }, */
+                      background: "#FFFFFF",
                       border: 'solid',
                       borderRadius: '10px',
-                      color: 'white',
-                      marginTop: "1.5rem",
+                      borderColor: 'black',
+                      mb: "1rem"
                     }}
                     id="filled-search"
                     label="Nombre de la cancha"
@@ -511,19 +506,22 @@ export default function AddCancha() {
 
                   <TextField
                     sx={{
-                      bgcolor: "#75FA8D",
-
-
-
+                      bgcolor: "white",
                       '& .MuiInputLabel-root': {
                         fontSize: '20px',
                         color: 'black', fontWeight: 'bolder',
 
                       },
+                      '& .MuiInputBase-root': {
+                        fontSize: '20px',
+                        color: 'black', fontWeight: 'bolder',
+                        mt: "0.5rem"
+
+                      },
                       border: 'solid',
                       borderRadius: '10px',
-                      color: 'white',
-                      marginTop: "1.5rem",
+                      color: 'black',
+                      mb: "1rem"
                     }}
                     id="filled-search"
                     label="Precio por hora"
@@ -534,29 +532,51 @@ export default function AddCancha() {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position='start'>
-                          < LocalAtmIcon sx={{ fontSize: "2rem", color: "black", mt: "1rem" }} />
+                          < LocalAtmIcon sx={{ fontSize: "1.5rem", color: "black", mt: "0.2rem" }} />
                         </InputAdornment>
                       )
                     }}
                   />
+                  <label htmlFor="upload-photo"  >
+                    <input style={{ display: 'none', color: "white", mt: "1.5rem" }}
+                      id="upload-photo"
+                      name="upload-photo"
+                      accept="image/*"
+                      type="file"
+                      onChange={selectedHandler}
+                    />
+
+                    <Fab sx={{ mt: "1rem", width: "50%", textAlign: "center", justifyContent: "center", ml: "5.5rem" }}
+                      color="secondary"
+                      size="small"
+                      component="span"
+                      aria-label="add"
+                      variant="extended"
+                    >
+                      <AddIcon /> Cargar fotos
+                    </Fab>
+
+                  </label>
                 </FormControl>
 
 
               </Grid>
 
 
-              <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", }} >
+              <Grid item xs={12} sm={6} sx={{
+                alignItems: "center", justifyContent: "center",
+              }} >
                 <FormControl sx={{
-                  width: "50%",
-                  boxShadow: "10px 5px 5px black",
+                  width: "100%",
 
                 }}>
                   <Typography
                     sx={{
                       color: 'black',
                       fontWeight: 'bolder',
-                      textShadow: '1px 1px 0px green',
+                      textShadow: '1px 1px 0px white',
                       textAlign: "left",
+                      mb: "1rem"
 
                     }}
                     variant={"h6"}
@@ -566,7 +586,7 @@ export default function AddCancha() {
 
                   <TextField
                     sx={{
-                      bgcolor: "#75FA8D",
+                      bgcolor: "white",
                       '& .MuiInputLabel-root': {
                         fontSize: "1.5rem",
                         color: 'black', fontWeight: 'bolder',
@@ -575,7 +595,11 @@ export default function AddCancha() {
                       width: "90%",
                       border: 'solid',
                       borderRadius: '10px',
-                      color: 'white',
+                      color: 'black',
+                      mb: "1rem",
+
+
+
                     }}
                     id="filled-search"
                     label="Largo"
@@ -586,7 +610,7 @@ export default function AddCancha() {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position='start'>
-                          <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                          <AddIcon sx={{ fontSize: "1.5rem", color: "black", mb: "1.2rem", mt: "1rem" }} />
                         </InputAdornment>
                       )
                     }}
@@ -594,15 +618,19 @@ export default function AddCancha() {
                   />
                   <TextField
                     sx={{
-                      bgcolor: "#75FA8D",
+                      bgcolor: "white",
                       '& .MuiInputLabel-root': {
-                        fontSize: '1.5rem',
+                        fontSize: "1.5rem",
                         color: 'black', fontWeight: 'bolder',
+                        marginTop: "-10px",
+
+
                       },
                       border: 'solid',
                       borderRadius: '10px',
-                      color: 'white',
+                      color: 'black',
                       width: "90%",
+                      mb: "1rem"
 
                     }}
                     id="filled-search"
@@ -614,7 +642,7 @@ export default function AddCancha() {
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position='start'>
-                          <AddIcon sx={{ fontSize: "2rem", color: "black", mt: "1.2rem" }} />
+                          <AddIcon sx={{ fontSize: "1.5rem", color: "black", mb: "1.2rem", mt: "1rem" }} />
                         </InputAdornment>
                       )
                     }}
@@ -623,77 +651,50 @@ export default function AddCancha() {
 
                   <TextField
                     sx={{
-
-                      borderRadius: '10px',
-                      color: 'white',
+                      borderRadius: '16px',
+                      borderColor: 'black',
                       width: "90%",
                       '& .MuiInputLabel-root': {
                         fontSize: '1.5rem',
                         color: 'black', fontWeight: 'bolder',
                       },
                       '& .MuiInputBase-root': {
-                        bgcolor: "#75FA8D",
-
-                        mt: "1rem",
-                        mb: "1rem",
-
-
-                      }
-
-
-
+                        bgcolor: "white",
+                      }, mb: "1rem"
                     }}
                     id="outlined-multiline-static"
                     label="Descripción"
                     multiline
                     rows={4}
-                    variant="filled"
+                    defaultValue=""
                     value={Caracteristicas}
                     onChange={(e) => {
                       setCaracteristicas(e.target.value);
                     }}
                   />
-                  <label htmlFor="upload-photo">
-                    <input
-                      style={{ display: 'none', color: "#75FA8D" }}
-                      id="upload-photo"
-                      name="upload-photo"
-                      accept="image/*"
-                      type="file"
-                      onChange={selectedHandler}
-                    />
 
-                    <Fab
-                      color="secondary"
-                      size="small"
-                      component="span"
-                      aria-label="add"
-                      variant="extended"
-                    >
-                      <AddIcon /> Cargar fotos
-                    </Fab>
-
-                  </label>
 
 
                 </FormControl>
 
               </Grid>
-              <Button
+
+              <Button variant='contained'
                 sx={{
-                  background: '#75FA8D',
-                  color: 'white',
+                  background: 'white',
+                  color: 'black',
                   textAlign: 'center',
                   mb: '3rem',
                   border: 'none',
                   ml: "40%",
-                  boxShadow: "10px 5px 5px black",
-
+                  boxShadow: "5px 5px 5px grey",
+                  mt: "3.5rem",
                 }}
                 onClick={handleSubmit}
               >
                 Agregar Cancha
               </Button>
+
             </Grid>
 
           </div>
