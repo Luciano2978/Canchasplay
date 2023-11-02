@@ -1,10 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import "../Assets/css/Loader.css"
 import 'animate.css';
-import Pelota from "../Assets/Pelota.png";
-import PelotaBasket from "../Assets/PelotaBasket.png";
-import PelotaTenis from "../Assets/PelotaTenis.png";
-import CanchaPlayTransparent from "../Assets/CanchaPlayTransparent.png";
+import Pelota from "../Assets/img/Pelota.png";
+import PelotaBasket from "../Assets/img/PelotaBasket.png";
+import PelotaTenis from "../Assets/img/PelotaTenis.png";
+import CanchaPlayTransparent from "../Assets/img/CanchaPlayTransparent.png";
 
 export default function Loader() {
     const boxStyle = {

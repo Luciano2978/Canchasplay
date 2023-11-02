@@ -23,7 +23,7 @@ export default function DialogLogout({open, onClose}) {
     const { logout } = useAuth0();
 
     const desconectarse = () =>{
-        logout({ logoutParams: { returnTo: "http://localhost:3000/login" } })
+        logout({ logoutParams: { returnTo: "http://localhost:3000/homePage" } })
     }
 
   return (

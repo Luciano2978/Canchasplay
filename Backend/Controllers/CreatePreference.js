@@ -54,8 +54,8 @@ const createPreference = (req, res) => {
                     
                         },
                         back_urls: {
-                          success: "http://localhost:3000",
-                          failure: "http://localhost:3000",
+                          success: "http://localhost:3000/homeUsuario",
+                          failure: "http://localhost:3000/homeUsuario",
                           pending: "",
                         },
                         binary_mode: true,

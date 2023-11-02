@@ -1,5 +1,5 @@
 import { Box, Typography, Container } from "@mui/material";
-import Lupa from "../Assets/Lupa.png";
+import Lupa from "../Assets/img/Lupa.png";
 
 export default function BusquedaUi() {
   const boxStyle = {

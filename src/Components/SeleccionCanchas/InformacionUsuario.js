@@ -4,7 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import ImagenMia from "../../Assets/ImagenMia.jpeg";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function InformacionUsuario() {

@@ -6,15 +6,19 @@ import SeleccionCanchas from "./SeleccionCanchas.js";
 import MisReservas from "./MisReservas";
 import News from "./News";
 import { useAuth0 } from "@auth0/auth0-react";
+import SinPermisoUi from "../Components/SinPermisoUi";
 
 
 
 export default function Home(){
 
-    
-    //Recibo el valor para hacer una comparacion y mostrar el componente que necesito
-    
     const {RouteComponent} = useContext(Contexto);
+    const {user} = useAuth0();
+    const rol = user.Nombre.user_metadata.rol
+    console.log(rol)
+    if (rol === "Propietario"){
+      return <SinPermisoUi></SinPermisoUi>
+    }
     return(
         <>
             <div className="BackgroundHomeUsuario">
@@ -44,18 +48,6 @@ export default function Home(){
                     <FooterNavigation></FooterNavigation>
                 </div>
                 
-                {/*
-                <div>
-                    <img src={user.picture} alt={user.name} />
-                    <h2>{user.name}</h2>
-                    <p>{user.email}</p>
-                </div>
-
-                <div>
-                    <h2>Boton Home</h2>
-                    <LogoutButton></LogoutButton>
-                    
-            </div>*/}
             </div>
         </>
     

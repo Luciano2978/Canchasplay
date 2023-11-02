@@ -11,7 +11,7 @@ const createAccessToken = (req, res) => {
     const codigoAutorizacion = url.searchParams.get('code');
     // Aquí puedes manejar el código de autorización como lo necesites
     res.send("¡Su autorizacion fue todo un Exito! ");
-    const propietarioId = 1; //<- aca deberia recibir el idPropietario enviado desde el front
+    const propietarioId = 3; //<- aca deberia recibir el idPropietario enviado desde el front
     storeTokens(codigoAutorizacion,propietarioId, res);
     
 };
