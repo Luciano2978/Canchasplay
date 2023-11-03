@@ -135,7 +135,7 @@ export default function VistaPropietario() {
           ) : (
             <Hidden xsDown>
               {/* Muestra los tabs en pantallas más grandes */}
-              <AppBar position="static">
+              <AppBar position="static" sx={{ height: "64px" }}>
                 <Tabs sx={{ bgcolor: "black" }}
                   value={value}
                   onChange={handleChange}
