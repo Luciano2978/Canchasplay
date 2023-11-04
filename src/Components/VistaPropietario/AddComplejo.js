@@ -26,7 +26,6 @@ const AddComplejo = () => {
     const autocompleteRef = useRef();
     const [file, setFile] = useState(null)
     const {user} = useAuth0();
-    console.log(user)
     const selectedHandler = e => {
         setFile(e.target.files[0])
       }

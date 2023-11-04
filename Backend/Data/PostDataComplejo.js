@@ -105,7 +105,6 @@ const postComplejo = (req, res) => {
                                 }
 
                                 console.log('Transacción completada con éxito');
-                                connection.end();
                                 res.send('Transacción completada con éxito');
                             });
                         });

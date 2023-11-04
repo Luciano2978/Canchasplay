@@ -11,7 +11,7 @@ import {
   Checkbox,
   FormControlLabel,
   Typography,
-  Button, Grid
+  Button, Grid, useMediaQuery
 } from '@mui/material';
 import axios from 'axios';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -44,6 +44,14 @@ const styles = {
       background: 'green', // Cambio de color al pasar el mouse sobre el pulgar
     },
   },
+};
+const breakpoints = {
+  xs: '(max-width:600px)',
+  sm: '(max-width:960px)',
+  md: '(max-width:1280px)',
+  lg: '(max-width:1920px)',
+  xl: '(min-width:1920px)',
+  custom: '(width:1366px) and (height:768px)',
 };
 
 export default function ListHorario() {
@@ -146,64 +154,94 @@ export default function ListHorario() {
       setSelectedHours([...selectedHours, selectedHour]);
     }
   };
+  const isMobile = useMediaQuery(breakpoints.xs && breakpoints.sm);
 
   return (
     <div>
-      <Grid spacing={3} sx={{
-        backgroundColor: "#b9f6ca", borderRadius: '10px', position: "absolute", alignItems: "left", justifyContent: 'left',
+
+      <Grid spacing={3} container sx={{
+        backgroundColor: "#b9f6ca", borderRadius: '10px', alignItems: "left", justifyContent: 'left', width: "20%", ml: "1rem", mt: "1rem",
 
       }}>
-        <FormControl sx={{ m: 1, width: 300, }}>
-        <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb:"0.5rem" }} >Elegir cancha</Typography>
-          <Select sx={{ fontWeight: "bold", fontSize: "20px", background: "white" }}
-            labelId="demo-multiple-name-label"
-            id="demo-multiple-name"
-            value={selectedCancha}
-            onChange={handleChange}
-            input={<OutlinedInput label="Name" />}
-            MenuProps={MenuProps}
-          >
-            {datos.map((data) => (
-              <MenuItem
-                key={data.id_Cancha}
-                value={data.nombre_Cancha}
-              >
-                {data.nombre_Cancha}
-              </MenuItem>
-            ))}
-          </Select>
-          <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb:"0.5rem" }} id="demo-multiple-turno-label">Turno</Typography>
-          <Select sx={{ fontWeight: "bold", fontSize: "20px", background: "white", mb:"0.5rem"}}
-            labelId="demo-multiple-turno-label"
-            id="demo-multiple-turno"
-            value={turno}
-            onChange={handleTurnoChange}
-            input={<OutlinedInput label="Turno" />}
-          >
-            <MenuItem value="manana"> Mañana</MenuItem>
-            <MenuItem value="tarde"> Tarde</MenuItem>
-          </Select>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb:"0.5rem" }} id="demo-multiple-turno-label">Fecha</Typography>
-            <DatePicker sx={{ background: "white", }}
-              labelId="demo-multiple-fecha-label"
-              id="demo-multiple-fecha"
-              value={selectedDate}
-              onChange={handleDateChange}
-            /></LocalizationProvider>
 
-        </FormControl>
+        <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", }}>
+          <FormControl sx={{ m: 1, width: "200%", }}>
+            <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb: "0.5rem" }} >Elegir cancha</Typography>
+            <Select sx={{ fontWeight: "bold", fontSize: "20px", background: "white" }}
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              value={selectedCancha}
+              onChange={handleChange}
+              input={<OutlinedInput label="Name" />}
+              MenuProps={MenuProps}
+            >
+              {datos.map((data) => (
+                <MenuItem
+                  key={data.id_Cancha}
+                  value={data.nombre_Cancha}
+                >
+                  {data.nombre_Cancha}
+                </MenuItem>
+              ))}
+            </Select>
+            <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb: "0.5rem" }} id="demo-multiple-turno-label">Turno</Typography>
+            <Select sx={{ fontWeight: "bold", fontSize: "20px", background: "white", mb: "0.5rem" }}
+              labelId="demo-multiple-turno-label"
+              id="demo-multiple-turno"
+              value={turno}
+              onChange={handleTurnoChange}
+              input={<OutlinedInput label="Turno" />}
+            >
+              <MenuItem value="manana"> Mañana</MenuItem>
+              <MenuItem value="tarde"> Tarde</MenuItem>
+            </Select>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb: "0.5rem" }} id="demo-multiple-turno-label">Fecha</Typography>
+              <DatePicker sx={{ background: "white", }}
+                labelId="demo-multiple-fecha-label"
+                id="demo-multiple-fecha"
+                value={selectedDate}
+                onChange={handleDateChange}
+              /></LocalizationProvider>
+
+          </FormControl>
+        </Grid>
       </Grid>
+
       <div style={{
         display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
       }}>
+
         <Grid
           container
           spacing={3}
-          sx={{ background: "#b9f6ca", width: "50%", margin: "0 auto", borderRadius: '10px' }}
+          sx={{ background: "#b9f6ca", width: "50%", margin: "0 auto", borderRadius: '10px', mt: "-21.5rem", textAlign: "center", justifyContent: "center" }}
         >
           <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", mt: "0 auto" }}>
 
+
+            <Typography
+              sx={{
+                color: 'black', fontWeight: 'bolder',
+                textAlign: "left",
+              }}
+            > Eliga los horarios a añadir
+            </Typography>
+            <FormControlLabel
+              label="Seleccionar Todos"
+              control={
+                <Checkbox
+                  checked={selectAll}
+                  onChange={toggleSelectAll}
+                />
+              }
+              sx={{
+                // Aquí puedes agregar estilos personalizados para el label
+                color: 'black', // Cambia el color del texto
+                fontWeight: 'bold', // Cambia el grosor de la fuente
+
+              }}
+            />
             <Box sx={{
               maxHeight: '400px', // Altura máxima del contenedor, ajusta según tus necesidades
               overflowY: 'auto', // Habilita el desplazamiento vertical si es necesario
@@ -222,29 +260,6 @@ export default function ListHorario() {
               },
 
             }}>
-              <Typography
-                sx={{
-                  color: 'black', fontWeight: 'bolder',
-                  textAlign: "left",
-                }}
-              > Eliga los horarios a añadir
-              </Typography>
-              <FormControlLabel
-                label="Seleccionar Todos"
-                control={
-                  <Checkbox
-                    checked={selectAll}
-                    onChange={toggleSelectAll}
-                  />
-                }
-                sx={{
-                  // Aquí puedes agregar estilos personalizados para el label
-                  color: 'black', // Cambia el color del texto
-                  fontWeight: 'bold', // Cambia el grosor de la fuente
-
-                }}
-              />
-
               {turno === 'manana'
                 ? [...Array(6)].map((_, index) => (
                   <Box
