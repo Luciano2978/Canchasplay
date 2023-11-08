@@ -65,9 +65,9 @@ const PostCancha = (req, res) => {
                         nombre_Cancha: nombre_Cancha,
                         img_Cancha: img_Cancha
                     };
-
+                    const intoCancha= 'INSERT INTO cancha SET ?'
                     // Inserta los datos de la cancha en la base de datos
-                    connection.query('INSERT INTO cancha SET ?', canchaData, (err, rows) => {
+                    connection.query(intoCancha, canchaData, (err, rows) => {
                         if (err) {
                             connection.rollback(() => {
                                 console.error(err);

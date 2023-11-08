@@ -68,9 +68,9 @@ const postComplejo = (req, res) => {
                         longitud: longitud,
                         ubicacion_Detallada: ubicacion_Detallada
                     }
-
+                    const intoUbicacion= 'INSERT INTO ubicacion SET ?'
                     // Inserta datos en la tabla de ubicación
-                    connection.query('INSERT INTO ubicacion SET ?', dataUbicacion, (err, result) => {
+                    connection.query(intoUbicacion, dataUbicacion, (err, result) => {
                         if (err) {
                             connection.rollback(() => {
                                 console.error('Error al insertar datos en la tabla de ubicación:', err);
@@ -85,7 +85,8 @@ const postComplejo = (req, res) => {
                         complejoData.Ubicacion_id_Ubicacion = ubicacionId;
 
                         // Inserta datos en la tabla de complejo
-                        connection.query('INSERT INTO complejo SET ?', complejoData, (err, result) => {
+                        const intoComplejo= 'INSERT INTO complejo SET ?';
+                        connection.query(intoComplejo, complejoData, (err, result) => {
                             if (err) {
                                 connection.rollback(() => {
                                     console.error('Error al insertar datos en la tabla de complejo:', err);

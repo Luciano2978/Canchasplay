@@ -12,8 +12,9 @@ const postHorario = (req, res) =>{
             Cancha_id_Cancha: Cancha_id_Cancha,
             estado_Disponiblidad: 1,
         };
+        const intoHora= 'INSERT INTO horarios_disponibles SET ?';
 
-        connection.query('INSERT INTO horarios_disponibles SET ?', horaData, (err, rows) => {
+        connection.query( intoHora, horaData, (err, rows) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error en el servidor');
