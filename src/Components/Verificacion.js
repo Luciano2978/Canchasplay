@@ -12,6 +12,6 @@ export default function Verificacion(){
 
     if(rol === "Usuario") return <Navigate to="/homeUsuario"/>
 
-    if(rol === "Propietario") return <Navigate to="/homePropietario"/>
+    if(rol === "Propietario") return <Navigate to="/Complejo"/>
 
 }

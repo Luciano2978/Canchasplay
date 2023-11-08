@@ -13,7 +13,7 @@ import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import AddIcon from '@mui/icons-material/Add';
-
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 const AddComplejo = () => {
@@ -25,11 +25,11 @@ const AddComplejo = () => {
     const [nombre_Lugar, setNombre_Lugar] = useState('');
     const autocompleteRef = useRef();
     const [file, setFile] = useState(null)
-
+    const {user} = useAuth0();
     const selectedHandler = e => {
         setFile(e.target.files[0])
       }
-
+      
     
     const handlenombre_LugarChange = (event) => {
         console.log(nombre_Lugar)
@@ -55,7 +55,7 @@ const AddComplejo = () => {
         }
         
         const formdata = new FormData()
-        
+        formdata.append('id_Cuenta', user.sub)
         formdata.append('nombre_Lugar', nombre_Lugar)
         formdata.append('logo_Complejo', file)
         formdata.append('latitud', latitud)
@@ -146,7 +146,7 @@ const AddComplejo = () => {
                                 aria-label="add"
                                 variant="extended"
                             >
-                                <AddIcon /> Cargar fotos
+                                <AddIcon /> Cargar logo
                             </Fab>
 
                         </label>

@@ -17,7 +17,7 @@ import SportsTennisIcon from '@mui/icons-material/SportsTennis';
 import AddIcon from '@mui/icons-material/Add';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 const breakpoints = {
@@ -43,6 +43,7 @@ export default function AddCancha() {
   const dimensionesConcatenadas = `${largo} x ${ancho}`;
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const {user} = useAuth0();
 
   const selectedHandler = e => {
     setFile(e.target.files[0])
@@ -71,6 +72,7 @@ export default function AddCancha() {
       return; // No enviar la solicitud si falta alguno de los campos requeridos
     }
     const formdata = new FormData()
+    formdata.append('id_Cuenta', user.sub)
     formdata.append('deporte', deporte)
     formdata.append('Caracteristicas', Caracteristicas)
     formdata.append('precio_Hora', precio_Hora)
@@ -484,16 +486,17 @@ export default function AddCancha() {
                   <TextField
                     sx={{
 
-                      /* '& .MuiInputLabel-root': {
+                      '& .MuiInputBase-input': {
                         fontSize: '20px',
-                        color: 'black', fontWeight: 'bolder',
+                        color: 'black', fontWeight: 'bold',
 
-                      }, */
+                      },
                       background: "#FFFFFF",
                       border: 'solid',
                       borderRadius: '10px',
                       borderColor: 'black',
-                      mb: "1rem"
+                      mb: "1rem",
+                      fontWeight:"bold"
                     }}
                     id="filled-search"
                     label="Nombre de la cancha"
@@ -592,6 +595,11 @@ export default function AddCancha() {
                         color: 'black', fontWeight: 'bolder',
                         marginTop: "-10px",
                       },
+                      '& .MuiInputBase-input': {
+                        fontSize: '20px',
+                        color: 'black', fontWeight: 'bold',
+
+                      },
                       width: "90%",
                       border: 'solid',
                       borderRadius: '10px',
@@ -624,6 +632,11 @@ export default function AddCancha() {
                         color: 'black', fontWeight: 'bolder',
                         marginTop: "-10px",
 
+
+                      },
+                      '& .MuiInputBase-input': {
+                        fontSize: '20px',
+                        color: 'black', fontWeight: 'bold',
 
                       },
                       border: 'solid',
@@ -660,6 +673,10 @@ export default function AddCancha() {
                       },
                       '& .MuiInputBase-root': {
                         bgcolor: "white",
+                      }, '& .MuiInputBase-input': {
+                        fontSize: '20px',
+                        color: 'black', fontWeight: 'bold',
+
                       }, mb: "1rem"
                     }}
                     id="outlined-multiline-static"

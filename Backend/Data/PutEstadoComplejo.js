@@ -19,8 +19,9 @@ const PutEstadoComplejo = (req, res) => {
             logo_Complejo : logo_Complejo,
             estado_Complejo : estado_Complejo
         };
+        const updateComplejo= "UPDATE complejo set ? ";
 
-        connection.query("UPDATE complejo set ? ", dataEstado , (err, rows) => {
+        connection.query( updateComplejo, dataEstado , (err, rows) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Error en el servidor');

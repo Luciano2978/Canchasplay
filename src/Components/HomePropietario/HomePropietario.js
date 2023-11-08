@@ -97,12 +97,12 @@ function HomePropietario() {
             <FormControlLabel
               value="activo"
               control={
-                <Radio
+                <Radio 
                   sx={{
-                    fontSize: '1.5rem',
+                    
                     color: 'blue', // Cambia el color del círculo
                     '&.Mui-checked': {
-                      backgroundColor: 'lightgreen', // Cambia el fondo cuando está seleccionado
+                      backgroundColor: 'blue', // Cambia el fondo cuando está seleccionado
                       boxShadow: '0px 0px 10px rgba(0, 128, 0, 0.5)', // Sombra cuando está seleccionado
                     },
                   }}
@@ -110,7 +110,6 @@ function HomePropietario() {
               }
               label="Activo"
               sx={{
-                fontSize: '1.5rem',
                 '&:hover': {
                   color: 'darkgreen', // Cambia el color del texto al pasar el mouse
                 },
@@ -127,7 +126,7 @@ function HomePropietario() {
                     color: 'blue', // Cambia el color del círculo cuando está seleccionado
                     fontSize: '1.5rem',
                     '&:hover': {
-                      backgroundColor: 'lightcoral', // Cambia el fondo al pasar el mouse
+                      backgroundColor: 'blue', // Cambia el fondo al pasar el mouse
                       boxShadow: '0px 0px 10px rgba(255, 0, 0, 0.5)', // Sombra al pasar el mouse
                     },
                   },
@@ -135,7 +134,6 @@ function HomePropietario() {
               />}
               label="Inactivo"
               sx={{
-                fontSize: '1.5rem',
                 '&:hover': {
                   color: 'darkred', // Cambia el color del texto al pasar el mouse
                 },

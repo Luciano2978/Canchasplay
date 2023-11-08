@@ -9,9 +9,9 @@ import {
   TextField,
   Box,
   Checkbox,
-  FormControlLabel,
+  FormControlLabel, Paper,
   Typography,
-  Button
+  Button, Grid, useMediaQuery, ThemeProvider, createTheme, Table, Dialog, DialogTitle, DialogContent, DialogActions, Fab,
 } from '@mui/material';
 import axios from 'axios';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -19,6 +19,22 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import { styled } from "@mui/material/styles";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -45,7 +61,20 @@ const styles = {
     },
   },
 };
-
+const breakpoints = {
+  xs: '(max-width:600px)',
+  sm: '(max-width:960px)',
+  md: '(max-width:1280px)',
+  lg: '(max-width:1920px)',
+  xl: '(min-width:1920px)',
+  custom: '(width:1366px) and (height:768px)',
+};
+const theme = createTheme({
+  typography: {
+    fontFamily: "Arial", // Opcional: Cambia la fuente si lo deseas
+    fontWeight: "bold", // Aplica negritas a todas las instancias de Typography
+  },
+});
 export default function ListHorario() {
   const [datos, setDatos] = useState([]);
   const [selectedCancha, setSelectedCancha] = useState('');
@@ -54,7 +83,23 @@ export default function ListHorario() {
   const [selectAll, setSelectAll] = useState(false); // Para seleccionar todos los horarios
   const [canchaId, setCanchaId] = useState(null);
   const [turno, setTurno] = useState('manana'); // 'manana' o 'tarde'
+  const [horarios, setHorarios] = useState([]);
+  const [horarioEdit, setHorarioEdit] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [selectedOption, setSelectedOption] = useState('agregar'); // Estado para controlar la opción seleccionada
+  const boldText = {
+    fontWeight: "bold",
+    fontSize: "20px",
+  };
+  /* const ListText = {
+    fontWeight: "bold",
+    fontSize: "h6",
+    textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+  }; */
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
   useEffect(() => {
     axios.get('http://localhost:8080/getCancha')
       .then((response) => {
@@ -123,6 +168,14 @@ export default function ListHorario() {
         });
     });
   };
+  const getHorariosByCancha = async (canchaId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/getHorarios/${canchaId}`);
+      setHorarios(response.data); // Actualiza el estado con la lista de horarios
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleChange = (event) => {
     const selectedCancha = event.target.value;
@@ -130,6 +183,8 @@ export default function ListHorario() {
     const selectedCanchaData = datos.find((cancha) => cancha.nombre_Cancha === selectedCancha);
     if (selectedCanchaData) {
       setCanchaId(selectedCanchaData.id_Cancha);
+      getHorariosByCancha(selectedCanchaData.id_Cancha); // Llama a la función para obtener los horarios
+
     }
   };
 
@@ -146,156 +201,379 @@ export default function ListHorario() {
       setSelectedHours([...selectedHours, selectedHour]);
     }
   };
+  const handleEditClick = (horario) => {
+    setHorarioEdit(horario);
+    setIsModalOpen(true);
+  };
+ 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleDeleteClick = (horarioId) => {
+    if (window.confirm('¿Seguro que deseas eliminar este horario?')) {
+      // Actualiza el estado local para eliminar el horario de inmediato
+      setHorarios(horarios.filter((horario) => horario.id_Horario !== horarioId));
+
+      // Luego, envía la solicitud DELETE al servidor
+      deleteHorario(horarioId);
+    }
+  };
+const deleteHorario = (horarioId) => {
+  axios
+    .delete(`http://localhost:8080/deleteHorario/${horarioId}`)
+    .then((response) => {
+      // Realiza acciones adicionales después de la eliminación, si es necesario
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+const handleEditarHorario = (e) => {
+  e.preventDefault();
+  // Realiza una solicitud al servidor para actualizar el horario con la ID específica (horarioEdit.id_Horario) utilizando los datos en horarioEdit.
+  axios
+    .put(`http://localhost:8080/editHorario/${horarioEdit.id_Horario}`, horarioEdit)
+    .then((response) => {
+      // Actualiza el estado local `horarios` con los datos editados
+      const newHorarios = horarios.map((horario) =>
+        horario.id_Horario === horarioEdit.id_Horario ? horarioEdit : horario
+      );
+      setHorarios(newHorarios);
+
+      // Cierra el modal después de guardar los cambios
+      handleCloseModal();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+  const isMobile = useMediaQuery(breakpoints.xs && breakpoints.sm);
 
   return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-    }}>
-      <FormControl sx={{ m: 1, width: 300, background: "white" , boxShadow: "10px 5px 5px #75FA8D"}}>
-        <InputLabel sx={{fontSize:"30px"}} id="demo-multiple-name-label" >Canchas</InputLabel>
-        <Select sx={{ fontWeight: "bold", fontSize: "20px" }}
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          value={selectedCancha}
-          onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
-          MenuProps={MenuProps}
-        >
-          {datos.map((data) => (
-            <MenuItem
-              key={data.id_Cancha}
-              value={data.nombre_Cancha}
+    <div>
+
+      <Grid spacing={3} container sx={{
+        backgroundColor: "#b9f6ca", borderRadius: '10px', alignItems: "left", justifyContent: 'left', width: "20%", ml: "1rem", mt: "1rem",
+
+      }}>
+
+        <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", }}>
+          <FormControl sx={{ m: 1, width: "200%", }}>
+            <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb: "0.5rem" }} >Elegir cancha</Typography>
+            <Select sx={{ fontWeight: "bold", fontSize: "20px", background: "white" }}
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              value={selectedCancha}
+              onChange={handleChange}
+              input={<OutlinedInput label="Name" />}
+              MenuProps={MenuProps}
             >
-              {data.nombre_Cancha}
-            </MenuItem>
-          ))}
-        </Select>
-        <Typography sx={{ color: "green", fontWeight: "bold", fontSize: "20px" }} id="demo-multiple-turno-label">Turno</Typography>
-        <Select
-          labelId="demo-multiple-turno-label"
-          id="demo-multiple-turno"
-          value={turno}
-          onChange={handleTurnoChange}
-          input={<OutlinedInput label="Turno" />}
-        >
-          <MenuItem value="manana"> Mañana</MenuItem>
-          <MenuItem value="tarde"> Tarde</MenuItem>
-        </Select>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Typography sx={{ color: "green", fontWeight: "bold", fontSize: "20px" }} id="demo-multiple-turno-label">Fecha</Typography>
-          <DatePicker
-            labelId="demo-multiple-fecha-label"
-            id="demo-multiple-fecha"
-            value={selectedDate}
-            onChange={handleDateChange}
-          />
-          <Box sx={{
-            maxHeight: '400px', // Altura máxima del contenedor, ajusta según tus necesidades
-            overflowY: 'auto', // Habilita el desplazamiento vertical si es necesario
-            marginBottom: '16px', // Agrega espacio inferior para separar de otros elementos
-            ...styles.scrollbar, // Aplica los estilos personalizados a la barra de desplazamiento
-
-          }}>
-            <Typography
-              sx={{
-                color: 'green', fontWeight: 'bolder',
-                textAlign: "left",
-              }}
-            > Eliga los horarios a añadir
-            </Typography>
-            <FormControlLabel
-              label="Seleccionar Todos"
-              control={
-                <Checkbox
-                  checked={selectAll}
-                  onChange={toggleSelectAll}
-                />
-              }
-              sx={{
-                // Aquí puedes agregar estilos personalizados para el label
-                color: 'green', // Cambia el color del texto
-                fontWeight: 'bold', // Cambia el grosor de la fuente
-
-              }}
-            />
-            {turno === 'manana'
-              ? [...Array(6)].map((_, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    padding: '8px',
-                    marginBottom: '8px',
-                    fontWeight: 'bold',
-                  }}
+              {datos.map((data) => (
+                <MenuItem
+                  key={data.id_Cancha}
+                  value={data.nombre_Cancha}
                 >
-                  <Typography sx={{ flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: "bolder" }}>
-                    {`${String((index + 8) % 24).padStart(2, '0')}:00`} {/* Usa el mismo formato que selectedHours */}
-                  </Typography>
-                  <Checkbox
-                    checked={selectedHours.includes(`${String((index + 8) % 24).padStart(2, '0')}:00:00`)}
-                    onChange={() => handleHourChange(dayjs().hour((index + 8) % 24).minute(0).second(0))}
-                    sx={{
-                      '&.Mui-checked': {
-                        color: 'blue',
-                      },
-                    }}
-                  />
-                </Box>
-              ))
-              : [...Array(10)].map((_, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    padding: '8px',
-                    marginBottom: '8px',
-                    fontWeight: 'bold',
-
-                  }}
-                >
-                  <Typography sx={{
-                    flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: 'bolder',
-                    // Cambia el tamaño de fuente
-                  }}>
-                    {`${String((index + 16) % 24).padStart(2, '0')}:00`}
-                  </Typography>
-                  <Checkbox
-                    checked={selectedHours.includes(`${String((index + 16) % 24).padStart(2, '0')}:00:00`)}
-                    onChange={() => handleHourChange(dayjs().hour((index + 16) % 24).minute(0).second(0))}
-                    sx={{
-                      '&.Mui-checked': {
-                        color: 'blue',
-                      },
-
-                    }}
-                  />
-                </Box>
+                  {data.nombre_Cancha}
+                </MenuItem>
               ))}
-          </Box>
-        </LocalizationProvider>
+            </Select>
+            <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb: "0.5rem" }} id="demo-multiple-turno-label">Turno</Typography>
+            <Select sx={{ fontWeight: "bold", fontSize: "20px", background: "white", mb: "0.5rem" }}
+              labelId="demo-multiple-turno-label"
+              id="demo-multiple-turno"
+              value={turno}
+              onChange={handleTurnoChange}
+              input={<OutlinedInput label="Turno" />}
+            >
+              <MenuItem value="manana"> Mañana</MenuItem>
+              <MenuItem value="tarde"> Tarde</MenuItem>
+            </Select>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Typography sx={{ color: "black", fontWeight: "bold", fontSize: "20px", mb: "0.5rem" }} id="demo-multiple-turno-label">Fecha</Typography>
+              <DatePicker sx={{ background: "white", }}
+                labelId="demo-multiple-fecha-label"
+                id="demo-multiple-fecha"
+                value={selectedDate}
+                onChange={handleDateChange}
+              /></LocalizationProvider>
 
-        <Button
-          sx={{
-            background: '#75FA8D',
-            color: 'green',
-            border: 'none',
-          }}
-          onClick={handleSubmit}
+          </FormControl>
+        </Grid>
+      </Grid>
+
+      <div style={{
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+      }}>
+
+        <Grid
+          container
+          spacing={3}
+          sx={{ background: "#b9f6ca", width: "50%", margin: "0 auto", borderRadius: '10px', mt: "-21.5rem", textAlign: "center", justifyContent: "center" }}
         >
-          Agregar Horarios
-        </Button>
-      </FormControl>
-    </div>
+          <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", mt: "0 auto" }}>
+
+            <FormControl>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                value={selectedOption}
+                onChange={handleOptionChange}
+              >
+                <FormControlLabel value="agregar" control={<Radio />} label="Agregar" />
+                <FormControlLabel value="listar" control={<Radio />} label="Listar" />
+
+              </RadioGroup>
+            </FormControl>
+            {selectedOption === 'agregar' && (
+              <div>
+
+                <Typography
+                  sx={{
+                    color: 'black', fontWeight: 'bolder',
+                    textAlign: "left",
+                  }}
+                > Eliga los horarios a añadir
+                </Typography>
+                <FormControlLabel
+                  label="Seleccionar Todos"
+                  control={
+                    <Checkbox
+                      checked={selectAll}
+                      onChange={toggleSelectAll}
+                    />
+                  }
+                  sx={{
+                    // Aquí puedes agregar estilos personalizados para el label
+                    color: 'black', // Cambia el color del texto
+                    fontWeight: 'bold', // Cambia el grosor de la fuente
+
+                  }}
+                />
+                <Box sx={{
+                  maxHeight: '400px', // Altura máxima del contenedor, ajusta según tus necesidades
+                  overflowY: 'auto', // Habilita el desplazamiento vertical si es necesario
+                  marginBottom: '16px', // Agrega espacio inferior para separar de otros elementos
+                  ...styles.scrollbar, // Aplica los estilos personalizados a la barra de desplazamiento
+
+                  /* "&::-webkit-scrollbar": {
+                    width: "0.4em", // Ancho de la barra
+                    height: "0.4em", // Altura de la barra
+                  }, */
+                  "&::-webkit-scrollbar-thumb": {
+                    backgroundColor: "rgba(0, 0, 0, 0.2)", // Color del "pulgar" de la barra
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    background: "transparent", // Color del fondo de la barra
+                  },
+
+                }}>
+                  {turno === 'manana'
+                    ? [...Array(6)].map((_, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          padding: '8px',
+                          marginBottom: '8px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        <Typography sx={{ flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: "bolder" }}>
+                          {`${String((index + 8) % 24).padStart(2, '0')}:00`} {/* Usa el mismo formato que selectedHours */}
+                        </Typography>
+                        <Checkbox
+                          checked={selectedHours.includes(`${String((index + 8) % 24).padStart(2, '0')}:00:00`)}
+                          onChange={() => handleHourChange(dayjs().hour((index + 8) % 24).minute(0).second(0))}
+                          sx={{
+                            '&.Mui-checked': {
+                              color: 'blue',
+                            },
+                          }}
+                        />
+                      </Box>
+                    ))
+                    : [...Array(10)].map((_, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          padding: '8px',
+                          marginBottom: '8px',
+                          fontWeight: 'bold',
+
+                        }}
+                      >
+                        <Typography sx={{
+                          flex: 1, textAlign: 'left', marginRight: '8px', fontWeight: 'bolder',
+                          // Cambia el tamaño de fuente
+                        }}>
+                          {`${String((index + 16) % 24).padStart(2, '0')}:00`}
+                        </Typography>
+                        <Checkbox
+                          checked={selectedHours.includes(`${String((index + 16) % 24).padStart(2, '0')}:00:00`)}
+                          onChange={() => handleHourChange(dayjs().hour((index + 16) % 24).minute(0).second(0))}
+                          sx={{
+                            '&.Mui-checked': {
+                              color: 'blue',
+                            },
+
+                          }}
+                        />
+                      </Box>
+                    ))}
+                </Box>
+                <Button
+                  sx={{
+                    background: '#75FA8D',
+                    color: 'white',
+                    border: 'none',
+                  }}
+                  onClick={handleSubmit}
+                >
+                  Agregar Horarios
+                </Button>
+              </div>
+            )}
+            {selectedOption === "listar" && (
+              <div>
+                <TableContainer
+                  sx={{
+
+                    mt: "2rem",
+                    mb: "4rem",
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                  component={Paper}
+                >
+                  <ThemeProvider theme={theme}>
+                    <Table sx={{  mb: "2rem", }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>
+                            <Typography variant="subtitle1">ID</Typography>
+                          </StyledTableCell>
+      
+                          <StyledTableCell align="right">
+                            <Typography variant="subtitle1">Fecha</Typography>
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            <Typography variant="subtitle1">Hora</Typography>
+                          </StyledTableCell>
+                          
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {horarios.map((horario) => (
+                          <StyledTableRow key={horario.id_Horario} >
+                            <StyledTableCell component="th" scope="row">
+                              {horario.id_Cancha}
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              <Typography variant="subtitle1" sx={boldText}>{horario.fecha}</Typography >
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              <Typography variant="subtitle1" sx={boldText}>{horario.hora}</Typography >
+                            </StyledTableCell>
+                            <StyledTableCell align="right">
+                              <Typography variant="subtitle1" sx={boldText}>{horario.estado_Disponiblidad}</Typography>
+                            </StyledTableCell>
+                            <StyledTableCell align="right" colSpan={2}>
+                              <Fab color="primary" aria-label="edit" onClick={() => handleEditClick(horario)}>
+                                <EditIcon />
+                              </Fab>
+                              <Fab color="secondary" aria-label="delete" onClick={() => handleDeleteClick(horario.id_Horario)}>
+                                <DeleteForeverTwoToneIcon />
+                              </Fab>
+                            </StyledTableCell>
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </ThemeProvider>
+                </TableContainer>
+              </div>
+
+            )}
+            <Dialog open={isModalOpen} onClose={handleCloseModal}>
+              <DialogTitle>Editar Cancha</DialogTitle>
+              <DialogContent>
+                {horarioEdit && (
+                  <form onSubmit={handleEditarHorario}>
+                    <TextField
+                      sx={{ margin: '1rem' }}
+                      label="Fecha"
+                      fullWidth
+                      value={horarioEdit.fecha}
+                      onChange={(e) =>
+                        setHorarioEdit({
+                          ...horarioEdit,
+                          fecha: e.target.value,
+                        })
+                      }
+                    />
+                    <TextField
+                      sx={{ margin: '1rem' }}
+                      label="Hora"
+                      fullWidth
+                      value={horarioEdit.hora}
+                      onChange={(e) =>
+                        setHorarioEdit({
+                          ...horarioEdit,
+                          horario: e.target.value,
+                        })
+                      }
+                    />
+                    
+                    <DialogActions>
+                      <Button type="submit" color="primary">
+                        Guardar Cambios
+                      </Button>
+                      <Button onClick={handleCloseModal} color="primary">
+                        Cerrar
+                      </Button>
+                    </DialogActions>
+                  </form>
+                )}
+              </DialogContent>
+            </Dialog>
+
+
+          </Grid>
+
+        </Grid>
+
+
+      </div >
+    </div >
+
   );
 }
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "purple",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));

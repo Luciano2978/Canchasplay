@@ -8,7 +8,7 @@ const db = mysql.createConnection({
   database: "canchasplay",
 });
 
-
+ 
 const postDataUser = (req,res) => {
 
   const { userId, email, userMetadata } = req.body;
@@ -20,10 +20,13 @@ const postDataUser = (req,res) => {
   const rol = userMetadata.rol;
 
   console.log(req.body);
-
+  const dataPersona = "INSERT INTO Persona (dni, nombre, apellido, num_telefono) VALUES (?, ?, ?, ?)";
+  const dataCuenta = "INSERT INTO Cuenta (id_Cuenta, email, Persona_dni,Rol) VALUES (?, ?, ?, ?)";
+  const dataCliente = "INSERT INTO cliente (Cuenta_id_Cuenta) VALUES (?)";
+  const dataPropietario = "INSERT INTO  propietario  (Cuenta_id_Cuenta,Verificado) VALUES (?, ?)";
   // Primero, inserta el registro en la tabla Persona
   db.query(
-    "INSERT INTO Persona (dni, nombre, apellido, num_telefono) VALUES (?, ?, ?, ?)",
+    dataPersona,
     [dni, nombre, apellido, telefono], // Reemplaza 'Nombre1', 'Apellido1', 123456789 con los valores deseados
     (err, personaResult) => {
       if (err) {
@@ -32,7 +35,7 @@ const postDataUser = (req,res) => {
       } else {
         // Luego, inserta el registro en la tabla Cuenta
         db.query(
-          "INSERT INTO Cuenta (id_Cuenta, email, Persona_dni,Rol) VALUES (?, ?, ?, ?)",
+          dataCuenta,
           [userId, email, dni, rol],
           (err, cuentaResult) => {
             if (err) {
@@ -41,7 +44,7 @@ const postDataUser = (req,res) => {
             }         
             if (rol === "Usuario") {
               db.query(
-                "INSERT INTO cliente (Cuenta_id_Cuenta) VALUES (?)",
+                dataCliente,
                 [userId],
                 (err, clienteResult) => {
                   if (err) {
@@ -54,7 +57,7 @@ const postDataUser = (req,res) => {
               );
             } else if (rol === "Propietario") {
               db.query(
-                "INSERT INTO  propietario  (Cuenta_id_Cuenta,Verificado) VALUES (?, ?)",
+                dataPropietario,
                 [userId, 0 ],
                 (err, clienteResult) => {
                   if (err) {
