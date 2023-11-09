@@ -28,6 +28,8 @@ const AddComplejo = () => {
     const {user} = useAuth0();
     const selectedHandler = e => {
         setFile(e.target.files[0])
+        setShowSuccessAlert(true);
+
       }
       
     
@@ -51,8 +53,11 @@ const AddComplejo = () => {
     const sendHandler = () => {
         if(!file){
           alert('you must upload file')
+
           return
         }
+
+
         
         const formdata = new FormData()
         formdata.append('id_Cuenta', user.sub)
@@ -96,7 +101,7 @@ const AddComplejo = () => {
                     <Alert severity="success" onClose={() => setShowSuccessAlert(false)}>
                         <AlertTitle>Éxito</AlertTitle>
 
-                        ¡La cancha se ha registrado con éxito!
+                        ¡El logo se ha registrado con éxito!
                     </Alert>
                 )}
                 {showErrorAlert && (

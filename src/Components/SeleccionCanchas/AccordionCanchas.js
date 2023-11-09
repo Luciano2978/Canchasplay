@@ -42,7 +42,6 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           console.log("Error " + error);
     })
   };
-
   const [localOpen, setLocalOpen] = useState(false);
   
   const dataToSend = {
@@ -74,11 +73,13 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
   const [showInfoDialog, setShowInfoDialog] = useState(false);
   const [infoDimensiones,setInfoDimensiones] = useState("");
   const [carateristicas,setCaracteristicas] = useState("");
-  const handleOpenDialogInfoCanchas = useCallback((info_Dimensiones,Caracteristicas,precioHora) =>{
+  const [imgCancha,setImgCancha] = useState("");
+  const handleOpenDialogInfoCanchas = useCallback((info_Dimensiones,Caracteristicas,precioHora,img_Cancha) =>{
     setPrecioHora(precioHora)
     setInfoDimensiones(info_Dimensiones)
     setCaracteristicas(Caracteristicas)
     setShowInfoDialog(true);
+    setImgCancha(img_Cancha)
 
   },[])
   const handleCloseDialogInfoCanchas = useCallback(() =>{
@@ -143,7 +144,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
             id={`panel${i}bh-header`}
           >
              <div onClick={(e) => e.stopPropagation()}>
-              <Fab color="primary" onClick={() => handleOpenDialogInfoCanchas(cancha.info_Dimensiones,cancha.Caracteristicas,cancha.precio_Hora)} sx={{ backgroundColor: "black", marginRight: 1 }} aria-label="edit" size='small'>
+              <Fab color="primary" onClick={() => handleOpenDialogInfoCanchas(cancha.info_Dimensiones,cancha.Caracteristicas,cancha.precio_Hora,cancha.img_Cancha)} sx={{ backgroundColor: "black", marginRight: 1 }} aria-label="edit" size='small'>
                 <InfoRoundedIcon />
               </Fab>
             </div>
@@ -153,7 +154,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           <AccordionDetails>
             <Divider />
             {datosHorarios.map((horarios,i) => (
-              horarios.fecha === fecha && horarios.estado_Disponibilidad != 0?
+              horarios.fecha === fecha && horarios.estado_Disponiblidad != 0?
               <div key={i}>
                 <ListItem  button onClick={() => handleOpenMetodoDialog(horarios.id_Horario,horarios.hora, horarios.fecha,cancha.precio_Hora,cancha.deporte,cancha.id_Cancha)}>
                   <ListItemText primary={horarios.hora} secondary="Turno Disponible" />
@@ -174,7 +175,7 @@ export default function AccordionCanchas({open,onClose,NombreCancha,idComplejo})
           PrecioSelecc={precioHora}
           InfoDimensiones={infoDimensiones}
           Caracteristicas={carateristicas}
-          
+          img_Cancha={imgCancha}
         />
         <DialogMetodoPago
           open={showMetodoDialog}

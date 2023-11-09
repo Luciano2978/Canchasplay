@@ -36,29 +36,20 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-const images = [
-  {
-    label: "Dia",
-    imgPath:
-      "https://www.diarioel9dejulio.com.ar/wp-content/uploads/2012/04/cancha28.jpg"
-  },
-  {
-    label: "Adicional",
-    imgPath:
-      "https://i.pinimg.com/550x/71/d8/a9/71d8a91bf18074ec97c1a6283f2a01a2.jpg"
-  },
-  {
-    label: "De Noche",
-    imgPath:
-      "https://www.poderypolitica.com.ar/wp-content/uploads/2020/07/800_600_colisseo-futbol-5.jpg"
-  }
-];
 
 
-export default function DialogInfoCancha({open,onClose,PrecioSelecc,InfoDimensiones,Caracteristicas}) {
+export default function DialogInfoCancha({open,onClose,PrecioSelecc,InfoDimensiones,Caracteristicas,img_Cancha}) {
 
   const [localOpen, setLocalOpen] = React.useState(false);
-
+  
+  const images = [
+    {
+      label: "Dia",
+      imgPath:
+        {img_Cancha}
+    },
+  ];
+  
   React.useEffect(() => {
     setLocalOpen(open);
   }, [open]);
@@ -143,7 +134,7 @@ export default function DialogInfoCancha({open,onClose,PrecioSelecc,InfoDimensio
                         overflow: "hidden",
                         width: "100%"
                       }}
-                      src={step.imgPath}
+                      src={img_Cancha}
                       alt={step.label}
                     />
                   ) : null}

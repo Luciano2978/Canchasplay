@@ -11,7 +11,7 @@ const fechaAct = `${año}-${mes}-${dia}`;
 const postReserva = (req, res) => {
 
     const {idHorario,idCancha,Hora,Fecha,PrecioReserva,email,status} = req.body;
-
+    console.log(idHorario)
     const dataComplejoReservado = `
     select id_Complejo,deporte,nombre_Cancha,nombre_Lugar from cancha ca
     join complejo cm on ca.Complejo_id_Complejo = cm.id_Complejo  

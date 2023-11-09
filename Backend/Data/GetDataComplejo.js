@@ -1,37 +1,47 @@
 const connection = require("../config");
 
 const getDataComplejo = (req, res) => {
-    const dataComplejo = `
-        SELECT 
-            id_Complejo,
-            nombre_Lugar,
-            logo_Complejo,
-            latitud,
-            longitud,
-            ubicacion_Detallada,
-            estado_Complejo,
-            COUNT(cm.id_Comentario) AS totalComentarios,
-            AVG(cm.calificacion) AS calificacionPromedio
-        FROM complejo co 
-        JOIN Ubicacion ub ON co.Ubicacion_id_Ubicacion = ub.id_Ubicacion
-        LEFT JOIN comentario cm ON co.id_Complejo = cm.complejo_Id
-        GROUP BY co.id_Complejo`;
-
+    const dataComplejoQuery = `
+      SELECT 
+          id_Complejo,
+          nombre_Lugar,
+          logo_Complejo,
+          latitud,
+          longitud,
+          ubicacion_Detallada,
+          estado_Complejo,
+          COUNT(cm.id_Comentario) AS totalComentarios,
+          AVG(cm.calificacion) AS calificacionPromedio
+      FROM complejo co 
+      JOIN Ubicacion ub ON co.Ubicacion_id_Ubicacion = ub.id_Ubicacion
+      LEFT JOIN comentario cm ON co.id_Complejo = cm.complejo_Id
+      GROUP BY co.id_Complejo`;
+  
     try {
-        connection.query(dataComplejo, (err, results) => {
-            if (err) {
-                console.log("Error al obtener datos del complejo: " + err);
-                res.status(500).json({ error: "Error interno del servidor" });
-            } else {
-                res.json(results);
+      connection.query(dataComplejoQuery, (err, results) => {
+        if (err) {
+          console.log("Error al obtener datos del complejo: " + err);
+          res.status(500).json({ error: "Error interno del servidor" });
+        } else {
+          // Convertir el logo_Complejo en una cadena base64 si existe
+          results = results.map((result) => {
+            if (result.logo_Complejo) {
+              const base64Image = Buffer.from(result.logo_Complejo, 'binary').toString('base64');
+              result.logo_Complejo = `data:image/jpeg;base64,${base64Image}`;
             }
-        });
+            return result;
+          });
+  
+          res.json(results);
+        }
+      });
     } catch (err) {
-        console.log("Error inesperado: " + err);
-        res.status(500).json({ error: "Error interno del servidor" });
+      console.log("Error inesperado: " + err);
+      res.status(500).json({ error: "Error interno del servidor" });
     }
-};
-
+  };
+  
+  
 
 const getComentarios = (req,res) =>{
     const idComplejo = req.body.idCom;

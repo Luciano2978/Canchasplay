@@ -22,6 +22,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const breakpoints = {
     xs: '(max-width:600px)',
@@ -36,6 +37,7 @@ const theme = createTheme({
 });
 
 function ListCancha() {
+    const {user} = useAuth0()
     const isMobile = useMediaQuery(breakpoints.xs);
     const [data, setDatos] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,8 +53,11 @@ function ListCancha() {
     };
 
     useEffect(() => {
+        const dataToSend ={
+            id_Cuenta : user.sub
+        }
         axios
-            .get('http://localhost:8080/getCancha')
+            .post('http://localhost:8080/getCancha', dataToSend)
             .then((response) => {
                 setDatos(response.data);
             })

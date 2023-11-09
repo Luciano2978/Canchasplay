@@ -55,7 +55,7 @@ router.post("/Notificacion",PayCreate)
 //propietario
 router.post('/images/post', fileUpload_Logo, postComplejo);
 router.post('/createCancha', fileUpload_imgCancha, PostCancha);
-router.get('/getCancha', getCancha);
+router.post('/getCancha', getCancha);
 router.put('/editCancha/:id', PutChancha);
 router.delete('/deleteCancha/:id', DeleteCancha);
 router.post('/createHorario', postHorario);

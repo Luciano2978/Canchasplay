@@ -51,6 +51,7 @@ export default function VistaCanchas(){
         .then((response ) => {
             setDatosComplejo(response.data);
             console.log(response.data)
+            console.log(response.data.logo_Complejo)
         })
         .catch((error) =>{
             console.log("Error " + error);

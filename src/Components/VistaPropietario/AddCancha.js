@@ -47,6 +47,8 @@ export default function AddCancha() {
 
   const selectedHandler = e => {
     setFile(e.target.files[0])
+    setShowSuccessAlert(true);
+
   }
   const handleInputChange = (e, setStateFunction) => {
     const input = e.target.value;
@@ -125,7 +127,7 @@ export default function AddCancha() {
           <Alert severity="success" onClose={() => setShowSuccessAlert(false)}>
             <AlertTitle>Éxito</AlertTitle>
 
-            ¡La cancha se ha registrado con éxito!
+            ¡El dato se ha registrado con éxito!
           </Alert>
         )}
         {showErrorAlert && (
@@ -436,7 +438,7 @@ export default function AddCancha() {
         ) : (
           <div>
             <Grid container spacing={3} sx={{
-              backgroundColor: "#b9f6ca", width: "50%", margin: "0 auto", mt: "10rem", borderRadius: '10px',
+              backgroundColor: "#b9f6ca", width: "50%", margin: "0 auto", mt: "5rem", borderRadius: '10px',
 
             }}>
               <Grid item xs={12} sm={6} sx={{ alignItems: "center", justifyContent: "center", mt: "0 auto" }}>

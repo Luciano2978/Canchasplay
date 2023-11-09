@@ -29,7 +29,7 @@ const breakpoints = {
 };
 
 function HomePropietario() {
-  
+
 
   const isMobile = useMediaQuery(breakpoints.xs);
   const isTablet = useMediaQuery(breakpoints.sm);
@@ -62,7 +62,7 @@ function HomePropietario() {
         console.error('Error al obtener el estado del complejo:', error);
       });
   }, []);
- 
+
   return (
     <div>
       <Paper
@@ -82,7 +82,7 @@ function HomePropietario() {
             fontSize: '1.5rem',
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', // Agrega sombreado
             fontWeight: 'bold',
-            
+
 
           }} >        El complejo se encuentra {complejoActivo === 1 ? 'activo' : 'inactivo'}
 
@@ -97,9 +97,9 @@ function HomePropietario() {
             <FormControlLabel
               value="activo"
               control={
-                <Radio 
+                <Radio
                   sx={{
-                    
+
                     color: 'blue', // Cambia el color del círculo
                     '&.Mui-checked': {
                       backgroundColor: 'blue', // Cambia el fondo cuando está seleccionado
@@ -163,12 +163,15 @@ function HomePropietario() {
           }}
         >
           <MonetizationOnIcon sx={{ fontSize: isMobile ? '3rem' : '2rem', marginRight: isMobile ? '0' : '1rem', color: 'green' }} />
-          <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold' }}>
-            Ganancia Total
-          </Typography>
-          <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold' }}>
-            $22.900
-          </Typography>
+          <Box sx={{bgcolor: "grey"}}>
+            <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold',  }}>
+              Ganancia Total
+            </Typography>
+            <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold', textAlign:"center" }}>
+              $22.900
+            </Typography>
+          </Box>
+
           <Grid container spacing={isMobile ? 2 : 4}>
             <Grid item xs={12} md={6} lg={8}>
               <Typography sx={{ textAlign: isMobile ? 'center' : 'left', ml: isMobile ? '0' : '5rem' }} variant={isMobile ? 'h5' : 'h4'}>
