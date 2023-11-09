@@ -10,6 +10,8 @@ import FormProp from '../Components/FormProp';
 import NotFound from '../Components/NotFound';
 import HomePage from '../Container/HomePage';
 import Verificacion from '../Components/Verificacion';
+import AdminPage from '../Container/AdminPage';
+import NoAutenticado from '../Components/NoAutenticado';
 
 
 
@@ -33,7 +35,12 @@ export default function App(){
                     <Route exact path="/HomePage" element={<HomePage />} />
                     <Route exact path="/RegistroPropietario" element={<FormProp />} />
                     <Route path="/*" element={<NotFound />} />
+                    <Route path="/AdminPage" element={<AdminPage />} />
+
                     {/* Faltaria añadir una ruta para cuando el propietario este en estado de verificacion */}
+
+                    <Route path="/PropValidate" element={<NoAutenticado />} />
+                    
                 </Routes>
             </BrowserRouter>
         </>
