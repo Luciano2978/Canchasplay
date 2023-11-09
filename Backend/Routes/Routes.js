@@ -24,6 +24,11 @@ const { getComplejo } = require('../Data/GetComplejo');
 const PutEstadoComplejo = require('../Data/PutEstadoComplejo');
 const { PutHorario } = require("../Data/PutHorario");
 const { DeleteHorario } = require("../Data/DeleteHorario");
+const GetDataPropietario = require("../Data/GetDataPropietario");
+const { PutDataPropietario, PutPropietario } = require("../Data/PutDataPropietario");
+const putPropietario = require("../Data/PutDataPropietario");
+const DeleteDataProp = require("../Data/DeleteDataProp");
+const GetVerifiacionProp = require("../Data/GetVerificacion");
 
 router.get("/getDataComplejo", getDataComplejo);
 
@@ -64,6 +69,12 @@ router.get('/getHorarios/:canchaId', getDataHorarios);
 router.put('/editHorario/:id', PutHorario)
 router.put("/putEstado", PutEstadoComplejo)
 router.delete("/deleteHorario/:id", DeleteHorario)
+
+//ADMIN RUTAS
+router.get("/getDatosProp", GetDataPropietario)
+router.put('/editProp',putPropietario);
+router.delete("/deleteProp",DeleteDataProp)
+router.get("/getVerificacion/:id",GetVerifiacionProp)
 
 
 module.exports =  router
