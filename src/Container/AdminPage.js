@@ -92,20 +92,19 @@ const AdminPage = () => {
       });
   };
 
-  const eliminarProp = async () => {
-    console.log(propietarioSelect)
+  const eliminarProp = () => {
     try {
-      await axios.post("https://canchas-play.onrender.com/deleteProp", {
+      axios.post("https://canchas-play.onrender.com/deleteProp", {
         data: propietarioSelect,
       });
 
       setDatosAdm((prevDatos) =>
-        prevDatos.filter(
-          (propietario) =>
-            propietario.id_Propietario !== propietarioSelect.id_Propietario
+        prevDatos.map((propietario) =>
+          propietario.id_Propietario === propietarioSelect.id_Propietario
+            ? { ...propietario, Verificado: 0 }
+            : propietario
         )
       );
-
       abrirCerrarModalBorrar();
     } catch (error) {
       console.error(error);
