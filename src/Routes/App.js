@@ -24,7 +24,7 @@ export default function App(){
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route exact path="/login" element={<Login />}></Route>
+                    <Route exact path="/" element={<Login />}></Route>
                     <Route exact path="/Verificacion" element={<ProtectedRoute><Verificacion /></ProtectedRoute>} />
                     {/*Mishi*/}
                     <Route exact path="/HomeUsuario" element={<ProtectedRoute><NavigationContext><HomeUsuario/></NavigationContext></ProtectedRoute>}></Route>
