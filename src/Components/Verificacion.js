@@ -8,47 +8,35 @@ export default function Verificacion() {
   const { user } = useAuth0();
   const rol = user.Nombre.user_metadata.rol;
 
-
-
   useEffect(() => {
     axios
       .get(`https://canchas-play.onrender.com/getVerificacion/${user.sub}`)
       .then((response) => {
         setData(response.data);
-        console.log(response)
       })
       .catch((error) => {
         console.log("Error " + error);
       });
   }, []);
 
-
-  
-  console.log(data) 
-
   if (rol === "Usuario") return <Navigate to="/homeUsuario" />;
   
   if (rol === "Propietario") {
-    for (const dataProp of data) {
-        if (dataProp.Verificado === 1 && dataProp.cantidad_de_complejos_relacionados === 0 ) {
-          return <Navigate to="/Complejo" />;
-        } else if (dataProp.Verificado === 1 && dataProp.cantidad_de_complejos_relacionados === 1 ){
-          return <Navigate to="/homePropietario" />;
-        }
-        else if (dataProp.Verificado === 0) {
+    if (data) {
+      for (const dataProp of data) {
+        if (dataProp.Verificado === 1) {
+          if (dataProp.cantidad_de_complejos_relacionados === 0) {
+            return <Navigate to="/Complejo" />;
+          } else if (dataProp.cantidad_de_complejos_relacionados === 1) {
+            return <Navigate to="/homePropietario" />;
+          }
+        } else if (dataProp.Verificado === 0) {
           return <Navigate to="/PropValidate" />;
         }
       }
+    }
   }
-
-  if (rol === "Propietario" && data.Verificado === 1) {
-    return <Navigate to="/Complejo" />;
-  } else if (rol === "Propietario" && data.Verificado === 0){
-    return <Navigate to="/PropValidate" />;
-  }
-
-
-
 
   if (rol === "Administrador") return <Navigate to="/AdminPage" />;
 }
+
