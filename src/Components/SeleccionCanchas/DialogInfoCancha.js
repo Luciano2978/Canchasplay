@@ -61,6 +61,7 @@ export default function DialogInfoCancha({open,onClose,PrecioSelecc,InfoDimensio
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  
   const maxSteps = images.length;
 
   const handleNext = () => {

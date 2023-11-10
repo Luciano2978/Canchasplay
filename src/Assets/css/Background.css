@@ -1,5 +1,5 @@
 
-html {
+.HomeUsuarioContent {
     background-image: url('../img/background.jpg'); /* Asegúrate de ajustar la ruta */
     background-size: cover;
     background-repeat: no-repeat;
@@ -7,4 +7,12 @@ html {
     flex-direction: column;
     
   }
-  
+
+
+
+.BackgroundPropietario {
+  background-image: url('../img/background.jpg'); /* Asegúrate de ajustar la ruta */
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}

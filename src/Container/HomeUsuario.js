@@ -7,49 +7,53 @@ import MisReservas from "./MisReservas";
 import News from "./News";
 import { useAuth0 } from "@auth0/auth0-react";
 import SinPermisoUi from "../Components/SinPermisoUi";
+import Loader from "../Components/Loader.js";
 
 
 
-export default function Home(){
+export default function Home() {
 
-    const {RouteComponent} = useContext(Contexto);
-    const {user} = useAuth0();
+    const { RouteComponent } = useContext(Contexto);
+    const { user } = useAuth0();
     const rol = user.Nombre.user_metadata.rol
     console.log(rol)
-    if (rol === "Propietario"){
-      return <SinPermisoUi></SinPermisoUi>
+    if (rol === "Propietario") {
+        return <SinPermisoUi></SinPermisoUi>
     }
-    return(
-        <>
-            <div className="BackgroundHomeUsuario">
+    return (
+        <body className="HomeUsuarioContent">
 
-                {/* <div className="HeaderHomeUsuario">
-                    <HeaderUsuario></HeaderUsuario>
-                </div> */}
+            <>
+                <div className="BackgroundHomeUsuario">
 
-                <div className="BodyHomeUsuario">
-                    {/* Utilizo condicionales y muestro el componente*/}
-                    {(() => {
-                        if (RouteComponent === "Dashboard") {
-                            return <SeleccionCanchas></SeleccionCanchas>
-                        } 
-                        if (RouteComponent === "News") {
-                            return <News></News>;
-                        }
-                        if (RouteComponent === "MisReservas") {
-                            return  <MisReservas/>;
-                        }
-                    })()}
-                    
-                    {/*<CardDeportes></CardDeportes>*/}
+                    {/* <div className="HeaderHomeUsuario">
+                        <HeaderUsuario></HeaderUsuario>
+                    </div> */}
+
+                    <div className="BodyHomeUsuario">
+                        {/* Utilizo condicionales y muestro el componente*/}
+                        {(() => {
+                            if (RouteComponent === "Dashboard") {
+                                return <SeleccionCanchas></SeleccionCanchas>
+                            }
+                            if (RouteComponent === "News") {
+                                return <Loader/>;
+                            }
+                            if (RouteComponent === "MisReservas") {
+                                return <MisReservas />;
+                            }
+                        })()}
+
+                        {/*<CardDeportes></CardDeportes>*/}
+                    </div>
+
+                    <div className="FooterHomeUsuario">
+                        <FooterNavigation></FooterNavigation>
+                    </div>
+
                 </div>
+            </>
 
-                <div className="FooterHomeUsuario">
-                    <FooterNavigation></FooterNavigation>
-                </div>
-                
-            </div>
-        </>
-    
+        </body>
     )
 }

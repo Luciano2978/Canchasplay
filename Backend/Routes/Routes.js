@@ -73,7 +73,7 @@ router.delete("/deleteHorario/:id", DeleteHorario)
 //ADMIN RUTAS
 router.get("/getDatosProp", GetDataPropietario)
 router.put('/editProp',putPropietario);
-router.delete("/deleteProp",DeleteDataProp)
+router.post("/deleteProp",DeleteDataProp)
 router.get("/getVerificacion/:id",GetVerifiacionProp)
 
 

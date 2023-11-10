@@ -104,7 +104,9 @@ export default function VistaPropietario() {
   } //fin
 
   return (
+    <body className='BackgroundPropietario'>
     <>
+
       <Grid container >
         <Grid item sx={{ bg: "#75FA8D", }} xs={12}>
           {isMobile ? (
@@ -191,5 +193,6 @@ export default function VistaPropietario() {
       onClose={handleCloseDialogLogout}
       />
     </>
+    </body>
   );
 }

@@ -36,7 +36,7 @@ export default function FormProp() {
     const nombre = data.Nombre;
     const apellido = data.Apellido;
     const dni = data.Dni;
-    const teléfono = data.Telefono
+    const telefono = data.Telefono
 
     webAuth.signup(
       {
@@ -48,7 +48,7 @@ export default function FormProp() {
           apellido,
           dni,
           rol: "Propietario",
-          teléfono
+          telefono
         },
       },
       (err) => {
@@ -60,7 +60,7 @@ export default function FormProp() {
         } else {
           alert("Usuario registrado con éxito en Auth0");
           reset();
-          navigate("/");
+          navigate("/Login");
         }
       }
     );
@@ -175,7 +175,7 @@ export default function FormProp() {
               <button className="btn" type="submit">
                 Registrarse
               </button>
-              <button className="btn" onClick={() => navigate("/")}>Volver</button>
+              <button className="btn" onClick={() => navigate("/homePage")}>Volver</button>
             </form>
           </div>
           <div className="col-2">

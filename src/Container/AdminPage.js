@@ -5,7 +5,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { Modal, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@mui/styles";
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from "@auth0/auth0-react";
+import { BottomNavigationAction } from "@mui/material";
+import { Box } from "@mui/material";
+import { BottomNavigation } from "@mui/material";
+import DialogLogout from "../Components/DialogLogout";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const useStyles = makeStyles({
   modal: {
@@ -27,16 +32,12 @@ const useStyles = makeStyles({
 });
 
 const AdminPage = () => {
-
-
-
   const estilo = useStyles();
   const [datosAdm, setDatosAdm] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
   const [modalBorrar, setModalBorrar] = useState(false);
   const [propietarioSelect, setPropietarioSelect] = useState({
-    id_Propietario: "",
-    id_Cuenta: "",
+    id_Propietario:"",
     nombre: "",
     apellido: "",
     num_telefono: "",
@@ -45,8 +46,6 @@ const AdminPage = () => {
     certificado_comercio: "",
     Verificado: "",
   });
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +56,11 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
+    cargarDatos();
+  }, []);
+
+  
+  const cargarDatos = () => {
     axios
       .get("http://localhost:8080/getDatosProp")
       .then((response) => {
@@ -66,7 +70,7 @@ const AdminPage = () => {
       .catch((error) => {
         console.log("Error " + error);
       });
-  }, []);
+  };
 
   const abrirCerrarModalEditar = () => {
     setModalEditar(!modalEditar);
@@ -80,22 +84,7 @@ const AdminPage = () => {
     axios
       .put(`http://localhost:8080/editProp `, propietarioSelect)
       .then((response) => {
-        var dataNueva = datosAdm;
-        dataNueva.map((propietario) => {
-          if (propietario.id_Propietario === propietarioSelect.id_Propietario) {
-            propietario.id_Propietario = propietarioSelect.id_Propietario;
-            propietario.id_Cuenta = propietarioSelect.id_Cuenta;
-            propietario.nombre = propietarioSelect.nombre;
-            propietario.apellido = propietarioSelect.apellido;
-            propietario.num_telefono = propietarioSelect.num_telefono;
-            propietario.dni = propietarioSelect.dni;
-            propietario.email = propietarioSelect.email;
-            propietario.certificado_comercio =
-              propietarioSelect.certificado_comercio;
-            propietario.Verificado = propietarioSelect.Verificado;
-          }
-        });
-        setDatosAdm(dataNueva);
+        cargarDatos(); // Actualizar datos después de editar
         abrirCerrarModalEditar();
       })
       .catch((error) => {
@@ -104,8 +93,9 @@ const AdminPage = () => {
   };
 
   const eliminarProp = async () => {
+    console.log(propietarioSelect)
     try {
-      await axios.delete("http://localhost:8080/deleteProp", {
+      await axios.post("http://localhost:8080/deleteProp", {
         data: propietarioSelect,
       });
 
@@ -123,12 +113,7 @@ const AdminPage = () => {
   };
 
   const columns = [
-    {
-      name: "id_Propietario",
-      label: "ID",
-      options: { filter: true, sort: true },
-    },
-    { name: "id_Cuenta", label: "ID_Cuenta" },
+    { name: "id_Propietario", label: "ID" },
     { name: "nombre", label: "Nombre" },
     { name: "apellido", label: "Apellido" },
     { name: "num_telefono", label: "Telefono" },
@@ -173,26 +158,10 @@ const AdminPage = () => {
       <h3>Editar Propietario</h3>
       <TextField
         className={estilo.inputMaterial}
-        label="ID"
-        name="id_Propietario"
-        onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.id_Propietario}
-      />
-      <br />
-      <TextField
-        className={estilo.inputMaterial}
-        label="ID_Cuenta"
-        name="id_Cuenta"
-        onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.id_Cuenta}
-      />
-      <br />
-      <TextField
-        className={estilo.inputMaterial}
         label="Nombre"
         name="nombre"
         onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.nombre}
+        value={propietarioSelect.nombre}
       />
       <br />
       <TextField
@@ -200,7 +169,7 @@ const AdminPage = () => {
         label="Apellido"
         name="apellido"
         onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.apellido}
+        value={propietarioSelect.apellido}
       />
       <br />
       <TextField
@@ -208,7 +177,7 @@ const AdminPage = () => {
         label="Telefono"
         name="num_telefono"
         onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.num_telefono}
+        value={propietarioSelect.num_telefono}
       />
       <br />
       <TextField
@@ -216,7 +185,7 @@ const AdminPage = () => {
         label="Dni"
         name="dni"
         onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.dni}
+        value={propietarioSelect.dni}
       />
       <br />
       <TextField
@@ -224,7 +193,7 @@ const AdminPage = () => {
         label="Correo"
         name="email"
         onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.email}
+        value={propietarioSelect.email}
       />
       <br />
       <TextField
@@ -232,7 +201,7 @@ const AdminPage = () => {
         label="Certificado Cancha"
         name="certificado_comercio"
         onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.certificado_comercio}
+        value={propietarioSelect.certificado_comercio}
       />
       <br />
       <TextField
@@ -240,16 +209,16 @@ const AdminPage = () => {
         label="Estado"
         name="Verificado"
         onChange={handleChange}
-        value={propietarioSelect && propietarioSelect.Verificado}
+        value={propietarioSelect.Verificado}
       />
       <br />
 
       <br />
       <div align="right">
-        <Button color="primary" onClick={() => handleEditarProp()}>
+        <Button color="primary" onClick={handleEditarProp}>
           Editar
         </Button>
-        <Button onClick={() => abrirCerrarModalEditar()}>Cancelar</Button>
+        <Button onClick={abrirCerrarModalEditar}>Cancelar</Button>
       </div>
     </div>
   );
@@ -258,13 +227,13 @@ const AdminPage = () => {
     <div className={estilo.modal}>
       <p>
         Estás seguro que deseas eliminar al Propietario/a{" "}
-        <b>{propietarioSelect && propietarioSelect.nombre}</b>?{" "}
+        <b>{propietarioSelect.nombre}</b>?{" "}
       </p>
       <div align="right">
-        <Button color="secondary" onClick={() => eliminarProp()}>
+        <Button color="secondary" onClick={eliminarProp}>
           Sí
         </Button>
-        <Button onClick={() => abrirCerrarModalBorrar()}>No</Button>
+        <Button onClick={abrirCerrarModalBorrar}>No</Button>
       </div>
     </div>
   );
@@ -272,36 +241,42 @@ const AdminPage = () => {
   const seleccionarPropietario = (rowData) => {
     setPropietarioSelect({
       id_Propietario: rowData[0],
-      id_Cuenta: rowData[1],
-      nombre: rowData[2],
-      apellido: rowData[3],
-      num_telefono: rowData[4],
-      dni: rowData[5],
-      email: rowData[6],
-      certificado_comercio: rowData[7],
-      Verificado: rowData[8],
+      nombre: rowData[1],
+      apellido: rowData[2],
+      num_telefono: rowData[3],
+      dni: rowData[4],
+      email: rowData[5],
+      certificado_comercio: rowData[6],
+      Verificado: rowData[7],
     });
 
     abrirCerrarModalEditar();
-    console.log(propietarioSelect);
   };
 
   const handleDelete = (rowData) => {
     setPropietarioSelect({
       id_Propietario: rowData[0],
-      id_Cuenta: rowData[1],
-      nombre: rowData[2],
-      apellido: rowData[3],
-      num_telefono: rowData[4],
-      dni: rowData[5],
-      email: rowData[6],
-      certificado_comercio: rowData[7],
-      Verificado: rowData[8],
+      nombre: rowData[1],
+      apellido: rowData[2],
+      num_telefono: rowData[3],
+      dni: rowData[4],
+      email: rowData[5],
+      certificado_comercio: rowData[6],
+      Verificado: rowData[7],
     });
-    console.log(propietarioSelect, "adasdsada");
+
     abrirCerrarModalBorrar();
   };
 
+  const [showDialogLogout, setshowDialogLogout] = useState(false);
+
+  const handleOpenDialogLogout = () => {
+    setshowDialogLogout(true);
+  };
+
+  const handleCloseDialogLogout = () => {
+    setshowDialogLogout(false);
+  };
   return (
     <div>
       <MUIDataTable
@@ -318,7 +293,27 @@ const AdminPage = () => {
       <Modal open={modalBorrar} onClose={abrirCerrarModalBorrar}>
         {bodyEliminar}
       </Modal>
+      <Box sx={{ 
+        width: "100%",  
+        position: "fixed",
+        bottom: 0,
+        
+        }}>
+      <BottomNavigation
+        style={{
+          backgroundColor: "black"
+        }}
+        showLabels
+      >
+        <BottomNavigationAction  label="Logout" icon={<LogoutIcon  />} style={{color: "white"}} onClick={() => handleOpenDialogLogout()} />
+      </BottomNavigation>
+    </Box>
+    <DialogLogout
+        open={showDialogLogout}
+        onClose={handleCloseDialogLogout}
+      />
     </div>
+    
   );
 };
 
