@@ -42,7 +42,7 @@ export default function SinPermisoUi(){
                 <img src={Warning} alt="Warning" style={imgWarningStyle} className="animate__animated animate__tada"/>
                 <div className="Text-404">
                     <p>No esta autorizado para Ingresar a esta seccion.</p>
-                    <Link href="/homePage" color="inherit">
+                    <Link href="/" color="inherit">
                         CLICK AQUI: “PARA VOLVER”
                     </Link>
                 </div>

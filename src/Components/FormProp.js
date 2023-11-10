@@ -175,7 +175,7 @@ export default function FormProp() {
               <button className="btn" type="submit">
                 Registrarse
               </button>
-              <button className="btn" onClick={() => navigate("/homePage")}>Volver</button>
+              <button className="btn" onClick={() => navigate("/")}>Volver</button>
             </form>
           </div>
           <div className="col-2">

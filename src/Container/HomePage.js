@@ -14,7 +14,7 @@ function HomePage() {
     if (!isAuthenticated) {
       loginWithRedirect();
     } else {
-      logout({ logoutParams: { returnTo: "https://canchas-play.onrender.com/homePage" } })
+      logout({ logoutParams: { returnTo: "https://canchas-play.onrender.com/" } })
     }
   };
 

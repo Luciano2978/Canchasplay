@@ -28,11 +28,27 @@ export default function Verificacion() {
 
   if (rol === "Usuario") return <Navigate to="/homeUsuario" />;
 
+  for (const dataProp of data) {
+    if (rol === "Propietario") {
+      if (dataProp.Verificado === 1 && dataProp.cantidad_de_complejos_relacionados === 0 ) {
+        return <Navigate to="/Complejo" />;
+      } else if (dataProp.Verificado === 1 && dataProp.cantidad_de_complejos_relacionados === 1 ){
+        return <Navigate to="/homePropietario" />;
+      }
+      else if (dataProp.Verificado === 0) {
+        return <Navigate to="/PropValidate" />;
+      }
+    }
+  }
+
   if (rol === "Propietario" && data.Verificado === 1) {
     return <Navigate to="/Complejo" />;
   } else if (rol === "Propietario" && data.Verificado === 0){
     return <Navigate to="/PropValidate" />;
   }
+
+
+
 
   if (rol === "Administrador") return <Navigate to="/AdminPage" />;
 }
