@@ -22,7 +22,7 @@ export default function Verificacion() {
 
   const { user } = useAuth0();
   const rol = user.Nombre.user_metadata.rol;
-  if (rol === "" || undefined) return <Navigate to="/homePage"></Navigate>
+
   if (rol === "Usuario") return <Navigate to="/homeUsuario" />;
 
   if (rol === "Propietario" && data === 1) {
