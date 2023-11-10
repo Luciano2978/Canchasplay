@@ -54,8 +54,8 @@ const createPreference = (req, res) => {
                     
                         },
                         back_urls: {
-                          success: "http://localhost:3000/homeUsuario",
-                          failure: "http://localhost:3000/homeUsuario",
+                          success: "https://canchas-playfront.onrender.com/homeUsuario",
+                          failure: "https://canchas-playfront.onrender.com/homeUsuario",
                           pending: "",
                         },
                         binary_mode: true,

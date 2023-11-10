@@ -17,7 +17,7 @@ const PayCreate = (req,res) => {
         const status = response.data.status
         if(status === "approved"){
 
-            axios.post("http://localhost:8080/create_Reserva",{
+            axios.post("https://canchas-play.onrender.com/create_Reserva",{
                 Fecha: response.data.metadata.fecha,
                 idCancha: response.data.metadata.id_cancha,
                 Hora: response.data.metadata.hora,
