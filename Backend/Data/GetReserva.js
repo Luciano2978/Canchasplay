@@ -13,8 +13,12 @@ const getReserva = (req,res) => {
       if(err){
         console.log("Error al obtener el id" + err);
       }
-  
-      const idCliente = results[0].id_Cliente || 0;
+      try {
+        var idCliente = results[0].id_Cliente ;
+      } catch (error) {
+        var idCliente = 0
+      }
+      
 
       const dataReserva = `
       select nombre_Lugar,cancha_Reservada,fecha_Reservada,hora_Reservada,metodo_Pago,informacion_Pago,id_Reserva,estado_Reserva,Complejo_id_Complejo
