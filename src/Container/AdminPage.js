@@ -62,7 +62,7 @@ const AdminPage = () => {
   
   const cargarDatos = () => {
     axios
-      .get("http://localhost:8080/getDatosProp")
+      .get("https://canchas-play.onrender.com/getDatosProp")
       .then((response) => {
         setDatosAdm(response.data);
         console.log(response.data);
@@ -82,7 +82,7 @@ const AdminPage = () => {
 
   const handleEditarProp = () => {
     axios
-      .put(`http://localhost:8080/editProp `, propietarioSelect)
+      .put(`https://canchas-play.onrender.com/editProp `, propietarioSelect)
       .then((response) => {
         cargarDatos(); // Actualizar datos después de editar
         abrirCerrarModalEditar();
@@ -95,7 +95,7 @@ const AdminPage = () => {
   const eliminarProp = async () => {
     console.log(propietarioSelect)
     try {
-      await axios.post("http://localhost:8080/deleteProp", {
+      await axios.post("https://canchas-play.onrender.com/deleteProp", {
         data: propietarioSelect,
       });
 

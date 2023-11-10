@@ -9,7 +9,7 @@ export default function Verificacion() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/getVerificacion/${user.sub}`)
+      .get(`https://canchas-play.onrender.com/getVerificacion/${user.sub}`)
       .then((response) => {
         setData(response.data[0].Verificado);
       })

@@ -19,7 +19,7 @@ export default function ListInfoReserva() {
   const [dataMiReservas, setDataMiReservas] = useState([]);
 
   useEffect(() => {
-    axios.post("http://localhost:8080/getReservas",{email:user.email})
+    axios.post("https://canchas-play.onrender.com/getReservas",{email:user.email})
     .then((response) =>{
       setDataMiReservas(response.data)
     })

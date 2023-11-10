@@ -11,7 +11,7 @@ export default function News(){
 
     const callAuthMp = async () => {
         try { //enviar al propietario al link de mp 
-            await axios.post("http://localhost:8080/auth_user_mp", {
+            await axios.post("https://canchas-play.onrender.com/auth_user_mp", {
                 Correo: "luciano297801@gmail.com",
             });
       

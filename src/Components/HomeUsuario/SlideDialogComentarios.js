@@ -33,7 +33,7 @@ export default function SlideDialogComentarios({open,onClose,nombreCancha,idComp
        const dataToSend = {
           idCom: idComplejo
         };
-        axios.post("http://localhost:8080/getComentarios",dataToSend)
+        axios.post("https://canchas-play.onrender.com/getComentarios",dataToSend)
         .then((response ) => {
           setDatosComentarios(response.data)
         })

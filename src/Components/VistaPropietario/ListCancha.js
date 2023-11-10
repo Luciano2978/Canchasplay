@@ -57,7 +57,7 @@ function ListCancha() {
             id_Cuenta : user.sub
         }
         axios
-            .post('http://localhost:8080/getCancha', dataToSend)
+            .post('https://canchas-play.onrender.com/getCancha', dataToSend)
             .then((response) => {
                 setDatos(response.data);
             })
@@ -85,7 +85,7 @@ function ListCancha() {
 
     const deleteCancha = (canchaId) => {
         axios
-            .delete(`http://localhost:8080/deleteCancha/${canchaId}`)
+            .delete(`https://canchas-play.onrender.com/deleteCancha/${canchaId}`)
             .then((response) => {
                 // Realiza acciones adicionales después de la eliminación, si es necesario
             })
@@ -98,7 +98,7 @@ function ListCancha() {
         e.preventDefault();
         // Realiza una solicitud al servidor para actualizar la cancha con la ID específica (canchaAEditar.id_Cancha) utilizando los datos en canchaAEditar.
         axios
-            .put(`http://localhost:8080/editCancha/${canchaAEditar.id_Cancha}`, canchaAEditar)
+            .put(`https://canchas-play.onrender.com/editCancha/${canchaAEditar.id_Cancha}`, canchaAEditar)
             .then((response) => {
                 // Actualiza el estado local `data` con los datos editados
                 const newData = data.map((cancha) =>

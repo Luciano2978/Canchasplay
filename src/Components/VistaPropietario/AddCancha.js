@@ -83,7 +83,7 @@ export default function AddCancha() {
     formdata.append('img_Cancha', file)
     // Enviar la solicitud POST
     axios
-      .post("http://localhost:8080/createCancha", formdata)
+      .post("https://canchas-play.onrender.com/createCancha", formdata)
       .then(() => {
         setShowSuccessAlert(true);
         // Restablecer los campos después del éxito si es necesario

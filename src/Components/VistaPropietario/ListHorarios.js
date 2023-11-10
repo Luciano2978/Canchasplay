@@ -171,7 +171,7 @@ export default function ListHorario() {
         Cancha_id_Cancha: canchaId,
       };
 
-      axios.post("http://localhost:8080/createHorario", dataToSend)
+      axios.post("https://canchas-play.onrender.com/createHorario", dataToSend)
         .then((response) => {
           setShowSuccessAlert(true);
 
@@ -187,7 +187,7 @@ export default function ListHorario() {
   };
   const getHorariosByCancha = async (canchaId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/getHorarios/${canchaId}`);
+      const response = await axios.get(`https://canchas-play.onrender.com/getHorarios/${canchaId}`);
       setHorarios(response.data); // Actualiza el estado con la lista de horarios
     } catch (error) {
       console.error(error);
@@ -237,7 +237,7 @@ export default function ListHorario() {
   };
   const deleteHorario = (horarioId) => {
     axios
-      .delete(`http://localhost:8080/deleteHorario/${horarioId}`)
+      .delete(`https://canchas-play.onrender.com/deleteHorario/${horarioId}`)
       .then((response) => {
         // Realiza acciones adicionales después de la eliminación, si es necesario
       })
@@ -249,7 +249,7 @@ export default function ListHorario() {
     e.preventDefault();
     // Realiza una solicitud al servidor para actualizar el horario con la ID específica (horarioEdit.id_Horario) utilizando los datos en horarioEdit.
     axios
-      .put(`http://localhost:8080/editHorario/${horarioEdit.id_Horario}`, horarioEdit)
+      .put(`https://canchas-play.onrender.com/editHorario/${horarioEdit.id_Horario}`, horarioEdit)
       .then((response) => {
         // Actualiza el estado local `horarios` con los datos editados
         const newHorarios = horarios.map((horario) =>

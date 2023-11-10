@@ -39,7 +39,7 @@ export default function DialogCalificacion({open,onClose,idComplej}) {
 
 
   const enviarComentario = () => {
-    axios.post("http://localhost:8080/postComentario",{
+    axios.post("https://canchas-play.onrender.com/postComentario",{
         titulo: titulo,
         texto_Comentario: textoComentario,
         calificacion: valueRating,

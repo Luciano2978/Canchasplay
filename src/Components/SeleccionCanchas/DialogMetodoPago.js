@@ -80,7 +80,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
     const dataToSend = {
       idComplejo: idComplejo,
     };
-    axios.post('http://localhost:8080/get_PublicKey', dataToSend)
+    axios.post('https://canchas-play.onrender.com/get_PublicKey', dataToSend)
     .then((response) => {
       // Manejar la respuesta del servidor aquí
       console.log('Respuesta del servidor:', response.data);
@@ -112,7 +112,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
 
   const createPreference = async () => {
       try {
-        const response = await axios.post("http://localhost:8080/create_preference", {
+        const response = await axios.post("https://canchas-play.onrender.com/create_preference", {
           idHorario:idHorario,
           idCancha: idCanchaSelecc,
           Hora: HorarioSelec,
@@ -147,7 +147,7 @@ export default function DialogMetodoPago({open, onClose,HorarioSelec,FechaSelecc
 
       }
     } else {
-      axios.post("http://localhost:8080/create_Reserva", {
+      axios.post("https://canchas-play.onrender.com/create_Reserva", {
         idHorario:idHorario,
         idCancha: idCanchaSelecc,
         Hora: HorarioSelec,
