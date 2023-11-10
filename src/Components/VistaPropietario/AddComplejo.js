@@ -69,7 +69,7 @@ const AddComplejo = () => {
 
 
     
-        axios.post('http://localhost:8080/images/post', formdata)
+        axios.post('https://canchas-play.onrender.com/images/post', formdata)
         .then(response => {
           console.log(response.data);
         })

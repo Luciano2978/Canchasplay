@@ -113,7 +113,7 @@ export default function ListHorario() {
     const dataToSend ={
       id_Cuenta : user.sub
     }
-    axios.post('http://localhost:8080/getCancha',dataToSend)
+    axios.post('https://canchas-play.onrender.com/getCancha',dataToSend)
       .then((response) => {
         setDatos(response.data);
       })
