@@ -14,7 +14,7 @@ export default function Verificacion() {
     axios
       .get(`https://canchas-play.onrender.com/getVerificacion/${user.sub}`)
       .then((response) => {
-        setData(response.data[0].Verificado);
+        setData(response.data);
       })
       .catch((error) => {
         console.log("Error " + error);
@@ -27,9 +27,9 @@ export default function Verificacion() {
 
   if (rol === "Usuario") return <Navigate to="/homeUsuario" />;
 
-  if (rol === "Propietario" && data === 1) {
+  if (rol === "Propietario" && data.Verificado === 1) {
     return <Navigate to="/Complejo" />;
-  } else if (rol === "Propietario" && data === 0){
+  } else if (rol === "Propietario" && data.Verificado === 0){
     return <Navigate to="/PropValidate" />;
   }
 
