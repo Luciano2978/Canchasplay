@@ -23,6 +23,7 @@ export default function Verificacion() {
   
   if (rol === "Propietario") {
     if (data) {
+      console.log(data)
       for (const dataProp of data) {
         if (dataProp.Verificado === 1) {
           if (dataProp.cantidad_de_complejos_relacionados === 0) {
