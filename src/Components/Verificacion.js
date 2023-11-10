@@ -15,6 +15,7 @@ export default function Verificacion() {
       .get(`https://canchas-play.onrender.com/getVerificacion/${user.sub}`)
       .then((response) => {
         setData(response.data);
+        console.log(response)
       })
       .catch((error) => {
         console.log("Error " + error);
