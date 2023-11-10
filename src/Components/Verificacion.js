@@ -7,21 +7,22 @@ export default function Verificacion() {
   const [data, setData] = useState(null);
   const [verificado, setVerificado] = useState(null);
 
-  useEffect(() => {
+  if (rol === "Propietario"){
     axios
-      .get(`https://canchas-play.onrender.com/getVerificacion/${user.sub}`)
-      .then((response) => {
-        setData(response.data[0].Verificado);
-      })
-      .catch((error) => {
-        console.log("Error " + error);
-      });
-  }, []);
+        .get(`https://canchas-play.onrender.com/getVerificacion/${user.sub}`)
+        .then((response) => {
+          setData(response.data[0].Verificado);
+        })
+        .catch((error) => {
+          console.log("Error " + error);
+        });
+  }
+  
 
 
   const { user } = useAuth0();
   const rol = user.Nombre.user_metadata.rol;
-
+  if (rol === "" || undefined) return <Navigate to="/homePage"></Navigate>
   if (rol === "Usuario") return <Navigate to="/homeUsuario" />;
 
   if (rol === "Propietario" && data === 1) {

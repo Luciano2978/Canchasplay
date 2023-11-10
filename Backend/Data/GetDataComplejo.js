@@ -13,7 +13,7 @@ const getDataComplejo = (req, res) => {
           COUNT(cm.id_Comentario) AS totalComentarios,
           AVG(cm.calificacion) AS calificacionPromedio
       FROM complejo co 
-      JOIN Ubicacion ub ON co.Ubicacion_id_Ubicacion = ub.id_Ubicacion
+      JOIN ubicacion ub ON co.Ubicacion_id_Ubicacion = ub.id_Ubicacion
       LEFT JOIN comentario cm ON co.id_Complejo = cm.complejo_Id
       GROUP BY co.id_Complejo`;
   
