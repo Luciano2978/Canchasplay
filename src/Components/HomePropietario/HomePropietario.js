@@ -164,12 +164,7 @@ function HomePropietario() {
         >
           <MonetizationOnIcon sx={{ fontSize: isMobile ? '3rem' : '2rem', marginRight: isMobile ? '0' : '1rem', color: 'green' }} />
           <Box sx={{bgcolor: "grey"}}>
-            <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold',  }}>
-              Ganancia Total
-            </Typography>
-            <Typography variant={isMobile ? 'h5' : 'h4'} sx={{ fontWeight: 'bold', textAlign:"center" }}>
-              $22.900
-            </Typography>
+           
           </Box>
 
           <Grid container spacing={isMobile ? 2 : 4}>
