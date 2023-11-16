@@ -12,7 +12,7 @@ root.render(
     domain="dev-gonf6ysh.us.auth0.com"
     clientId="vLYBJVhpRwmL86MbveaArcYfBbSqyM3N"
     authorizationParams={{
-      redirect_uri: `http://localhost:3000/Verificacion`  
+      redirect_uri: `https://canchas-playfront.onrender.com/Verificacion`  
     }}
   >
     <App />
