@@ -2,8 +2,22 @@
 import React from "react";
 import { FaExclamationCircle } from "react-icons/fa";
 import "../Assets/css/noAutenticado.css";
-
+import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 function NoAutenticado() {
+
+  const { logout } = useAuth0();
+
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+
+    await logout()
+
+    await navigate("/")
+
+  }
+
   return (
     <body className="NoAutenticado-body">
       <div className="noAutenticado-Container">
@@ -15,6 +29,8 @@ function NoAutenticado() {
             respuesta para continuar.
           </p>
         </div>
+        <br/>
+        <button className="btn" onClick={handleLogout}>Volver</button>
       </div>
     </body>
   );

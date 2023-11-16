@@ -19,11 +19,17 @@ export default function Verificacion() {
       });
   }, []);
 
-  if (rol === "Usuario") return <Navigate to="/homeUsuario" />;
-  
+  console.log(user.email_verified, "Esta autenticasdo?");
+
+  if (rol === "Usuario" && user.email_verified == true) {
+    return <Navigate to="/homeUsuario" />;
+  } else if (rol === "Usuario" && user.email_verified == false) {
+    return <Navigate to="/PropValidate" />;
+  }
+
   if (rol === "Propietario") {
     if (data) {
-      console.log(data)
+      console.log(data);
       for (const dataProp of data) {
         if (dataProp.Verificado === 1) {
           if (dataProp.cantidad_de_complejos_relacionados === 0) {
@@ -31,7 +37,7 @@ export default function Verificacion() {
           } else if (dataProp.cantidad_de_complejos_relacionados === 1) {
             return <Navigate to="/homePropietario" />;
           }
-        } else if (dataProp.Verificado === 0) {
+        } else if (dataProp.Verificado === 0 && user.email_verified == false) {
           return <Navigate to="/PropValidate" />;
         }
       }
@@ -40,4 +46,3 @@ export default function Verificacion() {
 
   if (rol === "Administrador") return <Navigate to="/AdminPage" />;
 }
-
